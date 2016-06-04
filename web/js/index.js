@@ -55,7 +55,6 @@ $(function(){
 
     function handleClick(src,des){
         src.click(function(){
-            alert(src.text());
             content.hide();
             des.show();
         });

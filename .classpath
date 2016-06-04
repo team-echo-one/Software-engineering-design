@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="lib"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="netty-all-4.0.30.Final.jar" sourcepath="netty-all-4.0.33.Final-sources.jar">
+	<classpathentry kind="lib" path="D:/EcWorkpace/SoftwareDesign/lib/netty-all-4.0.30.Final.jar" sourcepath="D:/EcWorkpace/SoftwareDesign/lib/netty-all-4.0.33.Final-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/D:/EcWorkpace/SoftwareDesign/netty-all-4.0.33.Final-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/D:/EcWorkpace/SoftwareDesign/lib/netty-all-4.0.33.Final-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/hibernate-core-4.3.11.Final.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

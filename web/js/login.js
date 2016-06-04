@@ -1,5 +1,6 @@
 $(function(){
     var login=$('input[type="button"]');
+    localStorage.setItem('identity','registrar');
     login.click(function(){
         var username=$('input[type="username"]');
         var password=$('input[type="password"]');
@@ -11,7 +12,9 @@ $(function(){
            if(status=='success'){
                result=JSON.parse(result);
                if(result['info']=='success'){
-                   
+                    /*
+                    get identity to save
+                    * */
                    location.replace('./index.html');
                }else{
                    if(result['error']=='username not exist'){

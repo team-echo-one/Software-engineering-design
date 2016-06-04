@@ -20,15 +20,18 @@ body{
     position: absolute;
     left:0;
     top:60px;
-    font-size:20px;
     background-color: black;
-    text-align: center;
-    color:white;
     width:200px;
 }
 .item{
+    color:white;
+    width:200px;
     height:50px;
+    background-color: black;
     line-height: 50px;
+    font-size:20px;
+    text-align: right;
+    border:0;
 }
 .content{
     text-align: center;
@@ -39,5 +42,6 @@ body{
     width:75%;
     height:auto;
     font-size:20px;
+    display:none;
 }
 

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>software</title>
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <script src="./js/jquery-1.11.3.js"></script>
+    <script src="./js/index.js"></script>
+
+</head>
+<body>
+
+<!--title-->
+<div class="title">software</div>
+
+<!--student-->
+<div class="containers" id="student">
+    <div class="item" id="viewPort">View Report</div>
+    <div class="item">Create a Schedule</div>
+    <div class="item">Update a Schedule</div>
+    <div class="item">Delete a Schedule</div>
+</div>
+
+<!--teacher-->
+<!--<div class="containers" id="teacher">
+    <div class="item">Update Grades</div>
+    <div class="item">Select courses</div>
+</div>-->
+
+<!--registration-->
+<!--<div class="containers" id="registrar">
+    <div class="item">Add Professor</div>
+    <div class="item">Edit Professor</div>
+    <div class="item">Delete Professor</div>
+    <div class="item">Add Student</div>
+    <div class="item">Update Student</div>
+    <div class="item">Delete Student</div>
+</div>-->
+<!--<div class="content" id="addProfessor">
+    <br><br><br>
+    <h2>Add Professor</h2>
+    <br><br><br>
+    <form >
+        <input type="text" placeholder="name" name="name" class="input-large" required>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        birthday:<input type="date" placeholder="birthday" name="birthday" class="input-large" required>
+        <br><br><br>
+        <input type="text" placeholder="SSN" name="SSN"  class="input-large" required>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" placeholder="status" name="status" class="input-large" required>
+        <br><br><br>
+        <input type="text" placeholder="department" name="department" class="input-large" required>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" class="btn  btn-success" value="submit">
+    </form>
+</div>-->
+<!--   <div class="content" id="updateProfessor">
+       <br><br><br>
+       <h2>Update Professor</h2>
+       <br>
+       <form >
+           <input type="text" placeholder="professor ID" name="id" class="input-large" required>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+           <input type="button" class="btn  btn-success" value="submit">
+       </form>
+       <br><br><br>
+       <form >
+           <input type="text" placeholder="name" name="name" class="input-large" required>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           birthday:<input type="date" placeholder="birthday" name="birthday" class="input-large" required>
+           <br><br><br>
+           <input type="text" placeholder="SSN" name="SSN"  class="input-large" required>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <input type="text" placeholder="status" name="status" class="input-large" required>
+           <br><br><br>
+           <input type="text" placeholder="department" name="department" class="input-large" required>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <input type="button" class="btn  btn-success" value="update">
+       </form>
+   </div>-->
+
+<!-- <div class="content" id="deleteProfessor">
+     <br><br><br>
+     <h2>Delete Professor</h2>
+     <br>
+
+     <form >
+         <input type="text" placeholder="professor ID" name="id" class="input-large" required>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <input type="button" class="btn  btn-success" value="submit">
+     </form>
+     <br><br>
+     <br><br>
+     <div>
+         <input type="text" class="input-large" disabled>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <input type="text" class="input-large" disabled>
+         <br><br>
+         <input type="text" class="input-large" disabled>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <input type="text" class="input-large" disabled>
+         <br><br>
+         <input type="text" class="input-large" disabled>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <input type="button" class="btn btn-danger " value="delete">
+     </div>
+     </div>-->
+<!-- <div class="content" id="addStudent">
+     <br><br><br>
+     <h2>Add Student</h2>
+     <br><br><br>
+     <form >
+         <input type="text" placeholder="name" name="name" class="input-large" required>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        birthday:<input type="date" placeholder="birthday" name="birthday" class="input-large" required>
+         <br><br><br>
+         <input type="text" placeholder="SSN" name="SSN"  class="input-large" required>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <input type="text" placeholder="status" name="status" class="input-large" required>
+         <br><br><br>
+         graduation date:<input type="date" placeholder="graduation Date" name="graduationDate" class="input-large" required>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <input type="button" class="btn  btn-success" value="submit">
+     </form>
+ </div>-->
+<!-- <div class="content" id="updateStudent">
+     <br><br><br>
+     <h2>Update Student</h2>
+     <br>
+     <form >
+         <input type="text" placeholder="student ID" name="id" class="input-large" required>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+         <input type="button" class="btn  btn-success" value="submit">
+     </form>
+     <br><br><br>
+     <form >
+         <input type="text" placeholder="name" name="name" class="input-large" required>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         birthday:<input type="date" placeholder="birthday" name="birthday" class="input-large" required>
+         <br><br><br>
+         <input type="text" placeholder="SSN" name="SSN"  class="input-large" required>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <input type="text" placeholder="status" name="status" class="input-large" required>
+         <br><br><br>
+         graduation date:<input type="date" placeholder="graduation Date" name="graduationDate" class="input-large" required>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <input type="button" class="btn  btn-success" value="update">
+     </form>
+ </div>-->
+<!--<div class="content" id="deleteStudent">
+    <br><br><br>
+    <h2>Delete Student</h2>
+    <br>
+
+    <form>
+        <input type="text" placeholder="student ID" name="id" class="input-large" required>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" class="btn  btn-success" value="submit">
+    </form>
+    <br><br>
+    <br><br>
+    <div>
+        <input type="text" class="input-large" disabled>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+        birthday: <input type="text" class="input-large" disabled>
+        <br><br>
+        <input type="text" class="input-large" disabled>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" class="input-large" disabled>
+        <br><br>
+        graduation date:<input type="text" class="input-large" disabled>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" class="btn btn-danger " value="delete">
+    </div>
+</div>-->
+<!--<div class="content" id="createSchedule">
+    <br><br><br>
+    <h2>Create a Schedule</h2>
+    <br>
+    <form>
+    <select class="input-large">
+        <option value=""></option>
+        <option value=""></option>
+        <option value=""></option>
+    </select>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" class="btn  btn-success" value="select">
+    </form>
+    <br><br><br>
+    <div>
+        <input type="text" class="input-large" name="name">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" class="input-large" name="time"><br><br>
+        <input type="text" class="input-large" name="teacher">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" class="input-large" name="date">
+        <br><br><br>
+        <input type="button" class="btn  btn-success" value="submit">
+    </div>
+</div>-->
+<div class="content" id="updateSchedule">
+    <br><br><br>
+    <h2>Update a Schedule</h2>
+    <br>
+    <form>
+        <select class="input-large">
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+        </select>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" class="btn  btn-success" value="add">
+    </form>
+    <br><br><br>
+    <div>
+        <input type="text" class="input-large" name="name">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" class="input-large" name="time"><br><br>
+        <input type="text" class="input-larget" name="teacher">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" class="input-large" name="date">
+        <br><br><br>
+        <input type="button" class="btn  btn-success" value="submit">
+    </div>
+</div>
+
+</body>
+</html>

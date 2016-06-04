@@ -1,0 +1,31 @@
+body{
+    background-image: url("../images/background.jpg");
+    color:white;
+    font-size:20px;
+}
+h1{
+    text-align: center;
+}
+div.login-table{
+    position: absolute;
+    left:500px;
+    top:150px;
+    width:380px;
+    height:400px;
+}
+input{
+    position: absolute;
+    text-align: center;
+    width:280px;
+    height:30px;
+    left:60px;
+    font-size:20px;
+    border-radius: 2px;
+    border: 0;
+}
+input[type="button"]{
+    background-color: rgb(115,198,79);
+    width:280px;
+    height:60px;
+    color:white;
+}

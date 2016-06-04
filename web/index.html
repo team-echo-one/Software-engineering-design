@@ -16,26 +16,29 @@
 
 <!--student-->
 <div class="containers" id="student">
-    <div class="item" id="viewPort">View Report</div>
-    <div class="item">Create a Schedule</div>
-    <div class="item">Update a Schedule</div>
-    <div class="item">Delete a Schedule</div>
+    <div class="item" id="iViewPort">View Report</div>
+    <div class="item" id="iCreateSchedule">Create a Schedule</div>
+    <div class="item" id="iUpdateSchedule">Update a Schedule</div>
+    <div class="item" id="iDeleteSchedule">Delete a Schedule</div>
+    <div class="item" id="iSelectOfferings">Select Offerings</div>
+    <div class="item" id="iSubmitSchedule">Submit Schedule</div>
 </div>
+
 
 <!--teacher-->
 <!--<div class="containers" id="teacher">
-    <div class="item">Update Grades</div>
-    <div class="item">Select courses</div>
+    <div class="item" id="iUpdateGrades">Update Grades</div>
+    <div class="item" id="iSelectCourses">Select courses</div>
 </div>-->
 
 <!--registration-->
 <!--<div class="containers" id="registrar">
-    <div class="item">Add Professor</div>
-    <div class="item">Edit Professor</div>
-    <div class="item">Delete Professor</div>
-    <div class="item">Add Student</div>
-    <div class="item">Update Student</div>
-    <div class="item">Delete Student</div>
+    <div class="item" id="iAddProfessor">Add Professor</div>
+    <div class="item" id="iEditProfessor">Edit Professor</div>
+    <div class="item" id="iDeleteProfessor">Delete Professor</div>
+    <div class="item" id="iAddStudent">Add Student</div>
+    <div class="item" id="iUpdateStudent">Update Student</div>
+    <div class="item" id="iDeleteStudent">Delete Student</div>
 </div>-->
 <!--<div class="content" id="addProfessor">
     <br><br><br>
@@ -197,6 +200,22 @@
         <input type="button" class="btn btn-danger " value="delete">
     </div>
 </div>-->
+<!--<div class="content" id="viewReportCard">
+    <br><br><br>
+    <h2>view report card</h2>
+    <br>
+
+    <br><br><br>
+    <div>
+        <form >
+            <input type="text" name="name" disabled>
+            <input type="date" name="date" disabled><br>
+            <input type="date" name="time" disabled>
+            <input type="text" name="teacher" disabled>
+            <input type="button" class="btn btn-danger" value="delete" disabled>
+        </form>
+    </div>
+</div>-->
 <!--<div class="content" id="createSchedule">
     <br><br><br>
     <h2>Create a Schedule</h2>
@@ -225,7 +244,7 @@
         <input type="button" class="btn  btn-success" value="submit">
     </div>
 </div>-->
-<div class="content" id="updateSchedule">
+<!--<div class="content" id="updateSchedule">
     <br><br><br>
     <h2>Update a Schedule</h2>
     <br>
@@ -241,18 +260,94 @@
     </form>
     <br><br><br>
     <div>
-        <input type="text" class="input-large" name="name">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="text" class="input-large" name="time"><br><br>
-        <input type="text" class="input-larget" name="teacher">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="text" class="input-large" name="date">
-        <br><br><br>
-        <input type="button" class="btn  btn-success" value="submit">
+        <form >
+            <input type="text" name="name" disabled>
+            <input type="date" name="date" disabled><br>
+            <input type="date" name="time" disabled>
+            <input type="text" name="teacher" disabled>
+            <input type="button" class="btn btn-danger" value="delete" disabled>
+        </form>
+    </div>
+</div>-->
+<!--<div class="content" id="deleteSchedule">
+    <br><br><br>
+    <h2>Delete a Schedule</h2>
+    <br>
+
+    <br><br><br>
+    <div>
+        <form >
+            <input type="text" name="name" disabled>
+            <input type="date" name="date" disabled><br>
+            <input type="date" name="time" disabled>
+            <input type="text" name="teacher" disabled>
+            <input type="button" class="btn btn-danger" value="delete" disabled>
+        </form>
+    </div>
+</div>-->
+<!--<div class="content" id="selectOfferings">
+    <br><br><br>
+    <h2>Select  Offerings</h2>
+    <br>
+
+    <br><br><br>
+    <div>
+        <form >
+            <input type="text" name="name" >
+            <input type="date" name="date" ><br>
+            <input type="date" name="time" >
+            <input type="text" name="teacher" >
+            <input type="button" class="btn btn-info" value="select" >
+        </form>
+    </div>
+</div>-->
+<!--<div class="content" id="submitSchedule">
+    <br><br><br>
+    <h2>Submit  Schedule</h2>
+    <br>
+
+    <br><br><br>
+    <div>
+        <form >
+            <input type="text" name="name" disabled>
+            <input type="date" name="date" disabled><br>
+            <input type="date" name="time" disabled>
+            <input type="text" name="teacher" disabled>
+            <input type="button" class="btn btn-success" value="delete" disabled>
+        </form>
+    </div>
+</div>-->
+<!--<div class="content" id="selectTeach">
+    <br><br><br>
+    <h2>Select Teach</h2>
+    <br>
+
+    <br><br><br>
+    <div>
+        <form >
+            <input type="text" name="name" disabled>
+            <input type="date" name="date" disabled><br>
+            <input type="date" name="time" disabled>
+            <input type="text" name="teacher" disabled>
+            <input type="button" class="btn btn-success" value="select" disabled>
+        </form>
+    </div>
+</div>-->
+<div class="content" id="submitGrade">
+    <br><br><br>
+    <h2>Submit Grade</h2>
+    <br>
+
+    <br><br><br>
+    <div>
+        <form >
+            <input type="text" name="name" disabled>
+            <input type="date" name="date" disabled><br>
+            <input type="date" name="time" disabled>
+            <input type="text" name="teacher" disabled>
+            <input type="button" class="btn btn-danger" value="delete" disabled>
+        </form>
     </div>
 </div>
-
 </body>
 </html>

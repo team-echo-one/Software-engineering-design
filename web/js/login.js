@@ -11,6 +11,7 @@ $(function(){
            if(status=='success'){
                result=JSON.parse(result);
                if(result['info']=='success'){
+                   
                    location.replace('./index.html');
                }else{
                    if(result['error']=='username not exist'){

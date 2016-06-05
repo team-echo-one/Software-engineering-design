@@ -51,17 +51,28 @@ public class HttpServerInboundHandler extends SimpleChannelInboundHandler<FullHt
 			}
 			ctx.writeAndFlush(createResponse(new Gson().toJson(resDatas), request));
 		}*/
-		List<String> param = splitUri(uri);
-		handlerRequest(param, ctx);
+		System.out.println(uri);
+		if (uri.equals("/")) {
+			WebHandler.sendHtml(request, "web/login.html", ctx);
+		}
+		handlerRequest(uri, ctx);
 	}
 
-	private void handlerRequest(List<String> param, ChannelHandlerContext ctx)
+	private void handlerRequest(String uri, ChannelHandlerContext ctx)
 	{
+		List<String> param = splitUri(uri);
 		String function = param.get(0);
-		System.out.println("function:"+function);
+		//System.out.println("function:"+function);
 		switch (function)
 		{
-			case "image":
+			case "js":
+				WebHandler.sendJs(request, "web"+uri, ctx);
+				break;
+			case "css":
+				WebHandler.sendCss(request, "web"+uri, ctx);
+				break;
+			case "images":
+				ImageResponse.excute(request, "web" + uri, ctx);
 				break;
 			case "file":
 				break;

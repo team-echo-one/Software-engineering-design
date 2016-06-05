@@ -53,6 +53,7 @@ angular.module('software', [])
         };
         $scope.submit = function () {
             var data = {
+                id: studentId,
                 name: $scope.name,
                 birthday: $scope.birthday,
                 SSN: $scope.SSN,
@@ -103,7 +104,7 @@ angular.module('software', [])
             var verify = confirm("submit delete?");
             if (verify) {
                 var data = {
-                    studentId: $scope.studentId
+                    id: $scope.studentId
                 };
                 jQuery.post('/deleteStudent', data, function (result, status) {
                     if (status == 'success') {
@@ -121,29 +122,29 @@ angular.module('software', [])
             }
         }
     })
-    .controller('addProfessor',function($scope){
-       $scope.submit=function(){
-           var data = {
-               name: $scope.name,
-               birthday: $scope.birthday,
-               SSN: $scope.SSN,
-               status: $scope.status,
-               department: $scope.department
-           };
-           jQuery.post('/addProfessor', data, function (result, status) {
-               if (status == 'success') {
-                   result = JSON.parse(result);
-                   if (result['info'] == 'success') {
-                       alert('add success!');
-                   } else {
-                       alert('add failed!please try again!');
-                   }
-               } else {
-                   alert('network time out!please try again');
-               }
+    .controller('addProfessor', function ($scope) {
+        $scope.submit = function () {
+            var data = {
+                name: $scope.name,
+                birthday: $scope.birthday,
+                SSN: $scope.SSN,
+                status: $scope.status,
+                department: $scope.department
+            };
+            jQuery.post('/addProfessor', data, function (result, status) {
+                if (status == 'success') {
+                    result = JSON.parse(result);
+                    if (result['info'] == 'success') {
+                        alert('add success!');
+                    } else {
+                        alert('add failed!please try again!');
+                    }
+                } else {
+                    alert('network time out!please try again');
+                }
 
-           });
-       }
+            });
+        }
     })
     .controller('updateProfessor', function ($scope) {
         $scope.professors = [];
@@ -171,6 +172,7 @@ angular.module('software', [])
         };
         $scope.submit = function () {
             var data = {
+                id: $scope.professorId,
                 name: $scope.name,
                 birthday: $scope.birthday,
                 SSN: $scope.SSN,
@@ -208,7 +210,7 @@ angular.module('software', [])
         $scope.selectProfessor = function (professorId) {
             for (var i = 0; i < $scope.professors.length; i++) {
                 var professor = $scope.professors[i];
-                if (professor['id'] = studentId) {
+                if (professor['id'] = professorId) {
                     $scope.name = professor['name'];
                     $scope.birthday = professor['birthday'];
                     $scope.SSN = professor['SSN'];
@@ -221,7 +223,7 @@ angular.module('software', [])
             var verify = confirm("submit delete?");
             if (verify) {
                 var data = {
-                    professorId: $scope.professorId
+                    id: $scope.professorId
                 };
                 jQuery.post('/deleteProfessor', data, function (result, status) {
                     if (status == 'success') {
@@ -239,6 +241,24 @@ angular.module('software', [])
             }
         }
     })
+    .controller('viewReport', function ($scope) {
+        $scope.courses = [];
+        var data = {
+            id: localStorage.getItem('id')
+        };
+        jQuery.post('/courses', data, function (result, status) {
+            if (status == 'success') {
+                $scope.courses = JSON.parse(result);
+            } else {
+                alert('network time out!please try again');
+            }
+
+
+        });
+    })
+    .controller('createSchedule', function ($scope) {
+        
+    });
 
 
 

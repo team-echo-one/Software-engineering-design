@@ -219,23 +219,15 @@
 </div>
 
 
-<div class="content" id="viewReport">
+<div class="content" id="viewReport" ng-controller="viewReport">
     <br><br><br>
     <h2>view report card</h2>
     <br>
-
+    <table >
+        <tr class="{{course}}" ng-repeat="course in courses"> <td>{{course.name}}</td><td>{{course.time}}</td><td>{{course.score}}</td></tr>
+    </table>
     <br><br><br>
-    <div>
-        <form>
-            <input type="text" name="name" disabled>
-            <input type="date" name="date" disabled><br>
-            <input type="date" name="time" disabled>
-            <input type="text" name="teacher" disabled>
-            <input type="button" class="btn btn-danger" value="delete" disabled>
-        </form>
-    </div>
 </div>
-
 
 <div class="content" id="createSchedule">
     <br><br><br>

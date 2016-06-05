@@ -12,9 +12,8 @@ $(function(){
            if(status=='success'){
                result=JSON.parse(result);
                if(result['info']=='success'){
-                    /*
-                    get identity to save
-                    * */
+                   /* identity saved here*/
+                   localStorage.setItem('id',result['id']);
                    location.replace('./index.html');
                }else{
                    if(result['error']=='username not exist'){

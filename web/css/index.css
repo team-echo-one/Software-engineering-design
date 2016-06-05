@@ -43,4 +43,17 @@ body{
     font-size:20px;
     display:none;
 }
+tr.course{
+    width:600px;
+    height:30px;
+    background-color: #b3b3b3;
+    text-align: center;
+    line-height: 30px;
+    color:black;
+    box-shadow: 3px 3px 10px #fff;
+    font-size:20px;
+}
+tr.course>td{
+    width:200px;
+}
 

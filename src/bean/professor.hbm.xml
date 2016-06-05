@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="bean">
+	<class name="Professor" table="PROFESSOR">
+		<id name="id" column="professor_id">
+			<generator class="native" />
+		</id>
+		<property name="name" type="string" />
+		<property name="faculty" type="string" />
+		<property name="ssN" type="string" />
+		<property name="status" type="string" />
+		<property name="birth" type="timestamp" />
+
+		<map name="teach" table="PROFESSORS_COURSES" lazy="false">
+			<key column="professor_id" not-null="true" />
+			<map-key-many-to-many column="course_id" class="Course" />
+			<composite-element class="Professor_Course">
+				<property name="price" type="integer" />
+				<property name="day" type="integer" />
+				<property name="begin" type="integer" />
+				<property name="end" type="integer" />
+				<property name="semester" type="integer" />
+			</composite-element>
+		</map>
+	</class>
+</hibernate-mapping>

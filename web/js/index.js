@@ -2,7 +2,8 @@
  * Created by lenovo on 2016/6/2.
  */
 $(function(){
-   
+
+
     var identity=localStorage.getItem('identity');
     var teacher=$('#teacher');
     var student=$('#student');

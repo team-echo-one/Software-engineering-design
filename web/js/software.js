@@ -3,6 +3,9 @@
  */
 
 angular.module('software', [])
+    .constant('$id',{
+        id:localStorage.getItem('id')
+    })
     .controller('addStudent', function ($scope) {
         $scope.submit = function () {
             var data = {
@@ -241,22 +244,68 @@ angular.module('software', [])
             }
         }
     })
-    .controller('viewReport', function ($scope) {
+    .controller('viewReport', function ($scope,$id) {
         $scope.courses = [];
         var data = {
-            id: localStorage.getItem('id')
+            id: $id.id
         };
-        jQuery.post('/courses', data, function (result, status) {
-            if (status == 'success') {
-                $scope.courses = JSON.parse(result);
-            } else {
-                alert('network time out!please try again');
-            }
+        $scope.viewReport=function(){
+            jQuery.post('/myCourses', data, function (result, status) {
+                if (status == 'success') {
+                    $scope.courses = JSON.parse(result);
+                } else {
+                    alert('network time out!please try again');
+                }
 
 
-        });
+            });
+        };
+
     })
-    .controller('createSchedule', function ($scope) {
+    .controller('deleteSchedule', function ($scope,$id) {
+        $scope.schedules = [];
+        var data = {
+            id: $id.id
+        };
+
+        $scope.getSchedule = function () {
+            jQuery.post('/mySchedule', data, function (result, status) {
+                if (status == 'success') {
+                    $scope.schedules = JSON.parse(result);
+                } else {
+                    alert('network time out!please try again');
+                }
+            });
+        };
+        $scope.deleteSchedule = function () {
+            jQuery.post('/deleteMySchedule', data, function (result, status) {
+                if (status == 'success') {
+                    alert('delete success!');
+                } else {
+                    alert('network time out!please try again');
+                }
+            });
+        }
+    })
+    .controller('updateSchedule',function($scope,$id){
+       var data={
+           id:$id.id
+       };
+        $scope.mySchedule=[];
+        $scope.unselectedSchedule=[];
+        $scope.viewSchedule=function(){
+            jQuery.post('/mySchedule', data, function (result, status) {
+                if (status == 'success') {
+                    $scope.mySchedule=JSON.parse(result);
+                    $scope.
+                } else {
+                    alert('network time out!please try again');
+                }
+            });
+        };
+        $scope.updateSchedule=function(){
+
+        }
         
     });
 

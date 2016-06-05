@@ -219,12 +219,17 @@
 </div>
 
 
-<div class="content" id="viewReport" ng-controller="viewReport">
+<div class="content" id="viewReport" ng-controller="viewReport" >
     <br><br><br>
     <h2>view report card</h2>
     <br>
-    <table >
-        <tr class="{{course}}" ng-repeat="course in courses"> <td>{{course.name}}</td><td>{{course.time}}</td><td>{{course.score}}</td></tr>
+    <input type="button" value="View Report" class="btn btn-success" ng-click="viewReport()">
+    <table>
+        <tr class="{{course}}" ng-repeat="course in courses">
+            <td>{{course.name}}</td>
+            <td>{{course.time}}</td>
+            <td>{{course.score}}</td>
+        </tr>
     </table>
     <br><br><br>
 </div>
@@ -257,46 +262,41 @@
         <input type="button" class="btn  btn-success" value="submit">
     </div>
 </div>
-<div class="content" id="updateSchedule">
+<div class="content" id="updateSchedule" controller="updateSchedule">
     <br><br><br>
     <h2>Update a Schedule</h2>
     <br>
-    <form>
-        <select class="input-large">
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
-        </select>
+    <input type="button" class="btn btn-info" value="view Schedule" ng-click="viewSchedule()">
+    <input type="button" class="btn btn-success" value="update Schedule" ng-click="updateSchedule()">
+    <table>
+        <tr ng-repeat="schedule in mySchedule">
+            <td>{{schedule.name}}</td>
+            <td>{{schedule.time}}</td>
+            <td>{{schedule.teacher}}</td>
+            <input type="button" class="btn btn-danger" value="delete" data->
+        </tr>
+    </table>
+        
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="button" class="btn  btn-success" value="add">
-    </form>
+       
     <br><br><br>
-    <div>
-        <form>
-            <input type="text" name="name" disabled>
-            <input type="date" name="date" disabled><br>
-            <input type="date" name="time" disabled>
-            <input type="text" name="teacher" disabled>
-            <input type="button" class="btn btn-danger" value="delete" disabled>
-        </form>
-    </div>
+    
 </div>
-<div class="content" id="deleteSchedule">
+<div class="content" id="deleteSchedule" ng-controller="deleteSchedule">
     <br><br><br>
     <h2>Delete a Schedule</h2>
     <br>
-
+    <input type="button" class="btn btn-info" ng-click="getSchedule()" value="View Schedule">
+    <input type="button" class="btn btn-danger" ng-click="deleteSchedule()" value="Delete Schedule">
     <br><br><br>
-    <div>
-        <form>
-            <input type="text" name="name" disabled>
-            <input type="date" name="date" disabled><br>
-            <input type="date" name="time" disabled>
-            <input type="text" name="teacher" disabled>
-            <input type="button" class="btn btn-danger" value="delete" disabled>
-        </form>
-    </div>
+    <table>
+        <tr ng-repeat="schedule in schedules" class="{{course}}">
+            <td>{{schedule.name}}</td>
+            <td>{{schedule.time}}</td>
+            <td>{{schedule.teacher}}</td>
+        </tr>
+    </table>
 </div>
 <div class="content" id="selectOfferings">
     <br><br><br>

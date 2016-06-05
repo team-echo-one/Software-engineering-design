@@ -1,6 +1,6 @@
 $(function(){
     var login=$('input[type="button"]');
-    localStorage.setItem('identity','registrar');
+    localStorage.setItem('identity','student');
     login.click(function(){
         var username=$('input[type="username"]');
         var password=$('input[type="password"]');

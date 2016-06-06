@@ -3,20 +3,23 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package = "bean">
+<hibernate-mapping package="bean">
 	<class name="Student" table="STUDENT">
-        <id name="id" column="student_id">
-            <generator class="native"/>
-        </id>
-        <property name="name" type = "string"/>
-   		
-   		<map name="events" table="PERSON_EVENTS" lazy="false">
-			<key column="PERSON_ID" not-null="true" />
-			<map-key-many-to-many column="EVENT_ID" class="Event" />
-			<composite-element class="Other">
+		<id name="id" column="student_id">
+			<generator class="native" />
+		</id>
+		<property name="name" type="string" />
+		<property name="ssN" type = "string"/>
+		<property name="status" type = "string"/>
+		<property name="birth" type="timestamp"/>
+		<property name="graduationDate" type="timestamp"/>
+
+		<map name="courses" table="STUDENTS_COURSES" lazy="false">
+			<key column="student_id" not-null="true" />
+			<map-key-many-to-many column="course_id" class="Course" />
+			<composite-element class="Student_Course">
 				<property name="grade" column="grade" />
 			</composite-element>
 		</map>
-    </class>
-    
+	</class>
 </hibernate-mapping>

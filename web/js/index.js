@@ -23,11 +23,9 @@ $(function(){
     }
 
     var iViewReport=$("#iViewReport");
-    var iCreateSchedule=$('#iCreateSchedule');
     var iUpdateSchedule=$('#iUpdateSchedule');
     var iDeleteSchedule=$('#iDeleteSchedule');
     var iSelectOfferings=$('#iSelectOfferings');
-    var iSubmitSchedule=$('#iSubmitSchedule');
     var iUpdateGrades= $('#iUpdateGrades');
     var iSelectCourses= $('#iSelectCourses');
     var iAddProfessor= $('#iAddProfessor');
@@ -38,11 +36,9 @@ $(function(){
     var iDeleteStudent= $('#iDeleteStudent');
 
     var viewReport=$("#viewReport");
-    var createSchedule=$('#createSchedule');
     var updateSchedule=$('#updateSchedule');
     var deleteSchedule=$('#deleteSchedule');
     var selectOfferings=$('#selectOfferings');
-    var submitSchedule=$('#submitSchedule');
     var updateGrades= $('#updateGrades');
     var selectCourses= $('#selectCourses');
     var addProfessor= $('#addProfessor');
@@ -61,11 +57,9 @@ $(function(){
         });
     }
     handleClick(iViewReport,viewReport);
-    handleClick(iCreateSchedule,createSchedule);
     handleClick(iUpdateSchedule,updateSchedule);
     handleClick(iDeleteSchedule,deleteSchedule);
     handleClick(iSelectOfferings,selectOfferings);
-    handleClick(iSubmitSchedule,submitSchedule);
     handleClick(iUpdateGrades,updateGrades);
     handleClick(iSelectCourses,selectCourses);
     handleClick(iAddProfessor,addProfessor);

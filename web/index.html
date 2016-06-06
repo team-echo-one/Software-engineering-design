@@ -19,11 +19,9 @@
 <!--student-->
 <div class="containers" id="student">
     <input type="button" class="item" id="iViewReport" value="View Report"/>
-    <input type="button" class="item" id="iCreateSchedule" value="Create a Schedule"/>
     <input type="button" class="item" id="iUpdateSchedule" value="Update a Schedule"/>
     <input type="button" class="item" id="iDeleteSchedule" value="Delete a Schedule"/>
     <input type="button" class="item" id="iSelectOfferings" value="Select Offerings"/>
-    <input type="button" class="item" id="iSubmitSchedule" value="Submit Schedule"/>
 </div>
 
 
@@ -219,7 +217,7 @@
 </div>
 
 
-<div class="content" id="viewReport" ng-controller="viewReport" >
+<div class="content" id="viewReport" ng-controller="viewReport">
     <br><br><br>
     <h2>view report card</h2>
     <br>
@@ -233,35 +231,6 @@
     </table>
     <br><br><br>
 </div>
-
-<div class="content" id="createSchedule">
-    <br><br><br>
-    <h2>Create a Schedule</h2>
-    <br>
-    <form>
-        <select class="input-large">
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
-        </select>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="button" class="btn  btn-success" value="select">
-    </form>
-    <br><br><br>
-    <div>
-        <input type="text" class="input-large" name="name">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="text" class="input-large" name="time"><br><br>
-        <input type="text" class="input-large" name="teacher">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="text" class="input-large" name="date">
-        <br><br><br>
-        <input type="button" class="btn  btn-success" value="submit">
-    </div>
-</div>
 <div class="content" id="updateSchedule" controller="updateSchedule">
     <br><br><br>
     <h2>Update a Schedule</h2>
@@ -273,15 +242,18 @@
             <td>{{schedule.name}}</td>
             <td>{{schedule.time}}</td>
             <td>{{schedule.teacher}}</td>
-            <input type="button" class="btn btn-danger" value="delete" data->
+            <input type="button" class="btn btn-success" value="delete" data-select="false" data-id="schedule.id">
         </tr>
     </table>
-        
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       
     <br><br><br>
-    
+    <table>
+        <tr ng-repeat="schedule in unselectedSchedule">
+            <td>{{schedule.name}}</td>
+            <td>{{schedule.time}}</td>
+            <td>{{schedule.teacher}}</td>
+            <input type="button" class="btn btn-success" value="add" data-select="false" data-id="{{schedule.id}}">
+        </tr>
+    </table>
 </div>
 <div class="content" id="deleteSchedule" ng-controller="deleteSchedule">
     <br><br><br>
@@ -298,71 +270,49 @@
         </tr>
     </table>
 </div>
-<div class="content" id="selectOfferings">
+<div class="content" id="selectOfferings" ng-controller="selectOfferings">
     <br><br><br>
     <h2>Select Offerings</h2>
     <br>
-
-    <br><br><br>
-    <div>
-        <form>
-            <input type="text" name="name">
-            <input type="date" name="date"><br>
-            <input type="date" name="time">
-            <input type="text" name="teacher">
-            <input type="button" class="btn btn-info" value="select">
-        </form>
-    </div>
-</div>
-<div class="content" id="submitSchedule">
-    <br><br><br>
-    <h2>Submit Schedule</h2>
+    <br><br>
+    <input ng-click="getOfferings()" type="button" class="btn btn-success" value="get offerings">
+    <input ng-click="selectOfferings()" type="button" class="btn btn-info" value="select Offerings">
     <br>
-
-    <br><br><br>
-    <div>
-        <form>
-            <input type="text" name="name" disabled>
-            <input type="date" name="date" disabled><br>
-            <input type="date" name="time" disabled>
-            <input type="text" name="teacher" disabled>
-            <input type="button" class="btn btn-success" value="delete" disabled>
-        </form>
-    </div>
+    <table>
+        <tr ng-repeat="course in allCourses">
+            <td>{{course.name}}</td>
+            <td>{{course.time}}</td>
+            <td>{{course.teacher}}</td>
+            <input type="button"  value="select" class="btn btn-success" ng-click="chooseCourse()" data-id="{{course.id}}" data-select="false">
+        </tr>
+    </table>
 </div>
-<div class="content" id="selectTeach">
+
+<div class="content" id="selectTeach" ng-controller="selectTeach">
     <br><br><br>
     <h2>Select Teach</h2>
     <br>
-
-    <br><br><br>
-    <div>
-        <form>
-            <input type="text" name="name" disabled>
-            <input type="date" name="date" disabled><br>
-            <input type="date" name="time" disabled>
-            <input type="text" name="teacher" disabled>
-            <input type="button" class="btn btn-success" value="select" disabled>
-        </form>
-    </div>
+    <br>
+    <input type="button" ng-click="allCourses" class="btn btn-success" value="get Courses">
+    <input type="button" ng-click="selectTeach" class="btn btn-info" value="select Teach">
+    <br><br>
+    <table>
+        <tr ng-repeat="course in allCourses">
+            <td>{{course.name}}</td>
+            <td>{{course.time}}</td>
+            <input type="button" class="btn btn-success" value="select" ng-click="chooseCourse" data-id="{{course.id}}" data->
+        </tr>
+    </table>
 </div>
-<div class="content" id="submitGrade">
+<div class="content" id="submitGrade" ng-controller="submitGrade">
     <br><br><br>
     <h2>Submit Grade</h2>
     <br>
-
+    <input type="button" class="btn btn-success" value="taught courses" ng-click="taughtCourse()">
     <br><br><br>
-    <div>
-        <form>
-            <input type="text" name="name" disabled>
-            <input type="date" name="date" disabled><br>
-            <input type="date" name="time" disabled>
-            <input type="text" name="teacher" disabled>
-            <input type="button" class="btn btn-danger" value="delete" disabled>
-        </form>
-    </div>
+    <select ng-change="(courseId)" ng-model="courseId"
+            ng-options="course.id as course.name for course in taughtCourses"></select>
 </div>
-
 <script src="./js/software.js"></script>
 </body>
 </html>

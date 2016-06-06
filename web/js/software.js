@@ -297,17 +297,198 @@ angular.module('software', [])
             jQuery.post('/mySchedule', data, function (result, status) {
                 if (status == 'success') {
                     $scope.mySchedule=JSON.parse(result);
-                    $scope.
                 } else {
                     alert('network time out!please try again');
                 }
             });
+            jQuery.post('/myUnselectedSchedule',data,function(result,status){
+               if(status=='success'){
+                   $scope.unselectedSchedule=JSON.parse(result);
+               } else{
+                   alert('network time out!please try again');
+               }
+            });
         };
+        var button=$('div#updateSchedule input[type="button"]');
+        $(button.context).delegate(button.selector,'click',function(){
+            if(this.css('backgroundColor')=='rgb(91, 183, 91)'){
+                this.css('backgroundColor','white');
+                this.data('select','true');
+            }else{
+                this.css('backgroundColor','rgb(91, 183, 91)');
+                this.data('select','false');
+            }
+        });
         $scope.updateSchedule=function(){
+            var deleteButton=$('div#updateSchedule>table:eq(0)>tr>input');
+            var deleteSchedule=[];
+            var addSchedule=[];
+            for(var i=0;i<deleteButton.length;i++){
+                if(deleteButton[i].data('select')=='true')
+                    deleteSchedule.push(deleteButton[i].data('id'));
+            }
+            var addButton=$('div#updateSchedule>table:eq(1)>tr>table');
+            for(i=0;i<addButton.length;i++){
+                if(addButton[i].data('select')=='true')
+                    deleteSchedule.push(deleteButton[i].data('id'));
+            }
+            var data={
+                id:$id.id,
+                deleteSchedule:deleteSchedule,
+                addSchedule:addSchedule
+            };
+            jQuery.post('/updateSchedule',data,function(data,status){
+               if(status=='success'){
+                   alert('update success!');
 
+               }else{
+                   alert('network error!please try again');
+               }
+
+            });
         }
         
+    })
+    .controller('selectOfferings',function($scope,$id){
+        $scope.allOfferings=[];
+        $scope.getOfferings=function(){
+           jQuery.post('/allCourses',{id:$id.id},function(result,status){
+              if(status=='success'){
+                  $scope.allOfferings=JSON.parse(result)
+              }else{
+                  alert('network error!please try again');
+              }
+
+           });
+       };
+        $scope.chooseCourse=function(){
+            var target=$(this);
+            if(target.data('select')=='false'){
+                target.data('select','true');
+                target.css('backgroundColor','white')
+            }else{
+                target.data('select','false');
+                target.css('backgroundColor','rgb(91, 183, 91)');
+            }
+        };
+        $scope.selectOfferings=function(){
+            var selectButton=$('div#selectOfferings>table>tr>input');
+            var selectCourse=[];
+            for(var i=0;i<selectButton.length;i++){
+                if(selectButton[i].data('select')=='true')
+                    selectCourse.push(selectButton[i].data('id'));
+            }
+            var data={
+                id:$id.id,
+                selectCourse:selectCourse
+            };
+            jQuery.post('/selectOfferings',data,function(data,status){
+                if(status=='success'){
+                    alert('select success!');
+
+                }else{
+                    alert('network error!please try again');
+                }
+
+            });
+        }
+    })
+    .controller('selectTeach',function($scope,$id){
+        $scope.allOfferings=[];
+        var selectCourse=[];
+        $scope.allCourses=function(){
+            jQuery.get('/allCourses',function(result,status){
+                if(status=='success'){
+                    $scope.allOfferings=JSON.parse(result)
+                }else{
+                   alert('network error!please try again');
+                }
+            });
+        };
+        $scope.chooseCourse=function(){
+            var target=$(this);
+            if(target.data('select')=='false'){
+                target.data('select','true');
+                target.css('backgroundColor','white')
+            }else{
+                target.data('select','false');
+                target.css('backgroundColor','rgb(91, 183, 91)');
+            }
+        };
+        $scope.selectTeach=function(){
+            var selectButton=$('div#selectTeach>table>tr>input');
+            var selectCourse=[];
+            for(var i=0;i<selectButton.length;i++){
+                if(selectButton[i].data('select')=='true')
+                    selectCourse.push(selectButton[i].data('id'));
+            }
+            var data={
+                id:$id.id,
+                selectCourse:selectCourse
+            };
+            jQuery.post('/selectTeach',data,function(data,status){
+                if(status=='success'){
+                    alert('select success!');
+
+                }else{
+                    alert('network error!please try again');
+                }
+
+            });
+        }
+        
+    })
+    .controller('submitGrade',function($scope,$id){
+        $scope.taughtCourses=[];
+        $scope.taughtCourse=function(){
+            jQuery.post('/taughtCourse',{id:$id.id},function(data,status){
+                if(status=='success'){
+                    $scope.taughtCourses=JSON.parse(data);
+                }else{
+                    alert('network error!please try again');
+                }
+            });
+        };
+        $scope.professorId = 0;
+        $scope.selectProfessor = function (professorId) {
+            for (var i = 0; i < $scope.professors.length; i++) {
+                var professor = $scope.professors[i];
+                if (professor['id'] = professorId) {
+                    $scope.name = professor['name'];
+                    $scope.birthday = professor['birthday'];
+                    $scope.SSN = professor['SSN'];
+                    $scope.status = professor['status'];
+                    $scope.deparment = professor['department'];
+                }
+            }
+        };
+        $scope.submit = function () {
+            var data = {
+                id: $scope.professorId,
+                name: $scope.name,
+                birthday: $scope.birthday,
+                SSN: $scope.SSN,
+                status: $scope.status,
+                department: $scope.department
+            };
+            jQuery.post('/updateProfessor', data, function (result, status) {
+                if (status == 'success') {
+                    result = JSON.parse(result);
+                    if (result['info'] == 'success') {
+                        alert('update success!');
+                    } else {
+                        alert('update failed!please try again!');
+                    }
+                } else {
+                    alert('network time out!please try again');
+                }
+
+            });
+        }
+        
+        
     });
+
 
 
 

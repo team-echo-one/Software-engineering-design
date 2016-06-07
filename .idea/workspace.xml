@@ -626,7 +626,7 @@
       <workItem from="1465105997087" duration="8374000" />
       <workItem from="1465191164557" duration="7179000" />
       <workItem from="1465296956447" duration="8158000" />
-      <workItem from="1465306458045" duration="55000" />
+      <workItem from="1465306458045" duration="111000" />
     </task>
     <task id="LOCAL-00001" summary="registrar completed">
       <created>1465109343430</created>
@@ -663,11 +663,18 @@
       <option name="project" value="LOCAL" />
       <updated>1465298021321</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add API.txt">
+      <created>1465306540544</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1465306540544</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32226000" />
+    <option name="totallyTimeSpent" value="32282000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1378" height="744" extended-state="0" />
@@ -714,7 +721,8 @@
     <MESSAGE value="jslogic3" />
     <MESSAGE value="jslogic4" />
     <MESSAGE value="DI completed" />
-    <option name="LAST_COMMIT_MESSAGE" value="DI completed" />
+    <MESSAGE value="add API.txt" />
+    <option name="LAST_COMMIT_MESSAGE" value="add API.txt" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

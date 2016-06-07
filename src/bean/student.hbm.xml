@@ -21,5 +21,7 @@
 				<property name="grade" column="grade" />
 			</composite-element>
 		</map>
+		
+		<one-to-one name="financial" class="Financial" cascade="all"></one-to-one>  
 	</class>
 </hibernate-mapping>

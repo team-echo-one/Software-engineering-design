@@ -11,7 +11,7 @@
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 
 		<!-- SQL dialect -->
-		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="dialect">org.hibernate.dialect.HSQLDialect</property>
 		<!-- JDBC connection pool (use the built-in) -->
 		<property name="connection.pool_size">10</property>
 		<!-- Enable Hibernate's automatic session context management -->
@@ -22,6 +22,7 @@
 		</property>
 		<!-- Echo all executed SQL to stdout -->
 		<property name="show_sql">true</property>
+		<property name="format_sql">true</property>
 		<!-- Drop and re-create the database schema on startup -->
 		<property name="hbm2ddl.auto">update</property>
 		<property name="javax.persistence.validation.mode">none</property>

@@ -71,4 +71,10 @@ public class ServerResponse
 		}
 		return response;
 	}
+	
+	protected static void setContentTypeHeader(HttpResponse response, File file, String type)
+	{
+		//MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
+		response.headers().set(CONTENT_TYPE, type);
+	}
 }

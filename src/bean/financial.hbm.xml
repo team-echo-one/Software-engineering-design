@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        
+<hibernate-mapping package="bean">
+	<class name="Financial" table="FINANCIAL">
+		<id name="id" column="id" type="long">
+			<generator class="foreign">
+				<param name="property">Student</param>
+			</generator>
+		</id>
+		<property name="bill"  type="integer"></property>
+		<!-- 一对一关联 -->
+		<one-to-one name="student" class="Student"></one-to-one>
+	</class>
+</hibernate-mapping>  

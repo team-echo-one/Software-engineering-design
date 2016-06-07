@@ -449,44 +449,40 @@ angular.module('software', [])
                 }
             });
         };
-        $scope.professorId = 0;
-        $scope.selectProfessor = function (professorId) {
-            for (var i = 0; i < $scope.professors.length; i++) {
-                var professor = $scope.professors[i];
-                if (professor['id'] = professorId) {
-                    $scope.name = professor['name'];
-                    $scope.birthday = professor['birthday'];
-                    $scope.SSN = professor['SSN'];
-                    $scope.status = professor['status'];
-                    $scope.deparment = professor['department'];
-                }
+        $scope.courseId = 0;
+        $scope.selectCourse = function (courseId) {
+          jQuery.post('/selectCourse',{id:courseId},function(data,status){
+            if(status=='success'){
+                $scope.studentGrade=JSON.parse(data);
+
+            }else{
+                alert('network error!please try again');
             }
+
+          });
         };
-        $scope.submit = function () {
-            var data = {
-                id: $scope.professorId,
-                name: $scope.name,
-                birthday: $scope.birthday,
-                SSN: $scope.SSN,
-                status: $scope.status,
-                department: $scope.department
+        $scope.submitGrade=function(){
+            var studentId=[];
+            var studentGrade=[];
+            for(var id in $('#submitGrade>form>div>input:eq(0)'))
+                studentId.push(id.val());
+            for(var grade in $('#submitGrade>form>div>input:eq(2)'))
+                studentGrade.push(grade.val());
+            var data={
+                courseId:$scope.courseId,
+                studentIds:studentId,
+                studentGrades:studentGrade
             };
-            jQuery.post('/updateProfessor', data, function (result, status) {
-                if (status == 'success') {
-                    result = JSON.parse(result);
-                    if (result['info'] == 'success') {
-                        alert('update success!');
-                    } else {
-                        alert('update failed!please try again!');
-                    }
-                } else {
-                    alert('network time out!please try again');
-                }
+            jQuery.post('submitGrade',data,function(data,status){
+               if(status=='success'){
+                   alert('submit grade success');
+               }else{
+                   alert('submit grade error!please try again');
+               }
+
 
             });
         }
-        
-        
     });
 
 

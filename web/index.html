@@ -309,9 +309,18 @@
     <h2>Submit Grade</h2>
     <br>
     <input type="button" class="btn btn-success" value="taught courses" ng-click="taughtCourse()">
+    <input type="button" class="btn btn-success" value="submit grade" ng-click="submitGrade()">
     <br><br><br>
-    <select ng-change="(courseId)" ng-model="courseId"
+    <select ng-change="selectCourse(courseId)" ng-model="courseId"
             ng-options="course.id as course.name for course in taughtCourses"></select>
+    <form>
+    <div ng-repeat="student in studentGrade">
+        <input type="number" ng-bind="student.id" ng-model="student.id" disabled>
+        <input type="text" ng-bind="student.name" ng-model="student.name" disabled>
+        <input type="number"  ng-bind="student.grade" ng-model="student.grade">
+    </div>
+
+    </form>
 </div>
 <script src="./js/software.js"></script>
 </body>

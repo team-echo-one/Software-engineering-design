@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/jquery-1.11.3.js"></script>
+    <script src="../js/angular.js"></script>
+    <style>
+        body{
+            background-color: black;
+        }
+        tr.course{
+            width:600px;
+            height:30px;
+            background-color: #b3b3b3;
+            text-align: center;
+            line-height: 30px;
+            color:black;
+            box-shadow: 3px 3px 10px #fff;
+            font-size:20px;
+        }
+        tr.course>td{
+            width:200px;
+        }
+    </style>
+</head>
+<input type="button"  class="btn btn-success">
+<!--<body ng-controller="view">
+<input type="text" ng-model="name" ng-bind="name">
+<input type="button" ng-click="click()">-->
+<!--<script>
+
+    angular.module('app',[])
+            .controller('view',function($scope){
+            $scope.name='zhang';
+            $scope.click=function(){
+                alert($scope.name);
+            }
+    });
+</script>-->
+<script>
+    var button=$('input').eq(0);
+    console.log(button.css('backgroundColor'));
+</script>
+
+</body>
+</html>

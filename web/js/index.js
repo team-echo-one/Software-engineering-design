@@ -5,22 +5,32 @@ $(function(){
 
 
     var identity=localStorage.getItem('identity');
+    if(!identity){
+        location.replace('./login.html');
+    }
     var teacher=$('#teacher');
     var student=$('#student');
     var registrar=$('#registrar');
     if(identity=='teacher'){
+        student.hide();
+        registrar.hide();
         teacher.show();
-        student.hide();
-        registrar.hide();
     }else if(identity=='registrar'){
-        registrar.show();
         teacher.hide();
         student.hide();
+        registrar.show();
     }else{
-        student.show();
         teacher.hide();
         registrar.hide();
+        student.show();
     }
+    var logOut=$('div.welcome>a').eq(0);
+    logOut.click(function(){
+        alert('logout');
+        localStorage.removeItem('identity');
+        location.replace("./login.html");
+
+    });
 
     var iViewReport=$("#iViewReport");
     var iUpdateSchedule=$('#iUpdateSchedule');

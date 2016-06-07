@@ -1,0 +1,162 @@
+/login post方法 
+request：{'username':username,'password':password}
+response:
+成功：
+{'info':'success','id':String,'identity':String}
+用户不存在:
+{'info':'error','error':'username not exist'}
+密码不正确：
+('info':'error','error':'password not match')
+
+/addStudent post方法
+request：{'name': studentName,'birthday':studentBirthday,'SSN':studentSSN,'status':studentStatus,'graduationDate':studentGraduationDate}
+reponse:
+添加成功：
+{'info':'success'}
+不成功：
+{'info':'failed'}
+
+/getStudents get方法  获取所有学生的学生信息
+reponse：
+[{'id':String,'name': studentName,'birthday':String,'SSN':studentBirthday,'status':studentStatus,'graduationDate':studentGraduationDate}*n]
+
+/updateStudent post方法 更新特定学生的信息
+request：
+{'id':String,'name': studentName,'birthday':String,'SSN':studentBirthday,'status':studentStatus,'graduationDate':studentGraduationDate}
+response:
+修改成功：
+{'info':'success'}
+修改不成功
+{'info':'failed'}
+
+/deleteStudent post方法 删除特定学生信息
+request:
+{'id':studentId}
+reponse:
+删除成功
+{'info':'success'}
+删除不成功
+{'info':'failed'}
+
+/addProfessor post方法 添加教授信息
+request:{'name':professorName,'birthday':professorBirthday,SSN:professorSSN,'status':professorStatus,'department':professorDepartment}
+response:
+添加成功
+{'info':'success'}
+添加不成功
+{'info':'failed'}
+
+/getProfessors get方法 获取所有教授的信息
+response:
+[{'name':professorName,'birthday':professorBirthday,SSN:professorSSN,'status':professorStatus,'department':professorDepartment}*n]
+
+/updateProfessor post方法 修改特定教授信息
+request:
+{'name':professorName,'birthday':professorBirthday,SSN:professorSSN,'status':professorStatus,'department':professorDepartment}
+reponse:
+修改成功：
+{'info':'success'}
+修改失败
+{'info':'failed'}
+
+/deleteProfessor post方法 删除特定教授信息
+request:
+{'id':professorId}
+reponse:
+删除成功
+{'info':'success'}
+删除不成功
+{'info':'failed'}
+
+/viewRepost post方法 查看用户已完成的课程信息
+request:
+{'id':studentId}
+response:
+[{'name':courseName,'time':courseTime,'score':courseScore}*n]
+
+/getSchedule post方法 获取已选课程列表
+request:
+{'id':studentId}
+reponse:
+[{'name':courseName,'time':courseTime,'teacher':courseTime}*n]
+
+/deleteSchedule post 删除所有的选择的课程
+request:
+{'id':studentID}
+response:
+删除成功：
+{'info':'success'}
+删除失败:
+{'info':'failed'}
+
+/unselectedSchedule post方法 获取某个用户没有选择的课程列表
+request:
+{'id':studentId}
+reponse:
+[{'name':courseName,'time':courseTime,'teacher':courseTeacher}*n]
+
+/updateSchedule post方法 更新某个用户的课程列表
+request:
+{'id':studentId,addSchedule:[courseID*n],deleteSchedule:[courseId*n]}
+其中addSchedule是一个课程ID的数组，每一个id对应的课程是该用户新添加的课程
+deleteSchedule是一个课程ID的数组，每一个id对应的课程是该用户删除的课程
+
+/allCourses get方法 获取所有的可以选择的课程
+response:
+[{'name':courseName,'time':courseTime,'teacher':courseTeacher}*n]
+
+/selectOfferings post方法 添加新课程
+request：
+{'id':studentId,'selectCourse':[id*n]}
+其中selectCourse是一个ID的数组，表示选择的课程
+response：
+成功：
+{'info':'success'}
+失败：
+{'info':'failed'}
+
+/untaugthCourses get方法 获取所有没有被教的课程列表
+response:
+[{'id':courseId,'name':courseName:'time':courseTime}]
+
+/selectTeach post方法 选取要教的课程
+request:
+{'id':professorID,'selectCourse':[courseId*n]}
+其中selectCourse是一个课程ID组成的数组，表示要教的课程
+response:
+成功：
+{'info':'success'}
+失败：
+{'info':'failed'}
+
+
+/taughtCourse post方法 选取某个教授教的所有课程
+request:
+{id:professorId}
+reponse:
+[{'id':courseID,'name':courseName}*n]
+
+/selectCourse post方法 获取某一个课程所有的学生名单
+request:
+{'id':courseId}
+response:
+{'id':stduentId,'name':studentName}
+
+/submitGrade post方法 提交某一个课程所有学生的成绩
+request:
+{'id':courseId,'studentIds':[studentId*n],'studentGrades':[studentGrade*n]}
+其中studentIds为选择某一个课程的所有学生的ID的数组
+studentGrades为选择某一个课程所有学生的成绩数组
+上面两个数组是一一对应的
+reponse:
+成功：
+{'info':'success'}
+失败：
+{'info':'failed'}
+
+
+
+
+
+
+

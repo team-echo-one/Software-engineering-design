@@ -33,7 +33,7 @@ angular.module('software', [])
     .controller('updateStudent', function ($scope) {
         $scope.students = [];
         $scope.getStudents = function () {
-            jQuery.get('/students', function (result, status) {
+            jQuery.get('/getStudents', function (result, status) {
                 if (status == 'success') {
                     $scope.students = JSON.parse(result);
                 } else {
@@ -56,7 +56,7 @@ angular.module('software', [])
         };
         $scope.submit = function () {
             var data = {
-                id: studentId,
+                id: $scope.studentId,
                 name: $scope.name,
                 birthday: $scope.birthday,
                 SSN: $scope.SSN,
@@ -82,7 +82,7 @@ angular.module('software', [])
     .controller('deleteStudent', function ($scope) {
         $scope.students = [];
         $scope.getStudents = function () {
-            jQuery.get('/students', function (result, status) {
+            jQuery.get('/getStudents', function (result, status) {
                 if (status == 'success') {
                     $scope.students = JSON.parse(result);
                 } else {
@@ -152,7 +152,7 @@ angular.module('software', [])
     .controller('updateProfessor', function ($scope) {
         $scope.professors = [];
         $scope.getProfessors = function () {
-            jQuery.get('/professors', function (result, status) {
+            jQuery.get('/getProfessors', function (result, status) {
                 if (status == 'success') {
                     $scope.professors = JSON.parse(result);
                 } else {
@@ -201,7 +201,7 @@ angular.module('software', [])
     .controller('deleteProfessor', function ($scope) {
         $scope.professors = [];
         $scope.getProfessors = function () {
-            jQuery.get('/professors', function (result, status) {
+            jQuery.get('/getProfessors', function (result, status) {
                 if (status == 'success') {
                     $scope.professors = JSON.parse(result);
                 } else {
@@ -250,14 +250,12 @@ angular.module('software', [])
             id: $id.id
         };
         $scope.viewReport=function(){
-            jQuery.post('/myCourses', data, function (result, status) {
+            jQuery.post('/viewReport', data, function (result, status) {
                 if (status == 'success') {
                     $scope.courses = JSON.parse(result);
                 } else {
                     alert('network time out!please try again');
                 }
-
-
             });
         };
 
@@ -269,7 +267,7 @@ angular.module('software', [])
         };
 
         $scope.getSchedule = function () {
-            jQuery.post('/mySchedule', data, function (result, status) {
+            jQuery.post('/getSchedule', data, function (result, status) {
                 if (status == 'success') {
                     $scope.schedules = JSON.parse(result);
                 } else {
@@ -278,9 +276,13 @@ angular.module('software', [])
             });
         };
         $scope.deleteSchedule = function () {
-            jQuery.post('/deleteMySchedule', data, function (result, status) {
+            jQuery.post('/deleteSchedule', data, function (result, status) {
                 if (status == 'success') {
-                    alert('delete success!');
+                    result=JSON.parse(result);
+                    if(result['info']='success')
+                        alert('delete success!');
+                    else
+                        alert('delete failed!')
                 } else {
                     alert('network time out!please try again');
                 }
@@ -294,14 +296,14 @@ angular.module('software', [])
         $scope.mySchedule=[];
         $scope.unselectedSchedule=[];
         $scope.viewSchedule=function(){
-            jQuery.post('/mySchedule', data, function (result, status) {
+            jQuery.post('/getSchedule', data, function (result, status) {
                 if (status == 'success') {
                     $scope.mySchedule=JSON.parse(result);
                 } else {
                     alert('network time out!please try again');
                 }
             });
-            jQuery.post('/myUnselectedSchedule',data,function(result,status){
+            jQuery.post('/unselectedSchedule',data,function(result,status){
                if(status=='success'){
                    $scope.unselectedSchedule=JSON.parse(result);
                } else{
@@ -382,9 +384,13 @@ angular.module('software', [])
                 id:$id.id,
                 selectCourse:selectCourse
             };
-            jQuery.post('/selectOfferings',data,function(data,status){
+            jQuery.post('/selectOfferings',data,function(result,status){
                 if(status=='success'){
-                    alert('select success!');
+                    result=JSON.parse(result);
+                    if(result['info']=='success')
+                        alert('select success');
+                    else
+                        alert('select failed');
 
                 }else{
                     alert('network error!please try again');
@@ -395,9 +401,8 @@ angular.module('software', [])
     })
     .controller('selectTeach',function($scope,$id){
         $scope.allOfferings=[];
-        var selectCourse=[];
         $scope.allCourses=function(){
-            jQuery.get('/allCourses',function(result,status){
+            jQuery.get('/untaughtCourses',function(result,status){
                 if(status=='success'){
                     $scope.allOfferings=JSON.parse(result)
                 }else{
@@ -426,9 +431,13 @@ angular.module('software', [])
                 id:$id.id,
                 selectCourse:selectCourse
             };
-            jQuery.post('/selectTeach',data,function(data,status){
+            jQuery.post('/selectTeach',data,function(result,status){
                 if(status=='success'){
-                    alert('select success!');
+                    result=JSON.parse(result);
+                    if(result['info']=='success')
+                        alert('select success');
+                    else
+                        alert('select failed');
 
                 }else{
                     alert('network error!please try again');
@@ -473,13 +482,12 @@ angular.module('software', [])
                 studentIds:studentId,
                 studentGrades:studentGrade
             };
-            jQuery.post('submitGrade',data,function(data,status){
+            jQuery.post('/submitGrade',data,function(data,status){
                if(status=='success'){
                    alert('submit grade success');
                }else{
                    alert('submit grade error!please try again');
                }
-
 
             });
         }

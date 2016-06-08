@@ -1,13 +1,20 @@
 package bean;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+
+import javax.sound.midi.VoiceStatus;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import jbean.JStudent;
+import jbean.VariousId;
 import utils.HibernateUtil;
 
 public class Student
@@ -20,12 +27,13 @@ public class Student
 	Date graduationDate;
 	Map<Course, Student_Course> courses = new HashMap<>();
 	Financial financial;
+	Password password;
 
 	public static void main(String[] args)
 	{
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
-
+		// init(session);
 		/*
 		 * Professor professor = new Professor();
 		 * professor.setId(System.currentTimeMillis());
@@ -38,23 +46,34 @@ public class Student
 		 * pCourse.setSemester(1); pCourse.setDay(1);
 		 * professor.getTeach().put(course, pCourse);
 		 */
-		Course course = (Course) session.get(Course.class, 1L);
-		// Student student = (Student) session.get(Student.class, (long)1);
-		for (Map.Entry<Student, Student_Course> entry : course.students.entrySet())
-		{
-			System.out.println("key:" + entry.getKey().name + "\nvalue:" + entry.getValue().grade);
-		}
-
+		// Course course = (Course) session.get(Course.class, 1L);
+		// Student student = new Student();
+		// student.setName("yyc");
+		// student.setId(System.currentTimeMillis());
+		/*
+		 * for (Map.Entry<Student, Student_Course> entry :
+		 * course.students.entrySet()) { System.out.println("key:" +
+		 * entry.getKey().name + "\nvalue:" + entry.getValue().grade); }
+		 */
+		// session.save(student);
+		/*
+		 * Financial financial = new Financial(); financial.setBill(123);
+		 * student.setFinancial(financial); financial.setStudent(student);
+		 * session.save(student);
+		 */
+		Student student = (Student) session.get(Student.class, 1L);
+		Password password = new Password();
+		password.setPassword("zxcvasdf");
+		student.setPassword(password);
+		// session.saveOrUpdate(student);*
+		// System.out.println(student.name);
 		tx.commit();
 		HibernateUtil.closeSessionFactory();
-		// init();
+
 	}
 
-	private static void init()
+	private static void init(Session session)
 	{
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx = session.beginTransaction();
-
 		Student student = new Student();
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(1990, 1, 2);
@@ -114,13 +133,20 @@ public class Student
 			Course course1 = (Course) session.get(Course.class, i);
 			student1.getCourses().put(course1, student_Course);
 		}
-
-		tx.commit();
-		HibernateUtil.closeSessionFactory();
 	}
 
 	public Student()
 	{
+	}
+
+	public void setPassword(Password password)
+	{
+		this.password = password;
+	}
+
+	public Password getPassword()
+	{
+		return password;
 	}
 
 	public void setFinancial(Financial financial)
@@ -201,5 +227,45 @@ public class Student
 	public long getId()
 	{
 		return id;
+	}
+
+	public void setFromJStudent(JStudent student)
+	{
+		try
+		{
+			setName(student.getName());
+			setSsN(student.getSSN());
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = sdf.parse(student.getBirthday());
+			setBirth(date);
+			date = sdf.parse(student.getGraduationDate());
+			setGraduationDate(date);
+			setStatus(student.getStatus());
+		} catch (Exception e)
+		{
+			System.out.println(e);
+		}
+	}
+
+	public static JStudent toJStudent(Student student)
+	{
+		JStudent jStudent = new JStudent();
+		jStudent.setId(student.getId());
+		jStudent.setName(student.getName());
+		jStudent.setSSN(student.getSsN());
+		jStudent.setBirthday(student.getBirth().toString());
+		jStudent.setGraduationDate(student.getGraduationDate().toString());
+		jStudent.setStatus(student.getStatus());
+		return jStudent;
+	}
+
+	public static List<JStudent> toJStudentList(List<Student> students)
+	{
+		List<JStudent> list = new LinkedList<>();
+		for (Student student : students)
+		{
+			list.add(toJStudent(student));
+		}
+		return list;
 	}
 }

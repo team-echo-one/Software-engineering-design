@@ -1,8 +1,13 @@
 package bean;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+
+import jbean.JProfessor;
 
 public class Professor
 {
@@ -87,5 +92,44 @@ public class Professor
 	public void setId(long id)
 	{
 		this.id = id;
+	}
+	
+	public void setFromJProfessor(JProfessor professor)
+	{
+		try
+		{
+			setName(professor.getName());
+			setSsN(professor.getSSN());
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
+		    Date date = sdf.parse(professor.getBirthday());  
+			setBirth(date);
+			setStatus(professor.getStatus());
+			setFaculty(professor.getDepartment());
+		} catch (Exception e)
+		{
+			System.out.println(e);
+		}
+	}
+	
+	public static JProfessor toJProfessor(Professor professor)
+	{
+		JProfessor jProfessor = new JProfessor();
+		jProfessor.setId(professor.getId());
+		jProfessor.setName(professor.getName());
+		jProfessor.setSSN(professor.getSsN());
+		jProfessor.setBirthday(professor.getBirth().toString());
+		jProfessor.setStatus(professor.getStatus());
+		jProfessor.setDepartment(professor.faculty);
+		return jProfessor;
+	}
+
+	public static List<JProfessor> toJProfessorList(List<Professor> professors)
+	{
+		List<JProfessor> list = new LinkedList<>();
+		for (Professor professor : professors)
+		{
+			list.add(toJProfessor(professor));
+		}
+		return list;
 	}
 }

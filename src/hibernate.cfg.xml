@@ -11,7 +11,7 @@
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 
 		<!-- SQL dialect -->
-		<property name="dialect">org.hibernate.dialect.HSQLDialect</property>
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 		<!-- JDBC connection pool (use the built-in) -->
 		<property name="connection.pool_size">10</property>
 		<!-- Enable Hibernate's automatic session context management -->
@@ -29,5 +29,7 @@
 		<mapping resource="bean\student.hbm.xml" />
 		<mapping resource="bean\course.hbm.xml" />
 		<mapping resource="bean\professor.hbm.xml" />
+		<mapping resource="bean\financial.hbm.xml" />
+		<mapping resource="bean\password.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>

@@ -5,6 +5,26 @@ body{
     font-family:"Lucida Grande", Helvetica, Arial, sans-serif;
 
 }
+.info{
+    position: absolute;
+    top:60px;
+    left:600px;
+    height:100px;
+    width:200px;
+    background-color: black;
+    z-index: 1000;
+    display: none;
+}
+.info>div:nth-child(1){
+    text-align: center;
+    font-size:26px;
+    color:white;
+}
+.info>div:nth-child(2){
+    position: absolute;
+    bottom: 0;
+    left:45px;
+}
 
 .title{
     float:left;
@@ -17,13 +37,20 @@ body{
 }
 .welcome{
     float:right;
-    width:10%;
+    width:30%;
     height:60px;
     font-size:24px;
     line-height: 60px;
     background-color: black;
     color:white;
 
+}
+div.welcome>div{
+    float:left;
+}
+div.welcome>a{
+    width:30%;
+    float:right;
 }
 
 .containers{

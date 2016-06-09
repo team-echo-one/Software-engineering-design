@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6abee291-787d-4266-9ece-2e44e659fae5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/test.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SoftwareDesign.iws" />
@@ -71,8 +70,8 @@
       <file leaf-file-name="login.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/js/login.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
+            <state relative-caret-position="184">
+              <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -657,7 +656,7 @@
       <workItem from="1465395186662" duration="1139000" />
       <workItem from="1465433133382" duration="2686000" />
       <workItem from="1465435872783" duration="2450000" />
-      <workItem from="1465451381605" duration="1448000" />
+      <workItem from="1465451381605" duration="1625000" />
     </task>
     <task id="LOCAL-00001" summary="registrar completed">
       <created>1465109343430</created>
@@ -729,11 +728,18 @@
       <option name="project" value="LOCAL" />
       <updated>1465452427320</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="test">
+      <created>1465453042407</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1465453042407</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40650000" />
+    <option name="totallyTimeSpent" value="40827000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1378" height="744" extended-state="0" />
@@ -784,7 +790,8 @@
     <MESSAGE value="add API.txt" />
     <MESSAGE value="handle BUG1" />
     <MESSAGE value="handle BUG2" />
-    <option name="LAST_COMMIT_MESSAGE" value="handle BUG2" />
+    <MESSAGE value="test" />
+    <option name="LAST_COMMIT_MESSAGE" value="test" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1097,8 +1104,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/js/login.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
+        <state relative-caret-position="184">
+          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
           <folding />
         </state>
       </provider>

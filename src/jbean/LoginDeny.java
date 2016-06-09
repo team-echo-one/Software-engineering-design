@@ -8,6 +8,7 @@ public class LoginDeny
 	public LoginDeny(String error)
 	{
 		info = "error";
+		this.error = error;
 	}
 	
 	public static LoginDeny newNotMatchInstance()

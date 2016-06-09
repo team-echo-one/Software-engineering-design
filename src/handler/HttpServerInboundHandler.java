@@ -76,6 +76,15 @@ public class HttpServerInboundHandler extends SimpleChannelInboundHandler<FullHt
 				case "deleteProfessor":
 					DeleteProfessor.excute(request, ctx);
 					break;
+				case "selectCourse":
+					SelectCourse.excute(request, ctx);
+					break;
+				case "taughtCourse":
+					TaughtCourse.excute(request, ctx);
+					break;
+				case "allCourses":
+					AllCourses.excute(request, ctx);
+					break;
 				case "js":
 					WebHandler.sendJs(request, "web" + uri, ctx);
 					break;
@@ -85,13 +94,16 @@ public class HttpServerInboundHandler extends SimpleChannelInboundHandler<FullHt
 				case "images":
 					ImageResponse.excute(request, "web" + uri, ctx);
 					break;
+				case "index.html":
+					WebHandler.sendHtml(request, "web/index.html", ctx);
+					break;
 				default:
 					sendError(ctx, HttpResponseStatus.NOT_FOUND);
 					break;
 			}
 		} catch (Exception exception)
 		{
-			System.out.println(exception.toString());
+			exception.printStackTrace();
 		}
 	}
 

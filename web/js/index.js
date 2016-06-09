@@ -6,7 +6,7 @@ $(function(){
 
     var identity=localStorage.getItem('identity');
     if(!identity){
-        location.replace('./login.html');
+        location.replace('/');
     }
     var teacher=$('#teacher');
     var student=$('#student');
@@ -26,9 +26,10 @@ $(function(){
     }
     var logOut=$('div.welcome>a').eq(0);
     logOut.click(function(){
-        alert('logout');
         localStorage.removeItem('identity');
-        location.replace("./login.html");
+        localStorage.removeItem('id');
+        alert('logout');
+        location.replace("/");
 
     });
 

@@ -243,7 +243,7 @@ public class Student
 			setStatus(student.getStatus());
 		} catch (Exception e)
 		{
-			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 

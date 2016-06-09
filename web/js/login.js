@@ -2,13 +2,13 @@ $(function(){
     var login=$('input[type="button"]');
     localStorage.setItem('identity','student');
     login.click(function(){
-        var username=$('input[type="username"]');
-        var password=$('input[type="password"]');
+        var username=$('input[id="username"]');
+        var password=$('input[id="password"]');
         var data={
-            username:username.val(),
-            password:password.val()
+           'username':username.val(),
+            'password':password.val()
         };
-        jQuery.post('/login',data,function(result,status){
+        jQuery.post('/login',JSON.stringify(data),function(result,status){
            if(status=='success'){
                result=JSON.parse(result);
                if(result['info']=='success'){

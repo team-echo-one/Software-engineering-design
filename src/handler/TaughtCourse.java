@@ -3,23 +3,26 @@ package handler;
 import static io.netty.handler.codec.http.HttpResponseStatus.BAD_REQUEST;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.google.gson.Gson;
 
+import bean.Course;
 import bean.Professor;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpMethod;
+import jbean.CourseOnlyName;
 import jbean.VariousId;
-import jbean.Result;
 import utils.HibernateUtil;
 
-public class DeleteProfessor extends ServerResponse
+public class TaughtCourse extends ServerResponse
 {
 	public static void excute(FullHttpRequest request, ChannelHandlerContext ctx)
 	{
@@ -33,26 +36,32 @@ public class DeleteProfessor extends ServerResponse
 		String s = buf.toString(Charset.forName("utf-8"));
 		VariousId data = gson.fromJson(s, VariousId.class);
 		
-		Result result = delete(data)?Result.successInstance():Result.failedInstance();
-		String content = gson.toJson(result);
+		String content = gson.toJson(getCourseList(data));
+		
 		FullHttpResponse response = createResponse(content, request);
+		
 		ctx.writeAndFlush(response);
 	}
 	
-	private static boolean delete(VariousId jsi)
+	private static List<CourseOnlyName> getCourseList(VariousId vi)
 	{
+		List<CourseOnlyName> result = new ArrayList<>();
 		try
 		{
 			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 			Transaction tx = session.beginTransaction();
-			Professor pro = (Professor) session.get(Professor.class, jsi.getId());
-			session.delete(pro);
+			Professor professor = (Professor) session.get(Professor.class, vi.getId());
+			
+			for(Course course:professor.getTeach().keySet())
+			{
+				result.add(new CourseOnlyName(course.getId(),course.getName()));
+			}
+			
 			tx.commit();
 		} catch (Exception e)
 		{
 			e.printStackTrace();
-			return false;
 		}
-		return true;
+		return result;
 	}
 }

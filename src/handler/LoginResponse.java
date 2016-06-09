@@ -33,12 +33,12 @@ public class LoginResponse extends ServerResponse
 		Gson gson = new Gson();
 		ByteBuf buf = request.content();
 		String s = buf.toString(Charset.forName("utf-8"));
-		
 		Login data = gson.fromJson(s, Login.class);
 		
 		Object result = loginResult(data.getUsername(), data.getPassword());
 		FullHttpResponse response;
 		String dataString = gson.toJson(result);
+		System.out.println(dataString);
 		response = createResponse(dataString, request);
 
 		ctx.writeAndFlush(response);
@@ -51,15 +51,14 @@ public class LoginResponse extends ServerResponse
 		{
 			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 			Transaction tx = session.beginTransaction();
-			String hql = "from Password where Password.id=:id";// 使用命名参数，推荐使用，易读。
+			String hql = "from Password where id=:id";// 使用命名参数，推荐使用，易读。
 			Query query = session.createQuery(hql);
 			query.setLong("id", id);
-			
-			Password pswd = (Password)query.list().get(0);
 
-			if(pswd == null){
+			if(query.list().size() == 0){
 				result = LoginDeny.newNotExist();
 			}else {
+				Password pswd = (Password)query.list().get(0);
 				String pString = pswd.getPassword();
 				if(pString.equals(password))
 				{
@@ -73,7 +72,7 @@ public class LoginResponse extends ServerResponse
 			tx.commit();
 		} catch (Exception e)
 		{
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		return result;
 	}

@@ -17,6 +17,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
+import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpRequest;
@@ -30,7 +31,7 @@ import io.netty.util.CharsetUtil;
  * @author pxh
  *
  */
-public class ServerResponse
+abstract public class ServerResponse
 {
 	protected static void setContentTypeHeader(HttpResponse response, File file)
 	{
@@ -70,5 +71,15 @@ public class ServerResponse
 			response.headers().set(CONNECTION, Values.KEEP_ALIVE);
 		}
 		return response;
+	}
+	
+	protected static void setContentTypeHeader(HttpResponse response, File file, String type)
+	{
+		//MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
+		response.headers().set(CONTENT_TYPE, type);
+	}
+	
+	public static void excute(FullHttpRequest request, ChannelHandlerContext ctx)
+	{
 	}
 }

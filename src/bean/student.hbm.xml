@@ -21,5 +21,9 @@
 				<property name="grade" column="grade" />
 			</composite-element>
 		</map>
+		
+		<many-to-one name="financial" class="Financial" cascade="all" update="true"></many-to-one>  
+		
+		<many-to-one name ="password"  class = "Password"  cascade="all" update = "true" unique="true" />
 	</class>
 </hibernate-mapping>

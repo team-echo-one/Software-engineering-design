@@ -24,7 +24,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class HttpServerInboundHandler extends SimpleChannelInboundHandler<FullHttpRequest>
 {
 	private FullHttpRequest request;
@@ -39,20 +38,9 @@ public class HttpServerInboundHandler extends SimpleChannelInboundHandler<FullHt
 			return;
 		}
 		String uri = request.getUri();
-		/*ArrayList<ResData> resDatas = new ArrayList<>();
+		System.out.println(uri);
 		if (uri.equals("/"))
 		{
-			for (int i = 0; i < 20; i++)
-			{
-				resDatas.add(new ResData("2016/2/12:" + i,
-						"内容内容内容，测试内容 content asdf content sadf content title name ajdlfj,asdf"
-								+ "adfjalskjgas;dlkjflkasjg",
-						"image/" + i + ".png", "titletitle" + i, "name", (1 + i) * 20, i * 30));
-			}
-			ctx.writeAndFlush(createResponse(new Gson().toJson(resDatas), request));
-		}*/
-		System.out.println(uri);
-		if (uri.equals("/")) {
 			WebHandler.sendHtml(request, "web/login.html", ctx);
 		}
 		handlerRequest(uri, ctx);
@@ -62,33 +50,48 @@ public class HttpServerInboundHandler extends SimpleChannelInboundHandler<FullHt
 	{
 		List<String> param = splitUri(uri);
 		String function = param.get(0);
-		//System.out.println("function:"+function);
-		switch (function)
+		// System.out.println("function:"+function);
+		try
 		{
-			case "js":
-				WebHandler.sendJs(request, "web"+uri, ctx);
-				break;
-			case "css":
-				WebHandler.sendCss(request, "web"+uri, ctx);
-				break;
-			case "images":
-				ImageResponse.excute(request, "web" + uri, ctx);
-				break;
-			case "file":
-				break;
-			case "upload":
-				break;
-			case "issue":
-				break;
-			case "resource":
-				break;
-			case "recommend":
-				break;
-			case "user":
-				break;
-			
-			default:
-				break;
+			switch (function)
+			{
+				case "login":
+					LoginResponse.excute(request, ctx);
+					break;
+				case "getStudents":
+					GetStudentResponse.excute(request, ctx);
+					break;
+				case "updateStudent":
+					UpdateStudent.excute(request, ctx);
+					break;
+				case "deleteStudent":
+					DeleteStudent.excute(request, ctx);
+					break;
+				case "getProfessors":
+					GetProfessors.excute(request, ctx);
+					break;
+				case "updateProfessor":
+					UpdateProfessor.excute(request, ctx);
+					break;
+				case "deleteProfessor":
+					DeleteProfessor.excute(request, ctx);
+					break;
+				case "js":
+					WebHandler.sendJs(request, "web" + uri, ctx);
+					break;
+				case "css":
+					WebHandler.sendCss(request, "web" + uri, ctx);
+					break;
+				case "images":
+					ImageResponse.excute(request, "web" + uri, ctx);
+					break;
+				default:
+					sendError(ctx, HttpResponseStatus.NOT_FOUND);
+					break;
+			}
+		} catch (Exception exception)
+		{
+			System.out.println(exception.toString());
 		}
 	}
 
@@ -124,8 +127,6 @@ public class HttpServerInboundHandler extends SimpleChannelInboundHandler<FullHt
 		response.headers().set(CONTENT_TYPE, "text/plain; charset=UTF-8");
 		ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
 	}
-
-	
 
 	private List<String> splitUri(String uri)
 	{

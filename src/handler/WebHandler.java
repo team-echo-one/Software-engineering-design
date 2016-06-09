@@ -19,8 +19,6 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 
-import javax.activation.MimetypesFileTypeMap;
-
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
@@ -38,7 +36,7 @@ import io.netty.handler.codec.http.HttpHeaders.Values;
 import io.netty.handler.stream.ChunkedFile;
 import io.netty.util.CharsetUtil;
 
-public class WebHandler
+public class WebHandler extends ServerResponse
 {
 	static public void sendHtml(FullHttpRequest request, String fileName, ChannelHandlerContext ctx)
 	{
@@ -149,45 +147,5 @@ public class WebHandler
 		{
 			e.printStackTrace();
 		}
-	}
-
-	protected static void setContentTypeHeader(HttpResponse response, File file, String type)
-	{
-		//MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
-		response.headers().set(CONTENT_TYPE, type);
-	}
-
-	protected static void sendRedirect(ChannelHandlerContext ctx, String newUri)
-	{
-		FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, FOUND);
-		response.headers().set(LOCATION, newUri);
-		ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
-	}
-
-	protected static void sendError(ChannelHandlerContext ctx, HttpResponseStatus status)
-	{
-		FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, status,
-				Unpooled.copiedBuffer("Failure: " + status.toString() + "\r\n", CharsetUtil.UTF_8));
-		response.headers().set(CONTENT_TYPE, "text/plain; charset=UTF-8");
-		ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
-	}
-
-	protected static FullHttpResponse createResponse(String content, HttpRequest request)
-	{
-		FullHttpResponse response = null;
-		try
-		{
-			response = new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.wrappedBuffer(content.getBytes("UTF-8")));
-		} catch (UnsupportedEncodingException e)
-		{
-			e.printStackTrace();
-		}
-		response.headers().set(CONTENT_TYPE, "text/plain");
-		response.headers().set(CONTENT_LENGTH, response.content().readableBytes());
-		if (HttpHeaders.isKeepAlive(request))
-		{
-			response.headers().set(CONNECTION, Values.KEEP_ALIVE);
-		}
-		return response;
 	}
 }

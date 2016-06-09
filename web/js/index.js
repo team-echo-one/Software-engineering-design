@@ -24,12 +24,28 @@ $(function(){
         registrar.hide();
         student.show();
     }
-    var logOut=$('div.welcome>a').eq(0);
-    logOut.click(function(){
-        alert('logout');
-        localStorage.removeItem('identity');
-        location.replace("./login.html");
+    var name=$('div.welcome>div');
+    name.text('welcome '+localStorage.getItem('name')+'!');
 
+    var logOut=$('div.welcome>a');
+    var info=$('.info');
+    var message=$('.info>div:nth-child(1)');
+    var yes=$('.info>div:nth-child(2)>input:nth-child(1)');
+    var no=$('.info>div:nth-child(2)>input:nth-child(2)');
+    logOut.click(function(event){
+        event.preventDefault();
+        message.text(localStorage.getItem('name')+'\r\n'+'want to log out?');
+        info.show();
+    });
+    yes.click(function(){
+        info.hide();
+        localStorage.removeItem('id');
+        localStorage.removeItem('name');
+        localStorage.removeItem('identity');
+        location.replace('./login.html');
+    });
+    no.click(function(){
+       info.hide();
     });
 
     var iViewReport=$("#iViewReport");

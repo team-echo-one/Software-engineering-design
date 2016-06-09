@@ -13,10 +13,18 @@
 
 <body>
 
+<div class="info">
+    <div></div>
+    <div>
+    <input type="button" value="yes" class="btn btn-success">
+    <input type="button" value="no" class="btn btn-info">
+    </div>
+</div>
 <!--title-->
 <div class="title">software
 <div class="welcome">
     <a href="#">log out</a>
+    <div></div>
 </div>
 </div>
 
@@ -227,9 +235,10 @@
     <br>
     <input type="button" value="View Report" class="btn btn-success" ng-click="viewReport()">
     <table>
-        <tr class="{{course}}" ng-repeat="course in courses">
+        <tr class="course" ng-repeat="course in courses">
             <td>{{course.name}}</td>
             <td>{{course.time}}</td>
+            <td>{{course.semeter}}</td>
             <td>{{course.score}}</td>
         </tr>
     </table>
@@ -251,7 +260,7 @@
     </table>
     <br><br><br>
     <table>
-        <tr ng-repeat="schedule in unselectedSchedule">
+        <tr ng-repeat="schedule in alldSchedule">
             <td>{{schedule.name}}</td>
             <td>{{schedule.time}}</td>
             <td>{{schedule.teacher}}</td>

@@ -1,25 +1,36 @@
 $(function(){
     var login=$('input[type="button"]');
-    localStorage.setItem('identity','student');
+    var info=$('div.info');
+    info.hide();
     login.click(function(){
-        var username=$('input[type="username"]');
-        var password=$('input[type="password"]');
+
+        var id=$('input[id="id"]');
+        var password=$('input[id="password"]');
         var data={
-            username:username.val(),
+            id:id.val(),
             password:password.val()
         };
-        jQuery.post('/login',data,function(result,status){
+        localStorage.setItem('id',id.val());
+        jQuery.post('/login',JSON.stringify(data),function(result,status){
            if(status=='success'){
                result=JSON.parse(result);
                if(result['info']=='success'){
-                   /* identity saved here*/
-                   localStorage.setItem('id',result['id']);
+                   localStorage.setItem('identity',result['identity']);
+                   localStorage.setItem('name',result['name']);
                    location.replace('./index.html');
                }else{
                    if(result['error']=='username not exist'){
-                       alert('user not exist!please try again');
+                        info.text('username not exist!');
+                        info.show();
+                        setTimeout(function(){
+                            info.hide(3000);
+                        },2000);
                    }else if(result['error']=='password not match'){
-                       alert('password not match!please try again');
+                        info.text('password not exist!');
+                        info.show();
+                        setTimeout(function(){
+                            info.hide(3000);
+                        },2000);
                    }
                }
            } else{

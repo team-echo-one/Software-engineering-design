@@ -3,8 +3,9 @@
  */
 
 angular.module('software', [])
-    .constant('$id',{
-        id:localStorage.getItem('id')
+    .constant('$id', {
+        id: localStorage.getItem('id'),
+        semester: localStorage.getItem('semester')
     })
     .controller('addStudent', function ($scope) {
         $scope.submit = function () {
@@ -36,6 +37,7 @@ angular.module('software', [])
             jQuery.get('/getStudents', function (result, status) {
                 if (status == 'success') {
                     $scope.students = JSON.parse(result);
+                    $scope.$digest();
                 } else {
                     alert('network time out!please try again');
                 }
@@ -85,6 +87,7 @@ angular.module('software', [])
             jQuery.get('/getStudents', function (result, status) {
                 if (status == 'success') {
                     $scope.students = JSON.parse(result);
+                    $scope.$digest();
                 } else {
                     alert('network time out!please try again');
                 }
@@ -134,6 +137,7 @@ angular.module('software', [])
                 status: $scope.status,
                 department: $scope.department
             };
+
             jQuery.post('/addProfessor', JSON.stringify(data), function (result, status) {
                 if (status == 'success') {
                     result = JSON.parse(result);
@@ -150,11 +154,11 @@ angular.module('software', [])
         }
     })
     .controller('updateProfessor', function ($scope) {
-        $scope.professors = [];
         $scope.getProfessors = function () {
             jQuery.get('/getProfessors', function (result, status) {
                 if (status == 'success') {
                     $scope.professors = JSON.parse(result);
+                    $scope.$digest();
                 } else {
                     alert('network time out!please try again');
                 }
@@ -169,7 +173,7 @@ angular.module('software', [])
                     $scope.birthday = professor['birthday'];
                     $scope.SSN = professor['SSN'];
                     $scope.status = professor['status'];
-                    $scope.deparment = professor['department'];
+                    $scope.department = professor['department'];
                 }
             }
         };
@@ -182,7 +186,7 @@ angular.module('software', [])
                 status: $scope.status,
                 department: $scope.department
             };
-            jQuery.post('/updateProfessor',JSON.stringify(data), function (result, status) {
+            jQuery.post('/updateProfessor', JSON.stringify(data), function (result, status) {
                 if (status == 'success') {
                     result = JSON.parse(result);
                     if (result['info'] == 'success') {
@@ -204,6 +208,7 @@ angular.module('software', [])
             jQuery.get('/getProfessors', function (result, status) {
                 if (status == 'success') {
                     $scope.professors = JSON.parse(result);
+                    $scope.$digest();
                 } else {
                     alert('network time out!please try again');
                 }
@@ -228,7 +233,7 @@ angular.module('software', [])
                 var data = {
                     id: $scope.professorId
                 };
-                jQuery.post('/deleteProfessor',JSON.stringify(data), function (result, status) {
+                jQuery.post('/deleteProfessor', JSON.stringify(data), function (result, status) {
                     if (status == 'success') {
                         result = JSON.parse(result);
                         if (result['info'] == 'success') {
@@ -244,15 +249,18 @@ angular.module('software', [])
             }
         }
     })
-    .controller('viewReport', function ($scope,$id) {
+    .controller('viewReport', function ($scope, $id) {
         $scope.courses = [];
-        var data = {
-            id: $id.id
-        };
-        $scope.viewReport=function(){
+        $scope.semester = 1;
+        $scope.viewReport = function () {
+            var data = {
+                id: $id.id,
+                semester: $scope.semester
+            };
             jQuery.post('/viewReport', JSON.stringify(data), function (result, status) {
                 if (status == 'success') {
                     $scope.courses = JSON.parse(result);
+                    $scope.$digest();
                 } else {
                     alert('network time out!please try again');
                 }
@@ -260,234 +268,179 @@ angular.module('software', [])
         };
 
     })
-    .controller('deleteSchedule', function ($scope,$id) {
-        $scope.schedules = [];
+    .controller('addCourse', function ($scope, $id) {
         var data = {
             id: $id.id
         };
-
-        $scope.getSchedule = function () {
-            jQuery.post('/getSchedule', JSON.stringify(data), function (result, status) {
+        $scope.allCourse = [];
+        $scope.selectedCourse = [];
+        $scope.viewSchedule = function () {
+            jQuery.post('/getCourses', JSON.stringify(data), function (result, status) {
                 if (status == 'success') {
-                    $scope.schedules = JSON.parse(result);
+                console.log(result);
+                    $scope.selectedCourse = JSON.parse(result);
+                    $scope.$digest();
+                } else {
+                    alert('network time out!please try again');
+                }
+            });
+            jQuery.get('/allCourses', function (result, status) {
+            console.log(result);
+                if (status == 'success') {
+                    $scope.allCourse = JSON.parse(result);
+                    $scope.$digest();
                 } else {
                     alert('network time out!please try again');
                 }
             });
         };
-        $scope.deleteSchedule = function () {
-            jQuery.post('/deleteSchedule', JSON.stringify(data), function (result, status) {
+        $scope.addCourse = function (id) {
+            for (var i = 0; i < $scope.selectedCourse.length; i++) {
+                var course = $scope.selectedCourse[i];
+                if (course['id'] == id) {
+                    alert('you had selected this course!');
+                    return;
+                }
+            }
+            jQuery.post('/addCourse', JSON.stringify({id: $id.id, courseId: id}), function (result, status) {
                 if (status == 'success') {
-                    result=JSON.parse(result);
-                    if(result['info']='success')
+                    result = JSON.parse(result);
+                    if (result['info'] == 'success') {
+                        alert('add success!');
+                    } else {
+                        alert('add failed!');
+                    }
+                } else {
+                    alert('network error!');
+                }
+            });
+        }
+    })
+    .controller('deleteCourse', function ($scope, $id) {
+        var data = {
+            id: $id.id
+        };
+        $scope.selectedCourse = [];
+        $scope.viewSchedule = function () {
+            jQuery.post('/getCourses', JSON.stringify(data), function (result, status) {
+                if (status == 'success') {
+                    $scope.selectedCourse = JSON.parse(result);
+                    $scope.$digest();
+                } else {
+                    alert('network time out!please try again');
+                }
+            });
+        };
+        $scope.deleteCourse = function (id) {
+            jQuery.post('/deleteCourse', JSON.stringify({id: $id.id, courseId: id}), function (result, status) {
+                if (status == 'success') {
+                    result = JSON.parse(result);
+                    if (result['info'] == 'success') {
                         alert('delete success!');
-                    else
-                        alert('delete failed!')
+                    } else {
+                        alert('delete failed!');
+                    }
                 } else {
-                    alert('network time out!please try again');
+                    alert('network error!');
                 }
             });
         }
     })
-    .controller('updateSchedule',function($scope,$id){
-       var data={
-           id:$id.id
-       };
-        $scope.mySchedule=[];
-        $scope.unselectedSchedule=[];
-        $scope.viewSchedule=function(){
-            jQuery.post('/getSchedule', JSON.stringify(data), function (result, status) {
+    .controller('selectTeach', function ($scope, $id) {
+        var data = {
+            id: $id.id
+        };
+        $scope.viewCourse = function () {
+            jQuery.get('/allTaughtCourses', function (result, status) {
                 if (status == 'success') {
-                    $scope.mySchedule=JSON.parse(result);
+                    $scope.allCourse = JSON.parse(result);
+                    $scope.$digest();
                 } else {
-                    alert('network time out!please try again');
+                    alert('network error!');
                 }
             });
-            jQuery.post('/allCourses',JSON.stringify(data),function(result,status){
-               if(status=='success'){
-                   $scope.unselectedSchedule=JSON.parse(result);
-               } else{
-                   alert('network time out!please try again');
-               }
-            });
+            jQuery.post('/myTaughtCourses', JSON.stringify(data), function (result, status) {
+                if (status == 'success') {
+                console.log(result);
+                    $scope.taughtCourse = JSON.parse(result);
+                    $scope.$digest();
+                } else {
+                    alert('network error');
+                }
+            })
         };
-        var button=$('div#updateSchedule input[type="button"]');
-        $(button.context).delegate(button.selector,'click',function(){
-            if(this.css('backgroundColor')=='rgb(91, 183, 91)'){
-                this.css('backgroundColor','white');
-                this.data('select','true');
-            }else{
-                this.css('backgroundColor','rgb(91, 183, 91)');
-                this.data('select','false');
-            }
-        });
-        $scope.updateSchedule=function(){
-            var deleteButton=$('div#updateSchedule>table:eq(0)>tr>input');
-            var deleteSchedule=[];
-            var addSchedule=[];
-            for(var i=0;i<deleteButton.length;i++){
-                if(deleteButton[i].data('select')=='true')
-                    deleteSchedule.push(deleteButton[i].data('id'));
-            }
-            var addButton=$('div#updateSchedule>table:eq(1)>tr>table');
-            for(i=0;i<addButton.length;i++){
-                if(addButton[i].data('select')=='true')
-                    deleteSchedule.push(deleteButton[i].data('id'));
-            }
-            var data={
-                id:$id.id,
-                deleteSchedule:deleteSchedule,
-                addSchedule:addSchedule
-            };
-            jQuery.post('/updateSchedule',JSON.stringify(data),function(data,status){
-               if(status=='success'){
-                   alert('update success!');
-
-               }else{
-                   alert('network error!please try again');
-               }
-
-            });
-        }
+        $scope.addCourse = function (id) {
         
-    })
-    .controller('selectOfferings',function($scope,$id){
-        $scope.allOfferings=[];
-        $scope.getOfferings=function(){
-           jQuery.post('/allCourses',JSON.stringify({id:$id.id}),function(result,status){
-              if(status=='success'){
-                  $scope.allOfferings=JSON.parse(result)
-              }else{
-                  alert('network error!please try again');
-              }
-
-           });
-       };
-        $scope.chooseCourse=function(){
-            var target=$(this);
-            if(target.data('select')=='false'){
-                target.data('select','true');
-                target.css('backgroundColor','white')
-            }else{
-                target.data('select','false');
-                target.css('backgroundColor','rgb(91, 183, 91)');
-            }
-        };
-        $scope.selectOfferings=function(){
-            var selectButton=$('div#selectOfferings>table>tr>input');
-            var selectCourse=[];
-            for(var i=0;i<selectButton.length;i++){
-                if(selectButton[i].data('select')=='true')
-                    selectCourse.push(selectButton[i].data('id'));
-            }
-            var data={
-                id:$id.id,
-                selectCourse:selectCourse
-            };
-            jQuery.post('/selectOfferings',JSON.stringify(data),function(result,status){
-                if(status=='success'){
-                    result=JSON.parse(result);
-                    if(result['info']=='success')
-                        alert('select success');
-                    else
-                        alert('select failed');
-
-                }else{
-                    alert('network error!please try again');
+            var info={};
+            var divS=$('div#selectTeach>div:eq(0)>div');
+            for(var i=0;i<divS.length;i++){
+                var item=$(divS[i]);
+                if(item.find('div:eq(0)').text()==id){
+                    info['professorId']=$id.id;
+                    info['courseId']=id;
+                    info['day']=1;
+                    info['begin']=2;
+                    info['end']=3;
+                    info['capacity']=item.find('input:eq(2)').val();
+                    break;
                 }
-
-            });
+            }
+            console.log(JSON.stringify(info));
+            jQuery.post('/addTaughtCourse', JSON.stringify(info),function (result, status) {
+                if (status == 'success') {
+                    result = JSON.parse(result);
+                    if (result['info'] == 'success') {
+                        alert('add course success');
+                    } else {
+                        alert('add course failed!');
+                    }
+                } else {
+                    alert('network error');
+                }
+            })
         }
     })
-    .controller('selectTeach',function($scope,$id){
-        $scope.allOfferings=[];
-        $scope.allCourses=function(){
-            jQuery.get('/untaughtCourses',function(result,status){
-                if(status=='success'){
-                    $scope.allOfferings=JSON.parse(result)
-                }else{
-                   alert('network error!please try again');
-                }
-            });
-        };
-        $scope.chooseCourse=function(){
-            var target=$(this);
-            if(target.data('select')=='false'){
-                target.data('select','true');
-                target.css('backgroundColor','white')
-            }else{
-                target.data('select','false');
-                target.css('backgroundColor','rgb(91, 183, 91)');
-            }
-        };
-        $scope.selectTeach=function(){
-            var selectButton=$('div#selectTeach>table>tr>input');
-            var selectCourse=[];
-            for(var i=0;i<selectButton.length;i++){
-                if(selectButton[i].data('select')=='true')
-                    selectCourse.push(selectButton[i].data('id'));
-            }
-            var data={
-                id:$id.id,
-                selectCourse:selectCourse
-            };
-            jQuery.post('/selectTeach',JSON.stringify(data),function(result,status){
-                if(status=='success'){
-                    result=JSON.parse(result);
-                    if(result['info']=='success')
-                        alert('select success');
-                    else
-                        alert('select failed');
-
-                }else{
-                    alert('network error!please try again');
-                }
-
-            });
-        }
-        
-    })
-    .controller('submitGrade',function($scope,$id){
-        $scope.taughtCourses=[];
-        $scope.taughtCourse=function(){
-            jQuery.post('/taughtCourse',JSON.stringify({id:$id.id}),function(data,status){
-                if(status=='success'){
-                    $scope.taughtCourses=JSON.parse(data);
-                }else{
+    .controller('submitGrade', function ($scope, $id) {
+        $scope.taughtCourses = [];
+        $scope.taughtCourse = function () {
+            jQuery.post('/taughtCourse', JSON.stringify({id: $id.id}), function (data, status) {
+                if (status == 'success') {
+                    $scope.taughtCourses = JSON.parse(data);
+                } else {
                     alert('network error!please try again');
                 }
             });
         };
         $scope.courseId = 0;
         $scope.selectCourse = function (courseId) {
-          jQuery.post('/selectCourse',JSON.stringify({id:courseId}),function(data,status){
-            if(status=='success'){
-                $scope.studentGrade=JSON.parse(data);
+            jQuery.post('/selectCourse', JSON.stringify({id: courseId}), function (data, status) {
+                if (status == 'success') {
+                    $scope.studentGrade = JSON.parse(data);
 
-            }else{
-                alert('network error!please try again');
-            }
+                } else {
+                    alert('network error!please try again');
+                }
 
-          });
+            });
         };
-        $scope.submitGrade=function(){
-            var studentId=[];
-            var studentGrade=[];
-            for(var id in $('#submitGrade>form>div>input:eq(0)'))
+        $scope.submitGrade = function () {
+            var studentId = [];
+            var studentGrade = [];
+            for (var id in $('#submitGrade>form>div>input:eq(0)'))
                 studentId.push(id.val());
-            for(var grade in $('#submitGrade>form>div>input:eq(2)'))
+            for (var grade in $('#submitGrade>form>div>input:eq(2)'))
                 studentGrade.push(grade.val());
-            var data={
-                courseId:$scope.courseId,
-                studentIds:studentId,
-                studentGrades:studentGrade
+            var data = {
+                courseId: $scope.courseId,
+                studentIds: studentId,
+                studentGrades: studentGrade
             };
-            jQuery.post('/submitGrade',JSON.stringify(data),function(data,status){
-               if(status=='success'){
-                   alert('submit grade success');
-               }else{
-                   alert('submit grade error!please try again');
-               }
+            jQuery.post('/submitGrade', JSON.stringify(data), function (data, status) {
+                if (status == 'success') {
+                    alert('submit grade success');
+                } else {
+                    alert('submit grade error!please try again');
+                }
 
             });
         }

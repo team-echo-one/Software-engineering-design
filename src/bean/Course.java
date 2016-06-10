@@ -13,6 +13,18 @@ public class Course
 	public Course()
 	{
 	}
+	
+	public Map.Entry<Professor, Professor_Course> getInfoBySemester(int semester)
+	{
+		for (Map.Entry<Professor, Professor_Course> entry : info.entrySet())
+		{
+			if (entry.getValue().getSemester() == semester)
+			{
+				return entry;
+			}
+		}
+		return null;
+	}
 
 	public void setInfo(Map<Professor, Professor_Course> info)
 	{
@@ -53,4 +65,11 @@ public class Course
 	{
 		return id;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "Course [id=" + id + ", name=" + name + ", students=" + students + ", info=" + info + "]";
+	}
+	
 }

@@ -47,6 +47,7 @@ public class DeleteProfessor extends ServerResponse
 			Transaction tx = session.beginTransaction();
 			Professor pro = (Professor) session.get(Professor.class, jsi.getId());
 			session.delete(pro);
+			session.delete(pro.getPassword());
 			tx.commit();
 		} catch (Exception e)
 		{

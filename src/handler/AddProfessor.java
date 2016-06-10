@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 
 import com.google.gson.Gson;
 
+import bean.Password;
 import bean.Professor;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -19,7 +20,7 @@ import jbean.JProfessor;
 import jbean.Result;
 import utils.HibernateUtil;
 
-public class UpdateProfessor extends ServerResponse
+public class AddProfessor extends ServerResponse
 {
 	public static void excute(FullHttpRequest request, ChannelHandlerContext ctx)
 	{
@@ -33,22 +34,27 @@ public class UpdateProfessor extends ServerResponse
 		String s = buf.toString(Charset.forName("utf-8"));
 		JProfessor data = gson.fromJson(s, JProfessor.class);
 		
-		Result result = update(data)?Result.successInstance():Result.failedInstance();
+		Result result = add(data)?Result.successInstance():Result.failedInstance();
 		String content = gson.toJson(result);
 		FullHttpResponse response = createResponse(content, request);
 		ctx.writeAndFlush(response);
 	}
 	
-	private static boolean update(JProfessor professor)
+	private static boolean add(JProfessor jProfessor)
 	{
 		try
 		{
 			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 			Transaction tx = session.beginTransaction();
-			Professor pro = (Professor) session.get(Professor.class, professor.getId());
-
-			pro.setFromJProfessor(professor);
-			
+			Professor professor = new Professor();
+			professor.setFromJProfessor(jProfessor);
+			professor.setId(System.currentTimeMillis());
+			Password password = new Password();
+			password.setPassword(String.valueOf(professor.getId()%10000));
+			password.setAuthority(0);
+			professor.setPassword(password);
+			session.save(professor);
+			session.save(password);
 			tx.commit();
 		} catch (Exception e)
 		{

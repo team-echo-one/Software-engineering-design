@@ -6,7 +6,6 @@
 <hibernate-mapping package="bean">
 	<class name="Student" table="STUDENT">
 		<id name="id" column="student_id">
-			<generator class="native" />
 		</id>
 		<property name="name" type="string" />
 		<property name="ssN" type = "string"/>

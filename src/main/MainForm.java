@@ -158,13 +158,13 @@ public class MainForm
 				InetAddress address = null;
 				try
 				{
-					address = InetAddress.getByName(Var.Host);
+					//address = InetAddress.getByName(Var.Host);
 					listenThread.start();
 				} catch (Exception ex)
 				{
 					ex.printStackTrace();
 				}
-				tf_IP.setText(address.getHostAddress());
+				//tf_IP.setText(address.getHostAddress());
 				btn_Start.setEnabled(false);
 			}
 		});

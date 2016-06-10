@@ -121,7 +121,7 @@ response:
 
 /selectTeach post方法 选取要教的课程
 request:
-{'id':professorID,'selectCourse':[courseId*n]}
+{'id':professorID,'selectCourse':[courseId]*n}
 其中selectCourse是一个课程ID组成的数组，表示要教的课程
 response:
 成功：

@@ -47,6 +47,7 @@ public class DeleteStudent extends ServerResponse
 			Transaction tx = session.beginTransaction();
 			Student stu = (Student) session.get(Student.class, jsi.getId());
 			session.delete(stu);
+			session.delete(stu.getPassword());
 			tx.commit();
 		} catch (Exception e)
 		{

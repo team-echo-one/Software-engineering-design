@@ -17,6 +17,7 @@ public class Professor
 	String status;
 	String ssN;
 	String faculty;
+	Password password;
 
 	Map<Course, Professor_Course> teach = new HashMap<>();
 
@@ -24,6 +25,16 @@ public class Professor
 	{
 	}
 
+	public void setPassword(Password password)
+	{
+		this.password = password;
+	}
+	
+	public Password getPassword()
+	{
+		return password;
+	}
+	
 	public void setTeach(Map<Course, Professor_Course> teach)
 	{
 		this.teach = teach;

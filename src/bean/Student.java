@@ -1,20 +1,16 @@
 package bean;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import javax.sound.midi.VoiceStatus;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import jbean.JStudent;
-import jbean.VariousId;
 import utils.HibernateUtil;
 
 public class Student
@@ -34,87 +30,83 @@ public class Student
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		// init(session);
-		/*
-		 * Professor professor = new Professor();
-		 * professor.setId(System.currentTimeMillis());
-		 * professor.setName("adf"); professor.setFaculty("123");
-		 * session.save(professor);
-		 * 
-		 * Course course = (Course) session.get(Course.class, 1L);
-		 * Professor_Course pCourse = new Professor_Course();
-		 * pCourse.setBegin(1); pCourse.setEnd(4); pCourse.setPrice(123);
-		 * pCourse.setSemester(1); pCourse.setDay(1);
-		 * professor.getTeach().put(course, pCourse);
-		 */
-		// Course course = (Course) session.get(Course.class, 1L);
-		// Student student = new Student();
-		// student.setName("yyc");
-		// student.setId(System.currentTimeMillis());
-		/*
-		 * for (Map.Entry<Student, Student_Course> entry :
-		 * course.students.entrySet()) { System.out.println("key:" +
-		 * entry.getKey().name + "\nvalue:" + entry.getValue().grade); }
-		 */
-		// session.save(student);
-		/*
-		 * Financial financial = new Financial(); financial.setBill(123);
-		 * student.setFinancial(financial); financial.setStudent(student);
-		 * session.save(student);
-		 */
-		Student student = (Student) session.get(Student.class, 1L);
-		Password password = new Password();
-		password.setPassword("zxcvasdf");
-		student.setPassword(password);
-		// session.saveOrUpdate(student);*
-		// System.out.println(student.name);
+		// initialCourseOffering(session);
+
+
 		tx.commit();
 		HibernateUtil.closeSessionFactory();
+	}
 
+	private static void initialCourseOffering(Session session)
+	{
+		Course course = (Course) session.get(Course.class, 1L);
+		Professor_Course pCourse = new Professor_Course();
+		pCourse.setSemester(1);
+		Professor professor = (Professor) session.get(Professor.class, 1465480175927L);
+		Map<Course, Professor_Course> teach = new HashMap<>();
+		teach.put(course, pCourse);
+		professor.setTeach(teach);
+
+		course = (Course) session.get(Course.class, 2L);
+		pCourse = new Professor_Course();
+		pCourse.setSemester(2);
+		professor = (Professor) session.get(Professor.class, 1465480182594L);
+		teach = new HashMap<>();
+		teach.put(course, pCourse);
+		professor.setTeach(teach);
+
+		course = (Course) session.get(Course.class, 3L);
+		pCourse = new Professor_Course();
+		pCourse.setSemester(3);
+		professor = (Professor) session.get(Professor.class, 1465480188224L);
+		teach = new HashMap<>();
+		teach.put(course, pCourse);
+		professor.setTeach(teach);
 	}
 
 	private static void init(Session session)
 	{
-		Student student = new Student();
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(1990, 1, 2);
-		student.setBirth(calendar.getTime());
-		student.setName("zyz");
-		student.setSsN("123123123");
-		calendar.set(2010, 1, 2);
-		student.setGraduationDate(calendar.getTime());
-		student.setStatus("无");
-		session.save(student);
-
-		student = new Student();
-		student.setName("zdf");
-		student.setSsN("123123123");
-		student.setStatus("无");
-		session.save(student);
-
-		student = new Student();
-		student.setName("asd");
-		student.setSsN("123123123");
-		student.setStatus("无");
-		session.save(student);
-
-		student = new Student();
-		student.setName("qwe");
-		student.setSsN("123123123");
-		student.setStatus("无");
-		session.save(student);
-
-		student = new Student();
-		student.setName("阿斯蒂芬");
-		student.setSsN("123123123");
-		student.setStatus("无");
-		session.save(student);
-
+		// Student student = new Student();
+		// Calendar calendar = Calendar.getInstance();
+		// calendar.set(1990, 1, 2);
+		// student.setBirth(calendar.getTime());
+		// student.setName("zyz");
+		// student.setSsN("123123123");
+		// calendar.set(2010, 1, 2);
+		// student.setGraduationDate(calendar.getTime());
+		// student.setStatus("无");
+		// session.save(student);
+		//
+		// student = new Student();
+		// student.setName("zdf");
+		// student.setSsN("123123123");
+		// student.setStatus("无");
+		// session.save(student);
+		//
+		// student = new Student();
+		// student.setName("asd");
+		// student.setSsN("123123123");
+		// student.setStatus("无");
+		// session.save(student);
+		//
+		// student = new Student();
+		// student.setName("qwe");
+		// student.setSsN("123123123");
+		// student.setStatus("无");
+		// session.save(student);
+		//
+		// student = new Student();
+		// student.setName("阿斯蒂芬");
+		// student.setSsN("123123123");
+		// student.setStatus("无");
+		// session.save(student);
+		//
 		Course course = new Course();
 		course.setName("chinese");
 		session.save(course);
 
 		course = new Course();
-		course.setName("pyshic");
+		course.setName("physics");
 		session.save(course);
 
 		course = new Course();
@@ -124,15 +116,14 @@ public class Student
 		course = new Course();
 		course.setName("english");
 		session.save(course);
-
-		Student student1 = (Student) session.get(Student.class, 3L);
-		for (long i = 1; i < 5; i++)
-		{
-			Student_Course student_Course = new Student_Course();
-			student_Course.setGrade("A+");
-			Course course1 = (Course) session.get(Course.class, i);
-			student1.getCourses().put(course1, student_Course);
-		}
+		
+		/*
+		 * Student student1 = (Student) session.get(Student.class,
+		 * 1465462464050L); for (long i = 1; i < 5; i++) { Student_Course
+		 * student_Course = new Student_Course(); student_Course.setGrade("A+");
+		 * Course course1 = (Course) session.get(Course.class, i);
+		 * student1.getCourses().put(course1, student_Course); }
+		 */
 	}
 
 	public Student()

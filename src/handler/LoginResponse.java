@@ -4,7 +4,6 @@ import static io.netty.handler.codec.http.HttpResponseStatus.BAD_REQUEST;
 
 import java.nio.charset.Charset;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -33,9 +32,9 @@ public class LoginResponse extends ServerResponse
 		Gson gson = new Gson();
 		ByteBuf buf = request.content();
 		String s = buf.toString(Charset.forName("utf-8"));
+		System.out.println(s);
 		Login data = gson.fromJson(s, Login.class);
-		
-		Object result = loginResult(data.getUsername(), data.getPassword());
+		Object result = loginResult(data.getId(), data.getPassword());
 		FullHttpResponse response;
 		String dataString = gson.toJson(result);
 		System.out.println(dataString);
@@ -51,19 +50,17 @@ public class LoginResponse extends ServerResponse
 		{
 			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 			Transaction tx = session.beginTransaction();
-			String hql = "from Password where id=:id";// 使用命名参数，推荐使用，易读。
+			/*String hql = "from Password psw where psw.id=:id";// 使用命名参数，推荐使用，易读。
 			Query query = session.createQuery(hql);
-			query.setLong("id", id);
-
-			if(query.list().size() == 0){
+			query.setLong("id", id);*/
+			Student student = (Student) session.get(Student.class, id);
+			
+			if(student == null){
 				result = LoginDeny.newNotExist();
 			}else {
-				Password pswd = (Password)query.list().get(0);
-				String pString = pswd.getPassword();
-				if(pString.equals(password))
+				if(password.equals(student.getPassword().getPassword()))
 				{
-					Student student = (Student) session.get(Student.class, id);
-					result  = new LoginSuccess(student.getName(),pswd.getAuthority());
+					result  = new LoginSuccess(student.getName(),student.getPassword().getAuthority());
 				}else
 				{
 					result = LoginDeny.newNotMatchInstance();

@@ -9,17 +9,19 @@ import org.hibernate.Transaction;
 
 import com.google.gson.Gson;
 
-import bean.Professor;
+import bean.Course;
+import bean.Student;
+import bean.Student_Course;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpMethod;
-import jbean.JProfessor;
+import jbean.JAddCourse;
 import jbean.Result;
 import utils.HibernateUtil;
 
-public class UpdateProfessor extends ServerResponse
+public class DeleteCourse extends ServerResponse
 {
 	public static void excute(FullHttpRequest request, ChannelHandlerContext ctx)
 	{
@@ -31,24 +33,26 @@ public class UpdateProfessor extends ServerResponse
 		Gson gson = new Gson();
 		ByteBuf buf = request.content();
 		String s = buf.toString(Charset.forName("utf-8"));
-		JProfessor data = gson.fromJson(s, JProfessor.class);
+		JAddCourse data = gson.fromJson(s, JAddCourse.class);
 		
-		Result result = update(data)?Result.successInstance():Result.failedInstance();
+		Result result = delete(data)?Result.successInstance():Result.failedInstance();
 		String content = gson.toJson(result);
 		FullHttpResponse response = createResponse(content, request);
 		ctx.writeAndFlush(response);
 	}
 	
-	private static boolean update(JProfessor professor)
+	private static boolean delete(JAddCourse jcourse)
 	{
 		try
 		{
 			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 			Transaction tx = session.beginTransaction();
-			Professor pro = (Professor) session.get(Professor.class, professor.getId());
-
-			pro.setFromJProfessor(professor);
 			
+			Student student = (Student)session.get(Student.class, jcourse.getId());
+			Course course = (Course)session.get(Course.class, jcourse.getCourseId());
+			
+			student.getCourses().remove(course);
+			//session.delete(sc);
 			tx.commit();
 		} catch (Exception e)
 		{

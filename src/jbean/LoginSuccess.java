@@ -1,43 +1,63 @@
 package jbean;
 
+import utils.Configure;
+import utils.Var;
+
 public class LoginSuccess
 {
 	String info;
-	String id;
+	String name;
 	String identity;
-	
-	public LoginSuccess(String id, int authortiy)
+	int semester;
+
+	public LoginSuccess(String name, int authortiy)
 	{
 		info = "success";
-		this.id = id;
-		if(authortiy == 0)
+		this.name = name;
+		if (authortiy == 0)
 			this.identity = "teacher";
-		if(authortiy == 1)
+		if (authortiy == 1)
 			this.identity = "student";
 		if (authortiy == 2)
 			this.identity = "registrar";
+		semester = Configure.getSemester();
 	}
-	
-	public void setId(String id)
+
+	public void setSemester(int semester)
 	{
-		this.id = id;
+		this.semester = semester;
 	}
-	public String getId()
+
+	public int getSemester()
 	{
-		return id;
+		return semester;
 	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
 	public void setIdentity(String identity)
 	{
 		this.identity = identity;
 	}
+
 	public String getIdentity()
 	{
 		return identity;
 	}
+
 	public void setInfo(String info)
 	{
 		this.info = info;
 	}
+
 	public String getInfo()
 	{
 		return info;

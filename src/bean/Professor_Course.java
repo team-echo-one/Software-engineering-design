@@ -3,6 +3,7 @@ package bean;
 public class Professor_Course
 {
 	int semester;
+	int capacity;
 	int price;
 	int day;
 	int begin;
@@ -10,6 +11,16 @@ public class Professor_Course
 
 	public Professor_Course()
 	{
+	}
+
+	public void setCapacity(int capacity)
+	{
+		this.capacity = capacity;
+	}
+
+	public int getCapacity()
+	{
+		return capacity;
 	}
 
 	public void setBegin(int begin)

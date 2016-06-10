@@ -16,16 +16,24 @@ body{
     display: none;
 }
 .info>div:nth-child(1){
+	width:200px;
     text-align: center;
     font-size:26px;
     color:white;
 }
 .info>div:nth-child(2){
+	width:200px;
     position: absolute;
     bottom: 0;
     left:45px;
 }
 
+.info>div:nth-child(2)>div{
+	width:100px;
+	float:left;
+	font-size:20px;
+	color:white;
+}
 .title{
     float:left;
     width:100%;
@@ -94,4 +102,51 @@ tr.course{
 tr.course>td{
     width:200px;
 }
-
+.name-item{
+    position: absolute;
+    left:200px;
+    top:200px;
+}
+.SSN-item{
+    position: absolute;
+    left:200px;
+    top:300px;
+}
+.department-item{
+    position: absolute;
+    left:200px;
+    top:400px;
+}
+.birthday-item{
+    position: absolute;
+    left:500px;
+    top:200px;
+}
+.status-item{
+    position: absolute;
+    left:500px;
+    top:300px;
+}
+.button-item{
+    position: absolute;
+    left:500px;
+    top:400px;
+}
+.choice1{
+    position: absolute;
+    left:200px;
+    top:150px;
+}
+.input1{
+    position: absolute;
+    left:500px;
+    top:150px;
+}
+div#addCourse>div:nth-child(1){
+    overflow: auto;
+    background-color: black;
+    width:500px;
+    height:300px;
+    left:100px;
+    top:200px;
+}

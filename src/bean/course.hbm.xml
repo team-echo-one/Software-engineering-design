@@ -23,6 +23,7 @@
 			<map-key-many-to-many column="professor_id" class="Professor" />
 			<composite-element class="Professor_Course">
 				<property name="price" type="integer" />
+				<property name="capacity" type="integer" />
 				<property name="day" type="integer" />
 				<property name="begin" type="integer" />
 				<property name="end" type="integer" />

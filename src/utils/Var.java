@@ -24,6 +24,8 @@ public class Var
 	
 	public static String rootPath="D:\\serverfolder\\";
 	
+	//public static int currentSemester = 6;
+	
 	synchronized public static String getRandomnum()
 	{
 		String string=Integer.toString(random);

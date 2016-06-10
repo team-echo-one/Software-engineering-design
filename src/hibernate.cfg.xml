@@ -21,7 +21,7 @@
 			org.hibernate.cache.NoCacheProvider
 		</property>
 		<!-- Echo all executed SQL to stdout -->
-		<property name="show_sql">true</property>
+		<property name="show_sql">false</property>
 		<property name="format_sql">true</property>
 		<!-- Drop and re-create the database schema on startup -->
 		<property name="hbm2ddl.auto">update</property>
@@ -31,5 +31,6 @@
 		<mapping resource="bean\professor.hbm.xml" />
 		<mapping resource="bean\financial.hbm.xml" />
 		<mapping resource="bean\password.hbm.xml" />
+		<mapping resource="bean\registrar.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>

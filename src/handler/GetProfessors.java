@@ -41,7 +41,7 @@ public class GetProfessors extends ServerResponse
 			tx.commit();
 		} catch (Exception e)
 		{
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		return result;
 	}

@@ -3,6 +3,7 @@ package handler;
 import static io.netty.handler.codec.http.HttpResponseStatus.BAD_REQUEST;
 
 import java.nio.charset.Charset;
+import java.util.Date;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -53,14 +54,29 @@ public class LoginResponse extends ServerResponse
 			/*String hql = "from Password psw where psw.id=:id";// 使用命名参数，推荐使用，易读。
 			Query query = session.createQuery(hql);
 			query.setLong("id", id);*/
-			Student student = (Student) session.get(Student.class, id);
+			Password pswd = (Password) session.get(Password.class, id);
 			
-			if(student == null){
+			if(pswd == null){
 				result = LoginDeny.newNotExist();
 			}else {
-				if(password.equals(student.getPassword().getPassword()))
+				if(password.equals(pswd.getPassword()))
 				{
-					result  = new LoginSuccess(student.getName(),student.getPassword().getAuthority());
+					int authority = pswd.getAuthority();
+					String name;
+					if(authority == 0)
+					{
+						Professor professor = (Professor)session.get(Professor.class, pswd.getId());
+						name = professor.getName();
+					}else if(authority == 1)
+					{
+						Student student = (Student)session.get(Student.class, pswd.getId());
+						name = student.getName();
+					}else {
+						Registrar registrar = (Registrar)session.get(Registrar.class, pswd.getId());
+						name = registrar.getName();
+					}
+					result  = new LoginSuccess(name,pswd.getAuthority());
+					pswd.setLastLogin(new Date());
 				}else
 				{
 					result = LoginDeny.newNotMatchInstance();

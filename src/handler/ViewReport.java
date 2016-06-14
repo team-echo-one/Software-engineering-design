@@ -7,11 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.transaction.Transactional.TxType;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.omg.CORBA.TCKind;
 
 import com.google.gson.Gson;
 

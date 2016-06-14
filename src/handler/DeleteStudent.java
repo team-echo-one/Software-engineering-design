@@ -35,6 +35,7 @@ public class DeleteStudent extends ServerResponse
 		
 		Result result = delete(data)?Result.successInstance():Result.failedInstance();
 		String content = gson.toJson(result);
+		printContent(content);
 		FullHttpResponse response = createResponse(content, request);
 		ctx.writeAndFlush(response);
 	}

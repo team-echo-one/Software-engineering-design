@@ -32,5 +32,6 @@
 		<mapping resource="bean\financial.hbm.xml" />
 		<mapping resource="bean\password.hbm.xml" />
 		<mapping resource="bean\registrar.hbm.xml" />
+		<mapping resource="bean\message.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>

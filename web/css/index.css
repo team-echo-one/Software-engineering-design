@@ -5,43 +5,67 @@ body{
     font-family:"Lucida Grande", Helvetica, Arial, sans-serif;
 
 }
+a:link {
+    text-decoration: none;
+    color:white;
+}
+a:visited {
+    text-decoration: none;
+    color:white;
+}
+a:hover {
+    text-decoration: none;
+    color:white;
+}
+a:active {
+    text-decoration: none;
+    color:white;
+}
+
 .info{
     position: absolute;
     top:60px;
-    left:600px;
+    left:560px;
     height:100px;
-    width:200px;
+    width:300px;
     background-color: black;
     z-index: 1000;
     display: none;
 }
 .info>div:nth-child(1){
-	width:200px;
+	width:300px;
+    height:50px;
     text-align: center;
     font-size:26px;
     color:white;
 }
 .info>div:nth-child(2){
-	width:200px;
-    position: absolute;
-    bottom: 0;
-    left:45px;
+	width:300px;
+    height:40px;
 }
-
+.info>div:nth-child(3){
+    width:300px;
+    height:40px;
+}
 .info>div:nth-child(2)>div{
-	width:100px;
+	width:150px;
 	float:left;
 	font-size:20px;
 	color:white;
+    text-align: center;
 }
 .title{
+    position: absolute;
+    left:0;
+    top:0;
+    padding-left: 10px;
     float:left;
     width:100%;
     height:60px;
     font-size:30px;
     line-height: 60px;
     background-color: black;
-    color:white;
+    color: rgb(60,137,157);
 }
 .welcome{
     float:right;
@@ -50,7 +74,7 @@ body{
     font-size:24px;
     line-height: 60px;
     background-color: black;
-    color:white;
+    color: rgb(60,137,157);
 
 }
 div.welcome>div{
@@ -69,8 +93,9 @@ div.welcome>a{
     width:200px;
 }
 .item{
+    padding-left:20px;
     color:white;
-    width:200px;
+    width:180px;
     height:50px;
     background-color: black;
     line-height: 50px;
@@ -104,49 +129,197 @@ tr.course>td{
 }
 .name-item{
     position: absolute;
-    left:200px;
+    left:300px;
     top:200px;
 }
 .SSN-item{
     position: absolute;
-    left:200px;
+    left:300px;
     top:300px;
 }
 .department-item{
     position: absolute;
-    left:200px;
+    left:300px;
     top:400px;
 }
 .birthday-item{
     position: absolute;
-    left:500px;
+    left:600px;
     top:200px;
 }
 .status-item{
     position: absolute;
-    left:500px;
+    left:600px;
     top:300px;
 }
 .button-item{
     position: absolute;
-    left:500px;
+    left:600px;
     top:400px;
 }
 .choice1{
     position: absolute;
-    left:200px;
+    left:300px;
     top:150px;
 }
 .input1{
     position: absolute;
-    left:500px;
+    left:600px;
     top:150px;
 }
-div#addCourse>div:nth-child(1){
-    overflow: auto;
+.foreground{
+    width:1360px;
+    height:641px;
+    position: absolute;
+    left:0;
+    top:0;
+    z-index:1000;
+    display: none;
+    opacity: 0.6;
     background-color: black;
-    width:500px;
-    height:300px;
-    left:100px;
+}
+.message1{
+    width:450px;
+    height:50px;
+    position: absolute;
+    left:450px;
     top:200px;
+    text-align: center;
+    line-height: 40px;
+    font-size:24px;
+    display: block;
+    background-color: white;
+    color:black;
+}
+.message2{
+    width:450px;
+    height:100px;
+    position: absolute;
+    left:450px;
+    top:250px;
+    text-align: center;
+    line-height: 40px;
+    font-size:20px;
+    display: block;
+    background-color: white;
+    color:black;
+}
+.allCourse{
+     position:absolute ;
+     left:200px;
+     top:200px;
+     width:600px;
+     height:180px;
+     overflow: auto;
+ }
+.selectedCourse{
+    position:absolute ;
+    left:200px;
+    top:390px;
+    width:600px;
+    height:180px;
+    overflow: auto;
+}
+.allCourse>div{
+    height:30px;
+    background-color: #b3b3b3;
+    border-bottom: solid 1px white;
+ }
+.selectedCourse>div{
+    height:30px;
+    background-color: #b3b3b3;
+    border-bottom: solid 1px white;
+}
+.allCourse>div>div{
+     float:left;
+     font-size:20px;
+     line-height: 30px;
+     width:80px;
+     height:30px;
+     color:black;
+     text-align: center;
+
+ }
+.allCourse>div>input{
+    float:left;
+    font-size:20px;
+    line-height: 30px;
+    width:80px;
+    height:30px;
+    text-align: center;
+    color:#2f96b4;
+
+}
+
+.selectedCourse>div>div{
+    float:left;
+    font-size:20px;
+    line-height: 30px;
+    width:100px;
+    height:30px;
+    color:black;
+    text-align: center;
+    background-color: #b3b3b3;
+}
+.dynamic{
+    width:1000px;
+    height:420px;
+}
+.inform{
+    position: absolute;
+    top:15px;
+    left:1150px;
+}
+.time{
+    position: absolute;
+    top:10px;
+    left:700px;
+    width:200px;
+    height:50px;
+    font-size:20px;
+    line-height: 40px;
+    text-align: center;
+    color: rgb(60,137,157);
+}
+.input3{
+     position: absolute;
+    left:260px;
+     top:120px;
+ }
+.input4{
+    position: absolute;
+    left:420px;
+    top:120px;
+}
+.input5{
+    position: absolute;
+    left:650px;
+    top:120px;
+}
+.informContent{
+    position: absolute;
+    right:0;
+    top:60px;
+    width:250px;
+    display: none;
+    color:white;
+}
+.informContent>div{
+    border-bottom: 1px solid #4bb1cf;
+}
+.informContent>div>h3{
+    text-align: center;
+}
+.informContent>div>p{
+    text-indent: 2em;
+    text-align: left;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+.taughtCourse{
+    width:900px;
+}
+
+.taughtCourse>input{
+    width:110px;
 }

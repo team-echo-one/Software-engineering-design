@@ -33,11 +33,12 @@ public class AddCourse extends ServerResponse
 		Gson gson = new Gson();
 		ByteBuf buf = request.content();
 		String s = buf.toString(Charset.forName("utf-8"));
-		System.out.println(s);
+		printRequest(s);
 		JAddCourse data = gson.fromJson(s, JAddCourse.class);
 		
 		Result result = add(data)?Result.successInstance():Result.failedInstance();
 		String content = gson.toJson(result);
+		printContent(content);
 		FullHttpResponse response = createResponse(content, request);
 		ctx.writeAndFlush(response);
 	}

@@ -3,11 +3,24 @@
  */
 $(function(){
 
-
+    /**verify identity*/
     var identity=localStorage.getItem('identity');
     if(!identity){
         location.replace('/');
     }
+
+    /**show time*/
+    var time=$('.time');
+    setInterval(function(){
+        var date=new Date();
+        var day=date.toLocaleDateString();
+        var hour=parseInt(date.getHours())<10?0+''+date.getHours():date.getHours();
+        var minute=parseInt(date.getMinutes())<10?0+''+date.getMinutes():date.getMinutes();
+        var second=parseInt(date.getSeconds())<10?0+''+date.getSeconds():date.getSeconds();
+        time.text(day+' '+hour+':'+minute+':'+second);
+    },1000);
+
+    /**show function*/
     var teacher=$('#teacher');
     var student=$('#student');
     var registrar=$('#registrar');
@@ -24,15 +37,19 @@ $(function(){
         registrar.hide();
         student.show();
     }
+
+    /** show name*/
     var name=$('div.welcome>div');
     name.text('welcome '+localStorage.getItem('name')+'!');
 
+    /** handle logout */
     var logOut=$('div.welcome>a');
     var info=$('.info');
     var message=$('.info>div:nth-child(1)');
     var yes=$('.info>div:nth-child(2)>div:nth-child(1)>a');
     var no=$('.info>div:nth-child(2)>div:nth-child(2)>a');
     logOut.click(function(event){
+        event.stopPropagation();
         event.preventDefault();
         message.text(localStorage.getItem('name')+'\r\n'+'want to log out?');
         info.show();
@@ -47,6 +64,18 @@ $(function(){
     no.click(function(){
        info.hide();
     });
+    /** handle hide inform and info */
+    var body=$('body');
+    var informContent=$('.informContent');
+    body.click(function(){
+        if(informContent.css('display')=='block') {
+            informContent.hide();
+        }
+        if(info.css('display')=='block'){
+            info.hide();
+        }
+    });
+
 
     var iViewReport=$("#iViewReport");
     var iAddCourse=$('#iAddCourse');
@@ -97,5 +126,6 @@ $(function(){
     handleClick(iAddStudent,addStudent);
     handleClick(iUpdateStudent,updateStudent);
     handleClick(iDeleteStudent,deleteStudent);
+
 
 });

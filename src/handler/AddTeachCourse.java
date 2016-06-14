@@ -35,11 +35,12 @@ public class AddTeachCourse extends ServerResponse
 		ByteBuf buf = request.content();
 		String s = buf.toString(Charset.forName("utf-8"));
 		
-		System.out.println(s);
+		printRequest(s);
 		JTeacherAddCourse data = gson.fromJson(s, JTeacherAddCourse.class);
 		
 		Result result = addTeachCourse(data)?Result.successInstance():Result.failedInstance();
 		String content = gson.toJson(result);
+		printContent(content);
 		FullHttpResponse response = createResponse(content, request);
 		ctx.writeAndFlush(response);
 	}

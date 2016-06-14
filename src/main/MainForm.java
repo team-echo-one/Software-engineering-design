@@ -6,12 +6,25 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import bean.Course;
+import bean.Message;
 import listener.HttpListenThread;
+import utils.Configure;
+import utils.HibernateUtil;
 import utils.Var;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.awt.event.WindowAdapter;
@@ -138,6 +151,8 @@ public class MainForm
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				Timer timer = new Timer();
+				timer.schedule(new CheckTask(), 0, Configure.getCheckPeriod() * 60 * 1000);
 				listenThread = new HttpListenThread();
 				int port = 0;
 				try
@@ -155,16 +170,15 @@ public class MainForm
 					return;
 				}
 				Var.Port = port;
-				InetAddress address = null;
 				try
 				{
-					//address = InetAddress.getByName(Var.Host);
+					// address = InetAddress.getByName(Var.Host);
 					listenThread.start();
 				} catch (Exception ex)
 				{
 					ex.printStackTrace();
 				}
-				//tf_IP.setText(address.getHostAddress());
+				// tf_IP.setText(address.getHostAddress());
 				btn_Start.setEnabled(false);
 			}
 		});
@@ -188,5 +202,58 @@ public class MainForm
 		});
 		btn_Stop.setBounds(459, 6, 63, 23);
 		frmServer.getContentPane().add(btn_Stop);
+	}
+
+	class CheckTask extends TimerTask
+	{
+		@Override
+		public void run()
+		{
+			Date nowDate = new Date();
+			if(Configure.getShutDownDate()==null)
+			{
+				return;
+			}
+			if(nowDate.before(Configure.getShutDownDate()))
+			{
+				return;
+			}
+			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+			Transaction tx = session.beginTransaction();
+			ArrayList<Course> courses = new ArrayList<>();
+			try
+			{
+				String hql = "from Course";
+				Query query = session.createQuery(hql);
+				for (Object o : query.list())
+				{
+					Course course = (Course) o;
+					if (course.getStudents().size() <= 3)
+					{
+						courses.add(course);
+					}
+				}
+				String title = "Notification : Course has been canceled";
+				StringBuilder content = new StringBuilder("");
+				content.append("Course Id").append("\t").append("Course Name\n");
+				for(Course course : courses)
+				{
+					content.append(course.getId()).append("\t").append(course.getName()).append("\n");
+				}
+				content.append("because of the number of selected students is too little,these courses has been canceled");
+				Message message = new Message();
+				message.setContent(content.toString());
+				message.setTitle(title);
+				message.setReleaseDate(new Date());
+				session.save(message);
+				tx.commit();
+			} catch (Exception e)
+			{
+				tx.rollback();
+				e.printStackTrace();
+				return;
+			}
+			return;
+		}
 	}
 }

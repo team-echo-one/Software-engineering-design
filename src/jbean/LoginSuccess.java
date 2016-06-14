@@ -1,7 +1,6 @@
 package jbean;
 
 import utils.Configure;
-import utils.Var;
 
 public class LoginSuccess
 {

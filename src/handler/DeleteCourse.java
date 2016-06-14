@@ -11,7 +11,6 @@ import com.google.gson.Gson;
 
 import bean.Course;
 import bean.Student;
-import bean.Student_Course;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
@@ -37,6 +36,7 @@ public class DeleteCourse extends ServerResponse
 		
 		Result result = delete(data)?Result.successInstance():Result.failedInstance();
 		String content = gson.toJson(result);
+		printContent(content);
 		FullHttpResponse response = createResponse(content, request);
 		ctx.writeAndFlush(response);
 	}

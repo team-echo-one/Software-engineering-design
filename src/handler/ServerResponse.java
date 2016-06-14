@@ -82,4 +82,13 @@ abstract public class ServerResponse
 	public static void excute(FullHttpRequest request, ChannelHandlerContext ctx)
 	{
 	}
+	
+	protected static void printContent(String content)
+	{
+		System.out.println("Response Content:"+content);
+	}
+	protected static void printRequest(String content)
+	{
+		System.out.println("request Content:"+content);
+	}
 }

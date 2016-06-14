@@ -3,33 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>software</title>
-    <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/index.css">
     <script src="./js/jquery-1.11.3.js"></script>
     <script src="./js/angular.js"></script>
     <script src="./js/index.js"></script>
-
 </head>
+<!--canvas background-->
+<body class="large-header" id="large-header">
+<canvas id="dynamic"></canvas>
 
-<body>
+<!--message-->
+<div class="foreground">
+    <div class="message1"></div>
+    <div class="message2"></div>
+</div>
 
+<!--info-->
 <div class="info">
     <div></div>
     <div>
-	<div>
-    <a href="#">yes</a>
-	</div>
-	<div>
-	<a href="#">no</a>
-	</div>
+        <div>
+            <a href="#">yes</a>
+        </div>
+        <div>
+            <a href="#">no</a>
+        </div>
     </div>
 </div>
+
 <!--title-->
-<div class="title">software
-<div class="welcome">
-    <a href="#">log out</a>
-    <div></div>
-</div>
+<div class="title">Course Selection System
+    <div class="welcome">
+        <a href="#">log out</a>
+        <div></div>
+    </div>
 </div>
 
 <!--student-->
@@ -56,46 +64,49 @@
     <input type="button" class="item" id="iDeleteStudent" value="Delete Student"/>
 </div>
 
-
+<!--addProfessor-->
 <div class="content" id="addProfessor" ng-controller="addProfessor">
-    <br><br><br>
+    <br>
     <h2>Add Professor</h2>
     <br><br><br>
-    <form ng-submit="submit()">
+    <form>
         <input type="text" placeholder="name" ng-model="name" class="input-large name-item" required>
         <input type="date" placeholder="birthday" ng-model="birthday" class="input-large birthday-item" required>
-        <br><br><br>
         <input type="text" placeholder="SSN" ng-model="SSN" class="input-large SSN-item" required>
         <input type="text" placeholder="status" ng-model="status" class="input-large status-item" required>
         <input type="text" placeholder="department" ng-model="department" class="input-large department-item" required>
-        <input type="submit" class="btn  btn-success button-item" value="add">
+        <input ng-click="submit($event)" type="button" class="btn  btn-success button-item" value="add">
     </form>
 </div>
 
+<!--updateProfessor-->
 <div class="content" id="updateProfessor" ng-controller="updateProfessor">
-    <br><br><br>
+    <br>
     <h2>Update Professor</h2>
     <br>
     <select class="choice1" ng-change="selectProfessor(professorId)" ng-model="professorId"
             ng-options="professor.id as professor.name for professor in professors">
-            <option value=''>--choose--</option>
-            </select>
+        <option value=''>--choose--</option>
+    </select>
     <input type="button" class="btn btn-info input1" ng-click="getProfessors()" value="Get Professors">
     <br><br><br>
 
-    <form ng-submit="submit()">
+    <form>
         <input type="text" placeholder="name" ng-bind="name" ng-model="name" class="input-large name-item" required>
-        <input type="text" placeholder="birthday" ng-bind="birthday" ng-model="birthday" class="input-large birthday-item" required>
+        <input type="text" placeholder="birthday" ng-bind="birthday" ng-model="birthday"
+               class="input-large birthday-item" required>
         <input type="text" placeholder="SSN" ng-bind="SSN" ng-model="SSN" class="input-large SSN-item" required>
-        <input type="text" placeholder="status" ng-bind="status" ng-model="status" class="input-large status-item" required>
-        <input type="text" placeholder="department" ng-bind="department" ng-model="department" class="input-large department-item" required>
-        <input type="submit" class="btn  btn-success button-item" value="update">
+        <input type="text" placeholder="status" ng-bind="status" ng-model="status" class="input-large status-item"
+               required>
+        <input type="text" placeholder="department" ng-bind="department" ng-model="department"
+               class="input-large department-item" required>
+        <input type="button" ng-click="submit($event)" class="btn  btn-success button-item" value="update">
     </form>
 </div>
 
-
+<!--deleteProfessor-->
 <div class="content" id="deleteProfessor" ng-controller="deleteProfessor">
-    <br><br><br>
+    <br>
     <h2>Delete Professor</h2>
     <br>
     <select class="choice1" ng-change="selectProfessor(professorId)" ng-model="professorId"
@@ -105,33 +116,40 @@
     <input type="button" class="btn btn-info input1" ng-click="getProfessors()" value="Get Professors">
     <br><br><br>
 
-    <form ng-submit="submit()">
-        <input type="text" placeholder="name" ng-bind="name" ng-model="name" class="input-large name-item" required disabled>
-        <input type="text" placeholder="birthday" ng-bind="birthday" ng-model="birthday" class="input-large birthday-item" required disabled>
-        <input type="text" placeholder="SSN" ng-bind="SSN" ng-model="SSN" class="input-large SSN-item" required disabled>
-        <input type="text" placeholder="status" ng-bind="status" ng-model="status" class="input-large status-item" required disabled>
-        <input type="text" placeholder="department" ng-bind="department" ng-model="department" class="input-large department-item" required disabled>
-        <input type="submit" class="btn  btn-success button-item" value="delete">
+    <form>
+        <input type="text" placeholder="name" ng-bind="name" ng-model="name" class="input-large name-item"
+               disabled>
+        <input type="text" placeholder="birthday" ng-bind="birthday" ng-model="birthday"
+               class="input-large birthday-item" disabled>
+        <input type="text" placeholder="SSN" ng-bind="SSN" ng-model="SSN" class="input-large SSN-item"
+               disabled>
+        <input type="text" placeholder="status" ng-bind="status" ng-model="status" class="input-large status-item"
+                disabled>
+        <input type="text" placeholder="department" ng-bind="department" ng-model="department"
+               class="input-large department-item" disabled>
+        <input type="button" ng-click="submit($event)" class="btn  btn-success button-item" value="delete">
     </form>
 </div>
-
+<!--addStudent-->
 <div class="content" id="addStudent" ng-controller="addStudent">
-    <br><br><br>
+    <br>
     <h2>Add Student</h2>
     <br><br><br>
-    <form ng-submit="submit()">
-        <input ng-model="name" maxlength="20" minlength="5" type="text" placeholder="name" class="input-large name-item" required autofocus>
+    <form>
+        <input ng-model="name" maxlength="20" minlength="5" type="text" placeholder="name" class="input-large name-item"
+               required autofocus>
         <input ng-model="birthday" type="date" placeholder="birthday" class="input-large birthday-item" required>
         <input ng-model="SSN" type="text" placeholder="SSN" class="input-large SSN-item" required>
         <input ng-model="status" type="text" placeholder="status" class="input-large status-item" required>
-        <input ng-model="graduationDate" type="date" placeholder="graduation Date" class="input-large department-item" required>
-        <input type="submit" class="btn  btn-success button-item" value="submit">
+        <input ng-model="graduationDate" type="date" placeholder="graduation Date" class="input-large department-item"
+               required>
+        <input type="button" ng-click="submit($event)" class="btn  btn-success button-item" value="add">
     </form>
 </div>
 
-
+<!--updateStudent-->
 <div class="content" id="updateStudent" ng-controller="updateStudent">
-    <br><br><br>
+    <br>
     <h2>Update Student</h2>
     <br>
     <select class="choice1" ng-change="selectStudent(studentId)" ng-model="studentId"
@@ -141,19 +159,22 @@
     <input type="button" class="btn btn-info input1" ng-click="getStudents()" value="getStudents">
 
 
-    <form ng-submit="submit()">
+    <form>
         <input type="text" placeholder="name" ng-bind="name" ng-model="name" class="input-large name-item" required>
-        <input type="text" placeholder="birthday" ng-bind="birthday" ng-model="birthday" class="input-large birthday-item" required>
+        <input type="text" placeholder="birthday" ng-bind="birthday" ng-model="birthday"
+               class="input-large birthday-item" required>
         <input type="text" placeholder="SSN" ng-bind="SSN" ng-model="SSN" class="input-large SSN-item" required>
-        <input type="text" placeholder="status" ng-bind="status" ng-model="status" class="input-large status-item" required>
-        <input type="text" placeholder="graduationDate" ng-bind="graduationDate" ng-model="graduationDate" class="input-large department-item" required>
-        <input type="submit" class="btn  btn-success button-item" value="update">
+        <input type="text" placeholder="status" ng-bind="status" ng-model="status" class="input-large status-item"
+               required>
+        <input type="text" placeholder="graduationDate" ng-bind="graduationDate" ng-model="graduationDate"
+               class="input-large department-item" required>
+        <input type="button" ng-click="submit($event)" class="btn  btn-success button-item" value="update">
     </form>
 </div>
 
-
+<!--deleteStudent-->
 <div class="content" id="deleteStudent" ng-controller="deleteStudent">
-    <br><br><br>
+    <br>
     <h2>Delete Student</h2>
     <br>
     <select class="choice1" ng-change="selectStudent(studentId)" ng-model="studentId"
@@ -163,19 +184,24 @@
     <input type="button" class="btn btn-info input1" ng-click="getStudents()" value="getStudents">
     <br><br><br>
 
-    <form ng-submit="submit()">
-        <input type="text" placeholder="name" ng-bind="name" ng-model="name" class="input-large name-item" required disabled>
-        <input type="text" placeholder="birthday" ng-bind="birthday" ng-model="birthday" class="input-large birthday-item" required disabled>
-        <input type="text" placeholder="SSN" ng-bind="SSN" ng-model="SSN" class="input-large SSN-item" required disabled>
-        <input type="text" placeholder="status" ng-bind="status" ng-model="status" class="input-large status-item" required disabled>
-        <input type="text" placeholder="graduationDate" ng-bind="graduationDate" ng-model="graduationDate" class="input-large department-item" required disabled>
-        <input type="submit" class="btn  btn-success button-item" value="delete">
+    <form>
+        <input type="text" placeholder="name" ng-bind="name" ng-model="name" class="input-large name-item"
+               disabled>
+        <input type="text" placeholder="birthday" ng-bind="birthday" ng-model="birthday"
+               class="input-large birthday-item" disabled>
+        <input type="text" placeholder="SSN" ng-bind="SSN" ng-model="SSN" class="input-large SSN-item"
+               disabled>
+        <input type="text" placeholder="status" ng-bind="status" ng-model="status" class="input-large status-item"
+                disabled>
+        <input type="text" placeholder="graduationDate" ng-bind="graduationDate" ng-model="graduationDate"
+               class="input-large department-item"disabled>
+        <input type="button" ng-click="submit($event)" class="btn  btn-success button-item" value="delete">
     </form>
 </div>
 
-
+<!--viewReport-->
 <div class="content" id="viewReport" ng-controller="viewReport">
-    <br><br><br>
+    <br>
     <h2>view report card</h2>
     <br>
     <select class="choice1" ng-model="semester">
@@ -188,7 +214,7 @@
         <option value="7">7</option>
         <option value="8">8</option>
     </select>
-    <input type="button" value="View Report" class="btn btn-success input1" ng-click="viewReport()">
+    <input type="button" value="View Report" class="btn btn-success input1" ng-click="viewReport($event)">
     <table class="name-item">
         <tr class="course" ng-repeat="course in courses">
             <td>{{course.courseId}}</td>
@@ -197,23 +223,29 @@
         </tr>
     </table>
 </div>
+
+<!--addCourse-->
 <div class="content" id="addCourse" ng-controller="addCourse">
-    <br><br><br>
+    <br>
     <h2>Add Schedule</h2>
     <br>
     <input type="button" class="btn btn-info input1" value="View Schedule" ng-click="viewSchedule()">
-
-    <div ng-repeat="course in allCourse">
+    <div class="allCourse">
+    <div>
+       <div>id</div><div>name</div><div>day</div><div>begin</div><div>end</div><div>capacity</div>
+       </div>
+        <div ng-repeat="course in allCourse">
             <div>{{course.id}}</div>
             <div>{{course.name}}</div>
             <div>{{course.day}}</div>
             <div>{{course.begin}}</div>
             <div>{{course.end}}</div>
             <div>{{course.capacity}}</div>
-            <input type="button" ng-click="addCourse(course.id)">
+            <input type="button" ng-click="addCourse(course.id,$event)" value="add">
+        </div>
     </div>
 
-    <br><br><br>
+    <div class="selectedCourse">
         <div ng-repeat="course in selectedCourse">
             <div>{{course.id}}</div>
             <div>{{course.name}}</div>
@@ -222,14 +254,20 @@
             <div>{{course.end}}</div>
             <div>{{course.capacity}}</div>
         </div>
+    </div>
 </div>
+
+<!--deleteCourse-->
 <div class="content" id="deleteCourse" ng-controller="deleteCourse">
-    <br><br><br>
+    <br>
     <h2>Delete Schedule</h2>
     <br>
     <input type="button" class="btn btn-info input1" value="View Schedule" ng-click="viewSchedule()">
     <br><br><br>
-    <table>
+    <div class="allCourse">
+       <div>
+       <div>id</div><div>name</div><div>day</div><div>begin</div><div>end</div><div>capacity</div>
+       </div>
         <div ng-repeat="course in selectedCourse">
             <div>{{course.id}}</div>
             <div>{{course.name}}</div>
@@ -237,50 +275,81 @@
             <div>{{course.begin}}</div>
             <div>{{course.end}}</div>
             <div>{{course.capacity}}</div>
-            <input type="button" ng-click="deleteCourse(course.id)">
+            <input type="button" value="delete" ng-click="deleteCourse(course.id,$event)">
         </div>
-    </table>
+    </div>
 </div>
-<div class="content" id="submitGrade" ng-controller="submitGrade">
+
+<!--selectTeach-->
+<div class="content" id="selectTeach" ng-controller="selectTeach">
+    <br>
+    <h2>Select Teach</h2>
+    <input type="button" class="btn btn-info input4" value="View Schedule" ng-click="viewCourse()">
+    <br><br><br><br><br>
+    <h3>all courses</h3>
+    <div>
+        <div ng-repeat="course in allCourse" class="taughtCourse">
+            <input type="text" ng-bind="course.id" ng-model="course.id" disabled>
+            <input type="text" ng-bind="course.name" ng-model="course.name" disabled>
+            <input type="number" name="day" placeholder="day" required>
+            <input type="number" name="begin" placeholder="begin" required>
+            <input type="number" name="end" placeholder="end" required>
+            <input type="number" name="capacity" placeholder="capacity" required>
+            <input type="button" class="btn-info" ng-click="addCourse(course,$event)" value="add">
+        </div>
+    </div>
+
     <br><br><br>
+    <h3>selected courses</h3>
+    <div ng-repeat="course in taughtCourse"  class="taughtCourse">
+        <input type="text" ng-bind="course.id" ng-model="course.id" disabled>
+        <input type="text" ng-bind="course.name" ng-model="course.name" disabled>
+        <input type="text" ng-bind="course.day" ng-model="course.day" disabled>
+        <input type="text" ng-bind="course.begin" ng-model="course.begin" disabled>
+        <input type="text" ng-bind="course.end" ng-model="course.end" disabled>
+        <input type="text" ng-bind="course.capacity" ng-model="course.capacity" disabled>
+    </div>
+</div>
+
+<!--submitGrade-->
+<div class="content" id="submitGrade" ng-controller="submitGrade">
+    <br>
     <h2>Submit Grade</h2>
     <br>
-    <input type="button" class="btn btn-success" value="taught courses" ng-click="taughtCourse()">
-    <input type="button" class="btn btn-success" value="submit grade" ng-click="submitGrade()">
-    <br><br><br>
-    <select ng-change="selectCourse(courseId)" ng-model="courseId"
+    <input type="button" class="btn btn-info input3" value="taught courses" ng-click="taughtCourse()">
+    <select class="input4" ng-change="selectCourse(courseId)" ng-model="courseId"
             ng-options="course.id as course.name for course in taughtCourses"></select>
+    <input type="button" class="btn btn-success input5" value="submit grade" ng-click="submitGrade()">
     <br><br><br>
     <div ng-repeat="student in studentGrade">
         <input type="number" ng-bind="student.id" ng-model="student.id" disabled>
         <input type="text" ng-bind="student.name" ng-model="student.name" disabled>
-        <input type="number"  ng-bind="student.grade" ng-model="student.grade">
+        <input type="text" ng-bind="student.grade" ng-model="student.grade" required>
     </div>
 </div>
-<div class="content" id="selectTeach" ng-controller="selectTeach">
-    <input type="button" class="btn btn-info input1" value="View Schedule" ng-click="viewCourse()">
-    <br><br>
-    <div>
-    <div ng-repeat="course in allCourse"  class="taughtCourse">
-        <div>{{course.id}}</div>
-        <div>{{course.name}}</div>
-        <input type="datetime" name="begin">
-        <input type="datetime" name="after">
-        <input type="number" name="capacity">
-        <input type="button" ng-click="addCourse(course.id)" value="add">
-    </div>
-    </div>
 
-    <br><br><br>
-    <div ng-repeat="course in taughtCourse">
-        <div>{{course.id}}</div>
-        <div>{{course.name}}</div>
-        <div>{{course.day}}</div>
-        <div>{{course.begin}}</div>
-        <div>{{course.end}}</div>
-        <div>{{course.capacity}}</div>
+<!--time-->
+<div class="time"></div>
+
+
+<!--inform-->
+<div ng-controller="inform">
+<div class="inform" >
+    <img ng-click="getInform($event)" src="./images/info.jpg" width="30px" height="10px" alt="info">
+</div>
+<div class="informContent">
+    <div ng-repeat="content in contents">
+        <h3>{{content.title}}</h3>
+        <p>{{content.content}}</p>
     </div>
 </div>
+</div>
+
+
 <script src="./js/software.js"></script>
+<script src="./js/TweenLite.min.js"></script>
+<script src="./js/EasePack.min.js"></script>
+<script src="./js/rAF.js"></script>
+<script src="./js/dynamic.js"></script>
 </body>
 </html>

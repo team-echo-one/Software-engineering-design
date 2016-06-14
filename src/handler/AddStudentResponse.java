@@ -37,20 +37,22 @@ public class AddStudentResponse extends ServerResponse
 		
 		Result result = add(data)?Result.successInstance():Result.failedInstance();
 		String content = gson.toJson(result);
+		System.out.println(content);
 		FullHttpResponse response = createResponse(content, request);
 		ctx.writeAndFlush(response);
 	}
 	
 	private static boolean add(JStudent jStudent)
 	{
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
 		try
 		{
-			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-			Transaction tx = session.beginTransaction();
 			Student student = new Student();
 			student.setFromJStudent(jStudent);
 			student.setId(System.currentTimeMillis());
 			Password password = new Password();
+			password.setId(student.getId());
 			password.setAuthority(1);
 			password.setPassword(String.valueOf(student.getId()%10000));
 			student.setPassword(password);
@@ -60,6 +62,7 @@ public class AddStudentResponse extends ServerResponse
 		} catch (Exception e)
 		{
 			e.printStackTrace();
+			tx.rollback();
 			return false;
 		}
 		return true;

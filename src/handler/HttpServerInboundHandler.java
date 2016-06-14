@@ -65,6 +65,9 @@ public class HttpServerInboundHandler extends SimpleChannelInboundHandler<FullHt
 					AddProfessor.excute(request, ctx);
 					break;
 				case "getStudents":
+					GetStudents.excute(request, ctx);
+					break;
+				case "getCourseStudents":
 					GetStudentResponse.excute(request, ctx);
 					break;
 				case "updateStudent":
@@ -97,6 +100,9 @@ public class HttpServerInboundHandler extends SimpleChannelInboundHandler<FullHt
 				case "allCourses":
 					AllCourses.excute(request, ctx);
 					break;
+				case "submitGrade":
+					SubmitGrade.excute(request, ctx);
+					break;
 				case "getCourses":
 					GetCourses.excute(request, ctx);
 					break;
@@ -109,13 +115,14 @@ public class HttpServerInboundHandler extends SimpleChannelInboundHandler<FullHt
 				case "viewReport":
 					ViewReport.excute(request, ctx);
 					break;
-				case "":
-					break;
 				case "js":
 					WebHandler.sendJs(request, "web" + uri, ctx);
 					break;
 				case "css":
 					WebHandler.sendCss(request, "web" + uri, ctx);
+					break;
+				case "getInform":
+					GetInform.excute(request, ctx);
 					break;
 				case "images":
 					ImageResponse.excute(request, "web" + uri, ctx);

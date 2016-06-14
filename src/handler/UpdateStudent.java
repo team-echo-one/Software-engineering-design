@@ -3,8 +3,6 @@ package handler;
 import static io.netty.handler.codec.http.HttpResponseStatus.BAD_REQUEST;
 
 import java.nio.charset.Charset;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;

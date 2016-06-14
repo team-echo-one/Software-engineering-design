@@ -32,10 +32,12 @@ public class AddProfessor extends ServerResponse
 		Gson gson = new Gson();
 		ByteBuf buf = request.content();
 		String s = buf.toString(Charset.forName("utf-8"));
+		printRequest(s);
 		JProfessor data = gson.fromJson(s, JProfessor.class);
 		
 		Result result = add(data)?Result.successInstance():Result.failedInstance();
 		String content = gson.toJson(result);
+		printContent(content);
 		FullHttpResponse response = createResponse(content, request);
 		ctx.writeAndFlush(response);
 	}
@@ -50,6 +52,7 @@ public class AddProfessor extends ServerResponse
 			professor.setFromJProfessor(jProfessor);
 			professor.setId(System.currentTimeMillis());
 			Password password = new Password();
+			password.setId(professor.getId());
 			password.setPassword(String.valueOf(professor.getId()%10000));
 			password.setAuthority(0);
 			professor.setPassword(password);

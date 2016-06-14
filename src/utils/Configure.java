@@ -3,6 +3,9 @@ package utils;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.MissingResourceException;
 import java.util.Properties;
 
@@ -50,5 +53,24 @@ public class Configure
 	static public int getSemester()
 	{
 		return Integer.parseInt(getString("semester"));
+	}
+	
+	static public int getCheckPeriod()
+	{
+		return Integer.parseInt(getString("checkPeriod"));
+	}
+	
+	static public Date getShutDownDate()
+	{
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = null;
+		try
+		{
+			date = sdf.parse(getString("shutdown"));
+		} catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
+		return date;
 	}
 }

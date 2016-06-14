@@ -26,7 +26,6 @@ public class AllTeachCourse extends ServerResponse
 	{
 		Gson gson = new Gson();
 		List<JCourseOnlyName> courses = getCourses();
-		System.out.println(courses.size());
 		String content = gson.toJson(courses);
 		System.out.println(content);
 		FullHttpResponse response = createResponse(content, request);

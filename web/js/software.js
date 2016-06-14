@@ -7,8 +7,35 @@ angular.module('software', [])
         id: localStorage.getItem('id'),
         semester: localStorage.getItem('semester')
     })
-    .controller('addStudent', function ($scope) {
-        $scope.submit = function () {
+    .factory('$message', function () {
+        return {
+            show: function (info) {
+                var foreground = $('.foreground');
+                var message1 = $('.message1');
+                var message2 = $('.message2');
+                var index = 2;
+                foreground.show();
+                message1.text(info);
+                message2.html('<p>The window will close in<h4 style="color:rgb(60,163,193);">' + (index--) + ' second</h4></p>');
+                var interval = setInterval(function () {
+                    message2.html('<p>The window will close in<h4 style="color:rgb(60,163,193);">' + (index) + ' second</h4></p>');
+                    if (index == 0) {
+                        clearInterval(interval);
+                        message1.text('');
+                        message2.html('');
+                        foreground.hide();
+                    }
+                    index--;
+                }, 1000)
+
+            }
+        }
+    })
+    .controller('addStudent', function ($scope, $message, $http) {
+        $scope.submit = function ($event) {
+            var target = $($event.target);
+            target.val('adding');
+            target.attr('disabled', 'true');
             var data = {
                 name: $scope.name,
                 birthday: $scope.birthday,
@@ -16,32 +43,33 @@ angular.module('software', [])
                 status: $scope.status,
                 graduationDate: $scope.graduationDate
             };
-            jQuery.post('/addStudent', JSON.stringify(data), function (result, status) {
-                if (status == 'success') {
-                    result = JSON.parse(result);
+            $http.post('/addStudent', JSON.stringify(data))
+                .success(function (result) {
+                    target.val('add');
+                    target.removeAttr('disabled');
                     if (result['info'] == 'success') {
-                        alert('add success!');
+                        $message.show('add success!');
                     } else {
-                        alert('add failed!please try again!');
+                        $message.show('add failed!');
                     }
-                } else {
-                    alert('network time out!please try again');
-                }
-
-            });
+                })
+                .error(function () {
+                    target.val('add');
+                    target.removeAttr('disabled');
+                    $message('network error!');
+                })
         }
     })
-    .controller('updateStudent', function ($scope) {
+    .controller('updateStudent', function ($scope, $http, $message) {
         $scope.students = [];
         $scope.getStudents = function () {
-            jQuery.get('/getStudents', function (result, status) {
-                if (status == 'success') {
-                    $scope.students = JSON.parse(result);
-                    $scope.$digest();
-                } else {
-                    alert('network time out!please try again');
-                }
-            });
+            $http.get('/getStudents')
+                .success(function (result) {
+                    $scope.students = result;
+                })
+                .error(function () {
+                    $message.show('network error!');
+                });
         };
         $scope.studentId = 0;
         $scope.selectStudent = function (studentId) {
@@ -56,7 +84,10 @@ angular.module('software', [])
                 }
             }
         };
-        $scope.submit = function () {
+        $scope.submit = function ($event) {
+            var target = $($event.target);
+            target.val('updating');
+            target.attr('disabled', 'true');
             var data = {
                 id: $scope.studentId,
                 name: $scope.name,
@@ -65,33 +96,34 @@ angular.module('software', [])
                 status: $scope.status,
                 graduationDate: $scope.graduationDate
             };
-            jQuery.post('/updateStudent', JSON.stringify(data), function (result, status) {
-                if (status == 'success') {
-                    result = JSON.parse(result);
+            $http.post('/updateStudent', JSON.stringify(data))
+                .success(function (result) {
+                    target.val('update');
+                    target.removeAttr('disabled');
                     if (result['info'] == 'success') {
-                        alert('update success!');
+                        $message.show('update success!');
                     } else {
-                        alert('update failed!please try again!');
+                        $message.show('update failed!');
                     }
-                } else {
-                    alert('network time out!please try again');
-                }
-
-            });
+                })
+                .error(function () {
+                    target.val('update');
+                    target.removeAttr('disabled');
+                    $message.show('network error!');
+                });
         }
 
     })
-    .controller('deleteStudent', function ($scope) {
+    .controller('deleteStudent', function ($scope, $http, $message) {
         $scope.students = [];
         $scope.getStudents = function () {
-            jQuery.get('/getStudents', function (result, status) {
-                if (status == 'success') {
-                    $scope.students = JSON.parse(result);
-                    $scope.$digest();
-                } else {
-                    alert('network time out!please try again');
-                }
-            });
+            $http.get('/getStudents')
+                .success(function (result) {
+                    $scope.students = result;
+                })
+                .error(function () {
+                    $message.show('network error!');
+                })
         };
         $scope.studentId = 0;
         $scope.selectStudent = function (studentId) {
@@ -106,30 +138,39 @@ angular.module('software', [])
                 }
             }
         };
-        $scope.submit = function () {
+        $scope.submit = function ($event) {
             var verify = confirm("submit delete?");
             if (verify) {
+                var target = $($event.target);
+                target.val('deleting');
+                target.attr('disabled', 'true');
                 var data = {
                     id: $scope.studentId
                 };
-                jQuery.post('/deleteStudent', JSON.stringify(data), function (result, status) {
-                    if (status == 'success') {
-                        result = JSON.parse(result);
+                $http.post('/deleteStudent', JSON.stringify(data))
+                    .success(function (result) {
+                        target.val('delete');
+                        target.removeAttr('disabled');
                         if (result['info'] == 'success') {
-                            alert('delete success!');
+                            $message.show('delete success!');
                         } else {
-                            alert('delete failed!please try again!');
+                            $message.show('delete failed!');
                         }
-                    } else {
-                        alert('network time out!please try again');
-                    }
-
-                });
+                    })
+                    .error(function () {
+                        target.val('delete');
+                        target.removeAttr('disabled');
+                        $message.show('network error!');
+                    })
             }
         }
+
     })
-    .controller('addProfessor', function ($scope) {
-        $scope.submit = function () {
+    .controller('addProfessor', function ($scope, $http, $message) {
+        $scope.submit = function ($event) {
+            var target = $($event.target);
+            target.val('adding');
+            target.attr('disabled', 'true');
             var data = {
                 name: $scope.name,
                 birthday: $scope.birthday,
@@ -138,31 +179,31 @@ angular.module('software', [])
                 department: $scope.department
             };
 
-            jQuery.post('/addProfessor', JSON.stringify(data), function (result, status) {
-                if (status == 'success') {
-                    result = JSON.parse(result);
+            $http.post('/addProfessor', JSON.stringify(data))
+                .success(function (result) {
+                    target.val('add');
+                    target.removeAttr('disabled');
                     if (result['info'] == 'success') {
-                        alert('add success!');
+                        $message.show('add success!');
                     } else {
-                        alert('add failed!please try again!');
+                        $message.show('add failed!');
                     }
-                } else {
-                    alert('network time out!please try again');
-                }
-
-            });
+                }).error(function () {
+                target.val('add');
+                target.removeAttr('disabled');
+                $message.show('network error!');
+            })
         }
     })
-    .controller('updateProfessor', function ($scope) {
+    .controller('updateProfessor', function ($scope, $http, $message) {
         $scope.getProfessors = function () {
-            jQuery.get('/getProfessors', function (result, status) {
-                if (status == 'success') {
-                    $scope.professors = JSON.parse(result);
-                    $scope.$digest();
-                } else {
-                    alert('network time out!please try again');
-                }
-            });
+            $http.get('/getProfessors')
+                .success(function (result) {
+                    $scope.professors=result;
+                })
+                .error(function () {
+                    $message.show('network error!');
+                });
         };
         $scope.professorId = 0;
         $scope.selectProfessor = function (professorId) {
@@ -177,7 +218,10 @@ angular.module('software', [])
                 }
             }
         };
-        $scope.submit = function () {
+        $scope.submit = function ($event) {
+            var target = $($event.target);
+            target.val('updating');
+            target.attr('disabled', 'true');
             var data = {
                 id: $scope.professorId,
                 name: $scope.name,
@@ -186,33 +230,35 @@ angular.module('software', [])
                 status: $scope.status,
                 department: $scope.department
             };
-            jQuery.post('/updateProfessor', JSON.stringify(data), function (result, status) {
-                if (status == 'success') {
-                    result = JSON.parse(result);
+            $http.post('/updateProfessor', JSON.stringify(data))
+                .success(function (result) {
+                    target.val('update');
+                    target.removeAttr('disabled');
                     if (result['info'] == 'success') {
-                        alert('update success!');
+                        $message.show('update success!');
                     } else {
-                        alert('update failed!please try again!');
+                        $message.show('update failed!');
                     }
-                } else {
-                    alert('network time out!please try again');
-                }
 
-            });
+                })
+                .error(function () {
+                    target.val('update');
+                    target.removeAttr('disabled');
+                    $message.show('network error!');
+                });
         }
 
     })
-    .controller('deleteProfessor', function ($scope) {
+    .controller('deleteProfessor', function ($scope, $http, $message) {
         $scope.professors = [];
         $scope.getProfessors = function () {
-            jQuery.get('/getProfessors', function (result, status) {
-                if (status == 'success') {
-                    $scope.professors = JSON.parse(result);
-                    $scope.$digest();
-                } else {
-                    alert('network time out!please try again');
-                }
-            });
+            $http.get('/getProfessors')
+                .success(function (result) {
+                    $scope.professors = result;
+                })
+                .error(function () {
+                    $message.show('network error!');
+                })
         };
         $scope.professorId = 0;
         $scope.selectProfessor = function (professorId) {
@@ -227,223 +273,272 @@ angular.module('software', [])
                 }
             }
         };
-        $scope.submit = function () {
+        $scope.submit = function ($event) {
             var verify = confirm("submit delete?");
             if (verify) {
+                var target = $($event.target);
+                target.val('deleting');
+                target.attr('disabled', 'true');
                 var data = {
                     id: $scope.professorId
                 };
-                jQuery.post('/deleteProfessor', JSON.stringify(data), function (result, status) {
-                    if (status == 'success') {
-                        result = JSON.parse(result);
+                $http.post('/deleteProfessor', JSON.stringify(data))
+                    .success(function (result) {
+                        target.val('delete');
+                        target.removeAttr('disabled');
                         if (result['info'] == 'success') {
-                            alert('delete success!');
+                            $message.show('delete success!');
                         } else {
-                            alert('delete failed!please try again!');
+                            $message.show('delete failed!');
                         }
-                    } else {
-                        alert('network time out!please try again');
-                    }
 
-                });
+                    })
+                    .error(function () {
+                        target.val('delete');
+                        target.removeAttr('disabled');
+                        $message.show('network error!');
+                    });
             }
         }
     })
-    .controller('viewReport', function ($scope, $id) {
+    .controller('viewReport', function ($scope, $http, $id, $message) {
         $scope.courses = [];
         $scope.semester = 1;
-        $scope.viewReport = function () {
+        $scope.viewReport = function ($event) {
+            var target = $($event.target);
+            target.val('View Reporting');
+            target.attr('disabled', 'true');
             var data = {
                 id: $id.id,
                 semester: $scope.semester
             };
-            jQuery.post('/viewReport', JSON.stringify(data), function (result, status) {
-                if (status == 'success') {
-                    $scope.courses = JSON.parse(result);
-                    $scope.$digest();
-                } else {
-                    alert('network time out!please try again');
-                }
-            });
+
+            $http.post('/viewReport', data)
+                .success(function (result) {
+                    target.val('View Report');
+                    target.removeAttr('disabled', 'false');
+                    $scope.courses = result;
+                })
+                .error(function () {
+                    target.val('View Report');
+                    target.removeAttr('disabled');
+                    $message.show('network error!');
+                });
+
         };
 
     })
-    .controller('addCourse', function ($scope, $id) {
+    .controller('addCourse', function ($scope, $http, $message, $id) {
         var data = {
             id: $id.id
         };
         $scope.allCourse = [];
         $scope.selectedCourse = [];
         $scope.viewSchedule = function () {
-            jQuery.post('/getCourses', JSON.stringify(data), function (result, status) {
-                if (status == 'success') {
-                console.log(result);
-                    $scope.selectedCourse = JSON.parse(result);
-                    $scope.$digest();
-                } else {
-                    alert('network time out!please try again');
-                }
-            });
-            jQuery.get('/allCourses', function (result, status) {
-            console.log(result);
-                if (status == 'success') {
-                    $scope.allCourse = JSON.parse(result);
-                    $scope.$digest();
-                } else {
-                    alert('network time out!please try again');
-                }
-            });
+            $http.post('getCourses', JSON.stringify(data))
+                .success(function (result) {
+                    $scope.selectedCourse = result;
+                })
+                .error(function () {
+                    $message.show('network error!');
+                });
+            $http.get('allCourses')
+                .success(function (result) {
+                    $scope.allCourse = result;
+                })
+                .error(function () {
+                    $message.show('network error!');
+                });
         };
-        $scope.addCourse = function (id) {
-            for (var i = 0; i < $scope.selectedCourse.length; i++) {
-                var course = $scope.selectedCourse[i];
-                if (course['id'] == id) {
-                    alert('you had selected this course!');
-                    return;
-                }
-            }
-            jQuery.post('/addCourse', JSON.stringify({id: $id.id, courseId: id}), function (result, status) {
-                if (status == 'success') {
-                    result = JSON.parse(result);
-                    if (result['info'] == 'success') {
-                        alert('add success!');
-                    } else {
-                        alert('add failed!');
+        $scope.addCourse = function (id, $event) {
+            var choose = confirm('add this course?');
+            if (choose) {
+                for (var i = 0; i < $scope.selectedCourse.length; i++) {
+                    var course = $scope.selectedCourse[i];
+                    if (course['id'] == id) {
+                        $message.show('you had selected this course!');
+                        return;
                     }
-                } else {
-                    alert('network error!');
                 }
-            });
+                var target = $($event.target);
+
+                $http.post('/addCourse', JSON.stringify({id: $id.id, courseId: id}))
+                    .success(function (result) {
+                        if (result['info'] == 'success') {
+                            $message.show('add success!');
+                            target.hide();
+                        } else {
+                            $message.show('add failed!');
+                        }
+
+                    })
+                    .error(function () {
+                        $message.show('network error!');
+                    })
+            }
         }
     })
-    .controller('deleteCourse', function ($scope, $id) {
+    .controller('deleteCourse', function ($scope, $http, $message, $id) {
         var data = {
             id: $id.id
         };
         $scope.selectedCourse = [];
         $scope.viewSchedule = function () {
-            jQuery.post('/getCourses', JSON.stringify(data), function (result, status) {
-                if (status == 'success') {
-                    $scope.selectedCourse = JSON.parse(result);
-                    $scope.$digest();
-                } else {
-                    alert('network time out!please try again');
-                }
-            });
+            $http.post('/getCourses', JSON.stringify(data))
+                .success(function (result) {
+                    $scope.selectedCourse = result;
+                })
+                .error(function () {
+                    $message.show('network error!');
+                })
         };
-        $scope.deleteCourse = function (id) {
-            jQuery.post('/deleteCourse', JSON.stringify({id: $id.id, courseId: id}), function (result, status) {
-                if (status == 'success') {
-                    result = JSON.parse(result);
-                    if (result['info'] == 'success') {
-                        alert('delete success!');
-                    } else {
-                        alert('delete failed!');
-                    }
-                } else {
-                    alert('network error!');
-                }
-            });
+        $scope.deleteCourse = function (id, $event) {
+            var choose = confirm('delete this course?');
+            if (choose) {
+                var parent = $($event.target).parent();
+                $http.post('/deleteCourse', JSON.stringify({id: $id.id, courseId: id}))
+                    .success(function (result) {
+                        if (result['info'] == 'success') {
+                            parent.hide();
+                            $message.show('delete success!');
+                        } else {
+                            $message.show('delete failed!');
+                        }
+
+                    })
+                    .error(function () {
+                        $message.show('network error!');
+                    });
+            }
         }
     })
-    .controller('selectTeach', function ($scope, $id) {
+    .controller('selectTeach', function ($scope, $http, $message, $id) {
         var data = {
             id: $id.id
         };
+        var title=$('div#selectTeach>h3');
+        title.hide();
         $scope.viewCourse = function () {
-            jQuery.get('/allTaughtCourses', function (result, status) {
-                if (status == 'success') {
-                    $scope.allCourse = JSON.parse(result);
-                    $scope.$digest();
-                } else {
-                    alert('network error!');
-                }
-            });
-            jQuery.post('/myTaughtCourses', JSON.stringify(data), function (result, status) {
-                if (status == 'success') {
-                console.log(result);
-                    $scope.taughtCourse = JSON.parse(result);
-                    $scope.$digest();
-                } else {
-                    alert('network error');
-                }
-            })
+            title.show();
+            $http.get('/allTaughtCourses')
+                .success(function (result) {
+                    $scope.allCourse = result;
+                })
+                .error(function () {
+                    $message.show('network error!');
+                });
+            $http.post('/myTaughtCourses', JSON.stringify(data))
+                .success(function (result) {
+                    $scope.taughtCourse = result;
+                })
+                .error(function () {
+                    $message.show('network error!');
+                })
         };
-        $scope.addCourse = function (id) {
-        
-            var info={};
-            var divS=$('div#selectTeach>div:eq(0)>div');
-            for(var i=0;i<divS.length;i++){
-                var item=$(divS[i]);
-                if(item.find('div:eq(0)').text()==id){
-                    info['professorId']=$id.id;
-                    info['courseId']=id;
-                    info['day']=1;
-                    info['begin']=2;
-                    info['end']=3;
-                    info['capacity']=item.find('input:eq(2)').val();
-                    break;
+        $scope.addCourse = function (course,$event ){
+            var target=$($event.target);
+            target.val('selecting');
+
+            var choice=confirm("you want to choose this course?");
+            if(choice) {
+                for(var i=0;i<$scope.allCourse;i++){
+                    if(course.id==$scope.allCourse[i].id){}
+                    $message.show('you have chose this course!');
+                    return;
                 }
+                var info={
+                    professorId:$id.id,
+                    courseId:course.id,
+                    day:course.day,
+                    begin:course.begin,
+                    end:course.end,
+                    capacity:course.capacity
+                };
+                $http.post('/addTaughtCourse', JSON.stringify(info))
+                    .success(function (result) {
+                        if (result['info'] == 'success') {
+                            target.attr('disabled', 'true');
+                            target.val('selected');
+                            $message.show('add success!');
+                        } else {
+                            $message.show('add failed!');
+                        }
+                    })
+                    .error(function () {
+                        $message.show('network error!');
+                    })
             }
-            console.log(JSON.stringify(info));
-            jQuery.post('/addTaughtCourse', JSON.stringify(info),function (result, status) {
-                if (status == 'success') {
-                    result = JSON.parse(result);
-                    if (result['info'] == 'success') {
-                        alert('add course success');
-                    } else {
-                        alert('add course failed!');
-                    }
-                } else {
-                    alert('network error');
-                }
-            })
         }
     })
-    .controller('submitGrade', function ($scope, $id) {
+    .controller('submitGrade', function ($scope, $http, $message, $id) {
         $scope.taughtCourses = [];
         $scope.taughtCourse = function () {
-            jQuery.post('/taughtCourse', JSON.stringify({id: $id.id}), function (data, status) {
-                if (status == 'success') {
-                    $scope.taughtCourses = JSON.parse(data);
-                } else {
-                    alert('network error!please try again');
-                }
-            });
+            $http.post('/myTaughtCourses', JSON.stringify({id: $id.id}))
+                .success(function (data) {
+                    $scope.taughtCourses = data;
+                })
+                .error(function () {
+                    $message.show('network error!');
+                });
         };
         $scope.courseId = 0;
-        $scope.selectCourse = function (courseId) {
-            jQuery.post('/selectCourse', JSON.stringify({id: courseId}), function (data, status) {
-                if (status == 'success') {
-                    $scope.studentGrade = JSON.parse(data);
-
-                } else {
-                    alert('network error!please try again');
-                }
-
-            });
+        $scope.selectCourse = function () {
+            $http.post('/getCourseStudents',
+            JSON.stringify({courseId:$scope.courseId,professorId:$id.id}))
+                .success(function (data) {
+                    $scope.studentGrade = data;
+                })
+                .error(function () {
+                    $http.show('network error!');
+                });
         };
+
+
         $scope.submitGrade = function () {
             var studentId = [];
             var studentGrade = [];
-            for (var id in $('#submitGrade>form>div>input:eq(0)'))
-                studentId.push(id.val());
-            for (var grade in $('#submitGrade>form>div>input:eq(2)'))
-                studentGrade.push(grade.val());
+            var ids=$('div#submitGrade>div>input:nth-child(1)');
+            var grades=$('div#submitGrade>div>input:nth-child(3)');
+            for(var i=0;i<ids.length;i++){
+                studentId.push($(ids[i]).val());
+                studentGrade.push($(grades[i]).val());
+            }
             var data = {
+                professorId:$id.id,
                 courseId: $scope.courseId,
                 studentIds: studentId,
                 studentGrades: studentGrade
             };
-            jQuery.post('/submitGrade', JSON.stringify(data), function (data, status) {
-                if (status == 'success') {
-                    alert('submit grade success');
-                } else {
-                    alert('submit grade error!please try again');
-                }
+            $http.post('/submitGrade', JSON.stringify(data))
+                .success(function (data) {
+                    if (data['info'] == 'success')
+                        $message.show('submit success!');
+                    else
+                        $message.show('submit failed!');
+                })
+                .error(function () {
+                    $message.show('network error!');
+                })
+        };
+    })
+    .controller('inform', function ($scope, $http, $message, $id) {
 
-            });
+        $scope.getInform = function ($event) {
+            $event.stopPropagation();
+            var informContent = $('.informContent');
+
+            $http.post('/getInform', JSON.stringify({'id': $id.id}))
+                .success(function (data) {
+                    if (data) {
+                        informContent.show();
+                        $scope.contents = data;
+                    }
+                })
+                .error(function () {
+                    $message.show('network error!');
+                })
         }
+
     });
 
 

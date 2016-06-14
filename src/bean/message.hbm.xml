@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="bean">
+	<class name="Message" table="MESSAGE">
+		<id name="id" column="message_id">
+			<generator class="increment"></generator>
+		</id>
+		<property name="title" type="string" />
+		<property name="content" type = "string"/>
+		<property name="releaseDate" type="timestamp"/>
+	</class>
+</hibernate-mapping>

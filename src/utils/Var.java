@@ -17,6 +17,8 @@ public class Var
 	public static String Host="imadministrition.xicp.net";		//连接的主机地址和端口
 	public static int Port;
 	
+	public static boolean isForceShutDown = false;
+	
 	public static JTextArea tarea_info=null;		//用于在其他线程进行更改的组件的引用，JTextArea主要用于调试
 	public static JTextField tf_Count=null;		//显示在线用户人数
 	

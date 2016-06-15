@@ -62,6 +62,7 @@
     <input type="button" class="item" id="iAddStudent" value="Add Student"/>
     <input type="button" class="item" id="iUpdateStudent" value="Update Student"/>
     <input type="button" class="item" id="iDeleteStudent" value="Delete Student"/>
+    <input type="button" class="item" id="iEndRegistrar" value="End Registrar">
 </div>
 
 <!--addProfessor-->
@@ -198,11 +199,20 @@
         <input type="button" ng-click="submit($event)" class="btn  btn-success button-item" value="delete">
     </form>
 </div>
-
+<!--endRegistrar-->
+<div class="content" id="endRegistrar" ng-controller="endRegistrar">
+    <br>
+    <h2>End Registrar</h2>
+    <form>
+        <input type="text" ng-model="id" required>
+        <input type="password" ng-model="password" required>
+        <input  ng-click="submit($event)" type="submit" class="btn btn-success" value="End Registrar">
+    </form>
+</div>
 <!--viewReport-->
 <div class="content" id="viewReport" ng-controller="viewReport">
     <br>
-    <h2>view report card</h2>
+    <h2>View Report Card</h2>
     <br>
     <select class="choice1" ng-model="semester">
         <option value="1">1</option>
@@ -231,9 +241,6 @@
     <br>
     <input type="button" class="btn btn-info input1" value="View Schedule" ng-click="viewSchedule()">
     <div class="allCourse">
-    <div>
-       <div>id</div><div>name</div><div>day</div><div>begin</div><div>end</div><div>capacity</div>
-       </div>
         <div ng-repeat="course in allCourse">
             <div>{{course.id}}</div>
             <div>{{course.name}}</div>
@@ -265,9 +272,6 @@
     <input type="button" class="btn btn-info input1" value="View Schedule" ng-click="viewSchedule()">
     <br><br><br>
     <div class="allCourse">
-       <div>
-       <div>id</div><div>name</div><div>day</div><div>begin</div><div>end</div><div>capacity</div>
-       </div>
         <div ng-repeat="course in selectedCourse">
             <div>{{course.id}}</div>
             <div>{{course.name}}</div>

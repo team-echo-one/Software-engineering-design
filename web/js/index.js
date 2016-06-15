@@ -90,6 +90,7 @@ $(function(){
     var iAddStudent= $('#iAddStudent');
     var iUpdateStudent= $('#iUpdateStudent');
     var iDeleteStudent= $('#iDeleteStudent');
+    var iEndRegistrar=$('#iEndRegistrar');
 
     var viewReport=$("#viewReport");
     var addCourse=$('#addCourse');
@@ -104,6 +105,7 @@ $(function(){
     var addStudent= $('#addStudent');
     var updateStudent= $('#updateStudent');
     var deleteStudent= $('#deleteStudent');
+    var endRegistrar=$('#endRegistrar');
 
     var content=$('.content');
 
@@ -126,6 +128,7 @@ $(function(){
     handleClick(iAddStudent,addStudent);
     handleClick(iUpdateStudent,updateStudent);
     handleClick(iDeleteStudent,deleteStudent);
+    handleClick(iEndRegistrar,endRegistrar);
 
 
 });

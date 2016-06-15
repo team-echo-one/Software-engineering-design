@@ -24,7 +24,7 @@ public class AddStudentResponse extends ServerResponse
 {
 	public static void excute(FullHttpRequest request, ChannelHandlerContext ctx)
 	{
-		if(request.getMethod()!=HttpMethod.POST)
+		if (request.getMethod() != HttpMethod.POST)
 		{
 			sendError(ctx, BAD_REQUEST);
 			return;
@@ -34,14 +34,14 @@ public class AddStudentResponse extends ServerResponse
 		String s = buf.toString(Charset.forName("utf-8"));
 		System.out.println(s);
 		JStudent data = gson.fromJson(s, JStudent.class);
-		
-		Result result = add(data)?Result.successInstance():Result.failedInstance();
+
+		Result result = add(data) ? Result.successInstance() : Result.failedInstance();
 		String content = gson.toJson(result);
 		System.out.println(content);
 		FullHttpResponse response = createResponse(content, request);
 		ctx.writeAndFlush(response);
 	}
-	
+
 	private static boolean add(JStudent jStudent)
 	{
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -54,7 +54,12 @@ public class AddStudentResponse extends ServerResponse
 			Password password = new Password();
 			password.setId(student.getId());
 			password.setAuthority(1);
-			password.setPassword(String.valueOf(student.getId()%10000));
+			int p = (int) (student.getId() % 10000);
+			if (p < 1000)
+			{
+				p *= 10;
+			}
+			password.setPassword(String.valueOf(p));
 			student.setPassword(password);
 			session.save(student);
 			session.save(password);

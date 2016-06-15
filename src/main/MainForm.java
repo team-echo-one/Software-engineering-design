@@ -13,6 +13,8 @@ import org.hibernate.Transaction;
 
 import bean.Course;
 import bean.Message;
+import bean.Student;
+import bean.Student_Course;
 import listener.HttpListenThread;
 import utils.Configure;
 import utils.HibernateUtil;
@@ -22,6 +24,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -34,6 +37,7 @@ import java.awt.event.KeyEvent;
 
 public class MainForm
 {
+	Timer timer;
 	HttpListenThread listenThread = null;
 	private JFrame frmServer;
 	private JTextField tf_IP;
@@ -151,7 +155,7 @@ public class MainForm
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				Timer timer = new Timer();
+				timer = new Timer();
 				timer.schedule(new CheckTask(), 0, Configure.getCheckPeriod() * 60 * 1000);
 				listenThread = new HttpListenThread();
 				int port = 0;
@@ -231,6 +235,11 @@ public class MainForm
 					if (course.getStudents().size() <= 3)
 					{
 						courses.add(course);
+						for(Map.Entry<Student, Student_Course> entry : course.getStudents().entrySet())
+						{
+							entry.getKey().getCourses().remove(course);
+						}
+						System.out.println("canceled:"+course.getName());
 					}
 				}
 				String title = "Notification : Course has been canceled";
@@ -247,6 +256,8 @@ public class MainForm
 				message.setReleaseDate(new Date());
 				session.save(message);
 				tx.commit();
+				Var.isForceShutDown = true;
+				timer.cancel();
 			} catch (Exception e)
 			{
 				tx.rollback();

@@ -301,6 +301,30 @@ angular.module('software', [])
             }
         }
     })
+    .controller('endRegistrar',function($scope,$http,$id,$message){
+        $scope.submit=function ($event) {
+            var target=$($event.target);
+            target.attr('disabled','true');
+            var data={
+                id:$scope.id,
+                password:$scope.password
+            };
+            $http.post('/endRegistrar',JSON.stringify(data))
+                .success(function(result){
+                    if(result['info']=='success'){
+                        $message.show('end registrar success!');
+                    }else{
+                        target.removeAttr('disabled');
+                        $message.show('end registrar failed!');
+                    }
+                })
+                .error(function(){
+                    target.removeAttr('disabled');
+                    $message.show('network error!');
+                })
+        }
+
+    })
     .controller('viewReport', function ($scope, $http, $id, $message) {
         $scope.courses = [];
         $scope.semester = 1;
@@ -446,6 +470,20 @@ angular.module('software', [])
                     $message.show('you have chose this course!');
                     return;
                 }
+                var days=[],begins=[],ends=[];
+                for( i=0;i<$scope.allCourse.length;i++){
+                    days.push($scope.allCourse[i].day);
+                    begins.push($scope.allCourse[i].begin);
+                    ends.push($scope.allCourse[i].end);
+                }
+                for(i=0;i<days.length;i++){
+                    if(course.day==days[i]){
+                        if((course.begin>begins[i]&&course.end<ends[i])||(course.end>begins[i]&&course.end<ends[i])){
+                            $message.show("time conflict!");
+                            return ;
+                        }
+                    }
+                }
                 var info={
                     professorId:$id.id,
                     courseId:course.id,
@@ -492,8 +530,6 @@ angular.module('software', [])
                     $http.show('network error!');
                 });
         };
-
-
         $scope.submitGrade = function () {
             var studentId = [];
             var studentGrade = [];
@@ -511,7 +547,7 @@ angular.module('software', [])
             };
             $http.post('/submitGrade', JSON.stringify(data))
                 .success(function (data) {
-                    if (data['info'] == 'success')
+                    if (data['info' == 'success'])
                         $message.show('submit success!');
                     else
                         $message.show('submit failed!');

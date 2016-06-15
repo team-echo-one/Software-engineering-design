@@ -3,6 +3,8 @@ package handler;
 import static io.netty.handler.codec.http.HttpResponseStatus.BAD_REQUEST;
 
 import java.nio.charset.Charset;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.hibernate.Session;
@@ -76,7 +78,7 @@ public class LoginResponse extends ServerResponse
 						name = registrar.getName();
 					}
 					result  = new LoginSuccess(name,pswd.getAuthority());
-					pswd.setLastLogin(new Date());
+					//pswd.setLastLogin(new Date());
 				}else
 				{
 					result = LoginDeny.newNotMatchInstance();
@@ -88,5 +90,25 @@ public class LoginResponse extends ServerResponse
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	public static void main(String[] args)
+	{
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		Password password  = (Password) session.get(Password.class,1465828095364L);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date lastDate =null;
+		try
+		{
+			lastDate = sdf.parse("1970-05-14");
+		} catch (ParseException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		password.setLastLogin(lastDate);
+		tx.commit();
 	}
 }

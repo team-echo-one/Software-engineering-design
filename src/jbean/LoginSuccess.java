@@ -8,6 +8,7 @@ public class LoginSuccess
 	String name;
 	String identity;
 	int semester;
+	String endTime;
 
 	public LoginSuccess(String name, int authortiy)
 	{
@@ -20,6 +21,16 @@ public class LoginSuccess
 		if (authortiy == 2)
 			this.identity = "registrar";
 		semester = Configure.getSemester();
+	}
+
+	public void setEndTime(String endTime)
+	{
+		this.endTime = endTime;
+	}
+
+	public String getEndTime()
+	{
+		return endTime;
 	}
 
 	public void setSemester(int semester)

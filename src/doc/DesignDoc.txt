@@ -3,3 +3,6 @@
 开发语言为java,html,js,css
   
 后台采用netty NIO框架，数据持久化使用hibernate
+
+表结构如下
+

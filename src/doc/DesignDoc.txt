@@ -6,17 +6,17 @@
 
 表结构如下
 +--------------------+
-| Tables_in_design   |
+| Tables_in_design    |
 +--------------------+
-| course             |
-| financial          |
-| message            |
-| password           |
-| professor          |
+| course					   |
+| financial          	   |	
+| message           	   |
+| password          	   |
+| professor          	   |
 | professors_courses |
-| registrar          |
-| student            |
-| students_courses   |
+| registrar          	   |
+| student           	   |
+| students_courses    |
 +--------------------+
 
 course表
@@ -45,9 +45,9 @@ professors_courses
 +-----------+-------+----------+----+-------+-----+----------+--------------+
 
 student
-+-------------+---------+----+--------+---------------+---------------------+-----------+---------------+
-| student_id    | name    | ssN  | status  | birth               | graduationDate      | financial | password      |
-+-------------+---------+-----+-------+---------------+---------------------+-----------+---------------+
++-------------+---------+----+--------+------+---------------------+-----------+---------+
+| student_id    | name    | ssN  | status  | birth  | graduationDate      | financial | password |
++-------------+---------+-----+-------+------+---------------------+-----------+---------+
 
 students_courses
 +-----------+-------+----------+

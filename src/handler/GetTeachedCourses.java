@@ -38,9 +38,9 @@ public class GetTeachedCourses extends ServerResponse
 		ByteBuf buf = request.content();
 		String s = buf.toString(Charset.forName("utf-8"));
 		VariousId data = gson.fromJson(s, VariousId.class);
-
+		printRequest(s);
 		String content = gson.toJson(getCourses(data));
-		System.out.println(content);
+		printContent(content);
 		FullHttpResponse response = createResponse(content, request);
 		ctx.writeAndFlush(response);
 	}

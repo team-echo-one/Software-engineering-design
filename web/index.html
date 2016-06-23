@@ -241,6 +241,7 @@
     <br>
     <input type="button" class="btn btn-info input1" value="View Schedule" ng-click="viewSchedule()">
     <div class="allCourse">
+    <div><div>Id</div><div>course</div><div>day</div><div>begin</div><div>end</div><div>capacity</div></div>
         <div ng-repeat="course in allCourse">
             <div>{{course.id}}</div>
             <div>{{course.name}}</div>
@@ -253,6 +254,7 @@
     </div>
 
     <div class="selectedCourse">
+     <div><div>Id</div><div>course</div><div>day</div><div>begin</div><div>end</div><div>capacity</div></div>
         <div ng-repeat="course in selectedCourse">
             <div>{{course.id}}</div>
             <div>{{course.name}}</div>
@@ -272,6 +274,7 @@
     <input type="button" class="btn btn-info input1" value="View Schedule" ng-click="viewSchedule()">
     <br><br><br>
     <div class="allCourse">
+    <div><div>Id</div><div>course</div><div>day</div><div>begin</div><div>end</div><div>capacity</div></div>
         <div ng-repeat="course in selectedCourse">
             <div>{{course.id}}</div>
             <div>{{course.name}}</div>

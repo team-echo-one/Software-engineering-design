@@ -24,6 +24,7 @@ $(function(){
     var teacher=$('#teacher');
     var student=$('#student');
     var registrar=$('#registrar');
+    var informContent=$('.informContent');
     if(identity=='teacher'){
         student.hide();
         registrar.hide();
@@ -36,6 +37,7 @@ $(function(){
         teacher.hide();
         registrar.hide();
         student.show();
+        informContent;
     }
 
     /** show name*/

@@ -339,8 +339,13 @@ angular.module('software', [])
 
             $http.post('/viewReport', data)
                 .success(function (result) {
-                    target.val('View Report');
-                    target.removeAttr('disabled', 'false');
+                target.val('View Report');
+                    target.removeAttr('disabled');
+                	if(result['info']=="this student doesn't have history course"){
+                		$message.show("this student doesn't have history course");
+                		return;
+                	}
+                   result.unshift({"courseId":'ID',"name":"courseName","teacher":"professor"});
                     $scope.courses = result;
                 })
                 .error(function () {
@@ -446,6 +451,9 @@ angular.module('software', [])
             title.show();
             $http.get('/allTaughtCourses')
                 .success(function (result) {
+                	if(result.length==0){
+                		$message.show('All course is empty! ');
+                	}
                     $scope.allCourse = result;
                 })
                 .error(function () {
@@ -453,6 +461,7 @@ angular.module('software', [])
                 });
             $http.post('/myTaughtCourses', JSON.stringify(data))
                 .success(function (result) {
+                   result.unshift({'id':'id','name':'name','day':'day','begin':'begin','end':'end','capacity':'capacity'});
                     $scope.taughtCourse = result;
                 })
                 .error(function () {
@@ -513,6 +522,11 @@ angular.module('software', [])
         $scope.taughtCourse = function () {
             $http.post('/myTaughtCourses', JSON.stringify({id: $id.id}))
                 .success(function (data) {
+                console.log(data);
+                   if(data.length==0){
+                   		$message.show('you have not chosen any courses!');
+                   		return;
+                   }
                     $scope.taughtCourses = data;
                 })
                 .error(function () {

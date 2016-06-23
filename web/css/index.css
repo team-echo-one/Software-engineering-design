@@ -303,6 +303,7 @@ tr.course>td{
     width:250px;
     display: none;
     color:white;
+    display:none;
 }
 .informContent>div{
     border-bottom: 1px solid #4bb1cf;

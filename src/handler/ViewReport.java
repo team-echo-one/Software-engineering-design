@@ -52,9 +52,10 @@ public class ViewReport extends ServerResponse
 	{
 		List<JViewReportResponse> result = new ArrayList<>();
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx = session.beginTransaction();
+		Transaction tx = null;
 		try
 		{
+			tx = session.beginTransaction();
 			Student student = (Student) session.get(Student.class, request.getId());
 			if (student == null)
 			{
@@ -75,12 +76,12 @@ public class ViewReport extends ServerResponse
 				result.add(new JViewReportResponse(entry.getKey().getId(), entry.getKey().getName(),
 						e.getKey().getName()));
 			}
-			tx.commit();
 		} catch (Exception e)
 		{
 			e.printStackTrace();
-			tx.rollback();
 			return new ArrayList<>();
+		}finally {
+			session.close();
 		}
 		return result;
 	}

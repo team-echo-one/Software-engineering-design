@@ -230,6 +230,7 @@
             <td>{{course.courseId}}</td>
             <td>{{course.name}}</td>
             <td>{{course.teacher}}</td>
+            <td>{{course.grade}}</td>
         </tr>
     </table>
 </div>
@@ -347,7 +348,7 @@
 <div class="informContent">
     <div ng-repeat="content in contents">
         <h3>{{content.title}}</h3>
-        <p>{{content.content}}</p>
+        <div ng-bind-html="content.content"></div>
     </div>
 </div>
 </div>

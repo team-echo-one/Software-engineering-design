@@ -302,17 +302,19 @@ tr.course>td{
     top:60px;
     width:250px;
     display: none;
-    color:white;
+    width:400px;
     display:none;
+    background-color:white;
+    color:black;
 }
 .informContent>div{
     border-bottom: 1px solid #4bb1cf;
 }
 .informContent>div>h3{
-    text-align: center;
+    text-align: left;
 }
-.informContent>div>p{
-    text-indent: 2em;
+.informContent>div>div{
+	font-size:20px;
     text-align: left;
     padding-left: 4px;
     padding-right: 4px;

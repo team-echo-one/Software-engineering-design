@@ -345,7 +345,7 @@ angular.module('software', [])
                 		$message.show("this student doesn't have history course");
                 		return;
                 	}
-                   result.unshift({"courseId":'ID',"name":"courseName","teacher":"professor"});
+                   result.unshift({"courseId":'ID',"name":"courseName","teacher":"professor",'grade':'grade'});
                     $scope.courses = result;
                 })
                 .error(function () {
@@ -571,7 +571,7 @@ angular.module('software', [])
                 })
         };
     })
-    .controller('inform', function ($scope, $http, $message, $id) {
+    .controller('inform', function ($scope, $http, $message, $id,$sce) {
 
         $scope.getInform = function ($event) {
             $event.stopPropagation();
@@ -581,6 +581,20 @@ angular.module('software', [])
                 .success(function (data) {
                     if (data) {
                         informContent.show();
+                       for(var i=0;i<data.length;i++){
+                       		var info=data[i].content;
+                       		info=info.split('\n');
+                       		info=info.join('<br>');
+                       		console.log(info);
+                       		info=info.split('\t');
+  
+                       		var head=info.shift();
+                       		head=head+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                       		info=info.join('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+
+                       		'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+                       		info=head+info;
+                    	    data[i].content=$sce.trustAsHtml(info);
+                       }
                         $scope.contents = data;
                     }
                 })

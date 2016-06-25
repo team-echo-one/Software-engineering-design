@@ -1,11 +1,14 @@
 package bean;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import org.hibernate.Session;
 
 import jbean.JProfessor;
 
@@ -142,5 +145,25 @@ public class Professor
 			list.add(toJProfessor(professor));
 		}
 		return list;
+	}
+	
+	public static Professor addProfessor(long id,String name,String password,Session session)
+	{
+		Professor professor = new Professor();
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(1995, 1, 2);
+		professor.setBirth(calendar.getTime());
+		professor.setId(456);
+		Password psw = new Password();
+		psw.setAuthority(0);
+		psw.setPassword(password);
+		professor.setName(name);
+		professor.setSsN("89741354");
+		calendar.set(2010, 1, 2);
+		professor.setStatus("无");
+		professor.setFaculty("Computer Science");
+		session.save(password);
+		session.save(professor);
+		return professor;
 	}
 }

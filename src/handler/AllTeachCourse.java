@@ -2,7 +2,6 @@ package handler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -11,8 +10,6 @@ import org.hibernate.Transaction;
 import com.google.gson.Gson;
 
 import bean.Course;
-import bean.Professor;
-import bean.Professor_Course;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
@@ -39,23 +36,18 @@ public class AllTeachCourse extends ServerResponse
 		Transaction tx = session.beginTransaction();
 		try
 		{
-			String hql = "from Course";
+			String hql = "from Course where semester=:sem";
 			Query query = session.createQuery(hql);
+			query.setInteger("sem", Configure.getSemester());
 
 			for (Object o : query.list())
 			{
 				Course course = (Course) o;
 				JCourseOnlyName jCourse = new JCourseOnlyName();
-				Map.Entry<Professor, Professor_Course> entry = course.getInfoBySemester(Configure.getSemester());
-				if (entry == null)
-				{
-					continue;
-				}
 				if (course.getInfo() != null || !course.getInfo().isEmpty())
 				{
 					continue;
 				}
-				jCourse.setName(entry.getKey().getName());
 				jCourse.setId(course.getId());
 				jCourse.setName(course.getName());
 				result.add(jCourse);

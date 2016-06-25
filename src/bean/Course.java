@@ -7,14 +7,15 @@ public class Course
 {
 	long id;
 	String name;
+	int semester;
 	Map<Student, Student_Course> students = new HashMap<>();
 	Map<Professor, Professor_Course> info = new HashMap<>();
 
 	public Course()
 	{
 	}
-	
-	public Map.Entry<Professor, Professor_Course> getInfoBySemester(int semester)
+
+	/*public Map.Entry<Professor, Professor_Course> getInfoBySemester(int semester)
 	{
 		for (Map.Entry<Professor, Professor_Course> entry : info.entrySet())
 		{
@@ -24,7 +25,7 @@ public class Course
 			}
 		}
 		return null;
-	}
+	}*/
 
 	public void setInfo(Map<Professor, Professor_Course> info)
 	{
@@ -34,6 +35,16 @@ public class Course
 	public Map<Professor, Professor_Course> getInfo()
 	{
 		return info;
+	}
+
+	public void setSemester(int semester)
+	{
+		this.semester = semester;
+	}
+
+	public int getSemester()
+	{
+		return semester;
 	}
 
 	public void setStudents(Map<Student, Student_Course> students)
@@ -71,5 +82,5 @@ public class Course
 	{
 		return "Course [id=" + id + ", name=" + name + ", students=" + students + ", info=" + info + "]";
 	}
-	
+
 }

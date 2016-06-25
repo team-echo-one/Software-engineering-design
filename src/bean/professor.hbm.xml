@@ -22,7 +22,6 @@
 				<property name="day" type="integer" />
 				<property name="begin" type="integer" />
 				<property name="end" type="integer" />
-				<property name="semester" type="integer" />
 			</composite-element>
 		</map>
 		<many-to-one name ="password"  class = "Password"  cascade="all" update = "true" unique="true" />

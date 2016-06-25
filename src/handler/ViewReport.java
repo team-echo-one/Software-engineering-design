@@ -8,13 +8,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import com.google.gson.Gson;
 
 import bean.Course;
 import bean.Professor;
-import bean.Professor_Course;
 import bean.Student;
 import bean.Student_Course;
 import io.netty.buffer.ByteBuf;
@@ -52,10 +50,9 @@ public class ViewReport extends ServerResponse
 	{
 		List<JViewReportResponse> result = new ArrayList<>();
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx = null;
 		try
 		{
-			tx = session.beginTransaction();
+			session.beginTransaction();
 			Student student = (Student) session.get(Student.class, request.getId());
 			if (student == null)
 			{
@@ -68,19 +65,21 @@ public class ViewReport extends ServerResponse
 			}
 			for (Map.Entry<Course, Student_Course> entry : student.getCourses().entrySet())
 			{
-				Map.Entry<Professor, Professor_Course> e = entry.getKey().getInfoBySemester(request.getSemester());
-				if (e == null)
+				if (entry.getKey().getSemester() != request.getSemester())
 				{
 					continue;
 				}
-				result.add(new JViewReportResponse(entry.getKey().getId(), entry.getKey().getName(),
-						e.getKey().getName()));
+				long pid = entry.getValue().getPid();
+				Professor professor = (Professor) session.get(Professor.class, pid);
+				result.add(new JViewReportResponse(entry.getKey().getId(),
+						entry.getKey().getName(), professor.getName(),entry.getValue().getGrade()));
 			}
 		} catch (Exception e)
 		{
 			e.printStackTrace();
 			return new ArrayList<>();
-		}finally {
+		} finally
+		{
 			session.close();
 		}
 		return result;

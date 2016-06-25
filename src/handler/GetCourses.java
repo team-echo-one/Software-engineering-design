@@ -61,8 +61,7 @@ public class GetCourses extends ServerResponse
 			{
 				Course course = e.getKey();
 				jCourse = new JCourse();
-				System.out.println(course);
-				Map.Entry<Professor, Professor_Course> entry = course.getInfoBySemester(Configure.getSemester());
+				/*Map.Entry<Professor, Professor_Course> entry = course.getInfoBySemester(Configure.getSemester());
 				if (entry == null)
 				{
 					continue;
@@ -74,7 +73,7 @@ public class GetCourses extends ServerResponse
 				jCourse.setEnd(entry.getValue().getEnd());
 				jCourse.setId(course.getId());
 				jCourse.setName(course.getName());
-				result.add(jCourse);
+				result.add(jCourse);*/
 			}
 			tx.commit();
 		} catch (Exception e)

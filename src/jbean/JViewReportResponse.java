@@ -5,12 +5,24 @@ public class JViewReportResponse
 	long courseId;
 	String name;
 	String teacher;
+	String grade;
 
-	public JViewReportResponse(long courseId, String name, String teacher)
+	public JViewReportResponse(long courseId, String name, String teacher, String grade)
 	{
 		this.courseId = courseId;
 		this.name = name;
 		this.teacher = teacher;
+		this.grade = grade;
+	}
+
+	public void setGrade(String grade)
+	{
+		this.grade = grade;
+	}
+
+	public String getGrade()
+	{
+		return grade;
 	}
 
 	public void setCourseId(long courseId)

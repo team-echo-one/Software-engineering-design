@@ -46,7 +46,7 @@ public class AllCourses extends ServerResponse
 			{
 				Course course = (Course) o;
 				JCourse jCourse = new JCourse();
-				Map.Entry<Professor, Professor_Course> entry = course.getInfoBySemester(Configure.getSemester());
+				/*Map.Entry<Professor, Professor_Course> entry = course.getInfoBySemester(Configure.getSemester());
 				if (entry == null)
 				{
 					continue;
@@ -58,7 +58,7 @@ public class AllCourses extends ServerResponse
 				jCourse.setEnd(entry.getValue().getEnd());
 				jCourse.setId(course.getId());
 				jCourse.setName(course.getName());
-				result.add(jCourse);
+				result.add(jCourse);*/
 			}
 			tx.commit();
 		} catch (Exception e)

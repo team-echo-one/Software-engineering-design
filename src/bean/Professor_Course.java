@@ -1,8 +1,9 @@
 package bean;
 
+import org.hibernate.Session;
+
 public class Professor_Course
 {
-	int semester;
 	int capacity;
 	int price;
 	int day;
@@ -58,18 +59,20 @@ public class Professor_Course
 		this.price = price;
 	}
 
-	public void setSemester(int semester)
-	{
-		this.semester = semester;
-	}
-
 	public int getPrice()
 	{
 		return price;
 	}
-
-	public int getSemester()
+	
+	public static void addCourseOffering(long id,Professor professor, Session session)
 	{
-		return semester;
+		Course course = (Course) session.get(Course.class, id);
+		Professor_Course pCourse = new Professor_Course();
+		pCourse.setBegin(0);
+		pCourse.setCapacity(0);
+		pCourse.setDay(0);
+		pCourse.setEnd(0);
+		pCourse.setPrice(0);
+		professor.getTeach().put(course, pCourse);
 	}
 }

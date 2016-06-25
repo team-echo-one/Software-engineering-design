@@ -9,8 +9,6 @@ import org.hibernate.Transaction;
 
 import com.google.gson.Gson;
 
-import bean.Course;
-import bean.Student;
 import bean.Student_Course;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -50,13 +48,7 @@ public class AddCourse extends ServerResponse
 			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 			Transaction tx = session.beginTransaction();
 			
-			Student student = (Student)session.get(Student.class, jcourse.getId());
-			Course course = (Course)session.get(Course.class, jcourse.getCourseId());
-			
-			Student_Course sc = new Student_Course();
-			sc.setGrade("");
-			
-			student.getCourses().put(course, sc);
+			Student_Course.addCourse(jcourse.getId(), jcourse.getProfessorid(), jcourse.getCourseId(), session);
 			
 			tx.commit();
 		} catch (Exception e)

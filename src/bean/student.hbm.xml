@@ -19,11 +19,9 @@
 			<map-key-many-to-many column="course_id" class="Course" />
 			<composite-element class="Student_Course">
 				<property name="grade" column="grade" />
+				<property name="pid" column="grade" />
 			</composite-element>
 		</map>
-		
-		<many-to-one name="financial" class="Financial" cascade="all" update="true"></many-to-one>  
-		
 		<many-to-one name ="password"  class = "Password"  cascade="all" update = "true" unique="true" />
 	</class>
 </hibernate-mapping>

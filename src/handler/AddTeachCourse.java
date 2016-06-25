@@ -19,7 +19,6 @@ import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpMethod;
 import jbean.JTeacherAddCourse;
 import jbean.Result;
-import utils.Configure;
 import utils.HibernateUtil;
 
 public class AddTeachCourse extends ServerResponse
@@ -58,7 +57,6 @@ public class AddTeachCourse extends ServerResponse
 			pCourse.setCapacity(addCourse.getCapacity());
 			pCourse.setDay(addCourse.getDay());
 			pCourse.setEnd(addCourse.getEnd());
-			pCourse.setSemester(Configure.getSemester());
 			pCourse.setPrice(100);
 			professor.getTeach().put(course, pCourse);
 			tx.commit();

@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -15,15 +16,20 @@ import org.hibernate.Transaction;
 
 import com.google.gson.Gson;
 
+import bean.Course;
 import bean.Message;
 import bean.Password;
+import bean.Professor;
+import bean.Professor_Course;
 import bean.Student;
+import bean.Student_Course;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpMethod;
 import jbean.VariousId;
+import utils.Configure;
 import utils.HibernateUtil;
 
 public class GetInform extends ServerResponse
@@ -75,7 +81,7 @@ public class GetInform extends ServerResponse
 					Message msg = new Message();
 					msg.setTitle("Semester's bill");
 					Student student = (Student) session.get(Student.class, vid.getId());
-					int bill = student.getFinancial().getBill();
+					int bill = getBill(student);
 					String content = "Your bill amount:$"+bill;
 					msg.setContent(content);
 					msg.setReleaseDate(new Date());
@@ -85,7 +91,7 @@ public class GetInform extends ServerResponse
 					result.add(message);
 				}
 			}
-			//password.setLastLogin(nowDate);
+			password.setLastLogin(nowDate);
 			tx.commit();
 		} catch (Exception e)
 		{
@@ -113,5 +119,24 @@ public class GetInform extends ServerResponse
 			System.out.println(message);
 		}
 		tx.commit();
+	}
+	
+	private static int getBill(Student student)
+	{
+		int bill = 0;
+		for(Map.Entry<Course, Student_Course> entry : student.getCourses().entrySet())
+		{
+			if(entry.getKey().getSemester()!=Configure.getSemester())
+			{
+				continue;
+			}
+			long pid = entry.getValue().getPid();
+			for(Map.Entry<Professor, Professor_Course> peEntry : entry.getKey().getInfo().entrySet())
+			{
+				if(peEntry.getKey().getId()==pid)
+					bill+=peEntry.getValue().getPrice();
+			}
+		}
+		return bill;
 	}
 }

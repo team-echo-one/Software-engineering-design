@@ -59,16 +59,15 @@ public class GetTeachedCourses extends ServerResponse
 			{
 				Course course = e.getKey();
 				jCourse = new JCourse();
-				Map.Entry<Professor, Professor_Course> entry = course.getInfoBySemester(Configure.getSemester());
-				if (entry == null)
+				if(course.getSemester()!=Configure.getSemester())
 				{
 					continue;
 				}
-				jCourse.setTeacher(entry.getKey().getName());
-				jCourse.setCapacity(entry.getValue().getCapacity());
-				jCourse.setBegin(entry.getValue().getBegin());
-				jCourse.setDay(entry.getValue().getDay());
-				jCourse.setEnd(entry.getValue().getEnd());
+				jCourse.setTeacher(professor.getName());
+				jCourse.setCapacity(e.getValue().getCapacity());
+				jCourse.setBegin(e.getValue().getBegin());
+				jCourse.setDay(e.getValue().getDay());
+				jCourse.setEnd(e.getValue().getEnd());
 				jCourse.setId(course.getId());
 				jCourse.setName(course.getName());
 				result.add(jCourse);

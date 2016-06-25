@@ -153,3 +153,7 @@ reponse:
 {'info':'success'}
 失败：
 {'info':'failed'}
+
+
+viewReport 增加 grade
+Addcourse 增加 professorId

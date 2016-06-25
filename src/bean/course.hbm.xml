@@ -9,12 +9,14 @@
 			<generator class="native" />
 		</id>
 		<property name="name" type="string" />
+		<property name="semester" type="integer" />
 
 		<map name="students" table="STUDENTS_COURSES" lazy="false" inverse = "true">
 			<key column="course_id" not-null="true" />
 			<map-key-many-to-many column="student_id" class="Student" />
 			<composite-element class="Student_Course">
 				<property name="grade" column="grade" />
+				<property name="pid" type="long" />
 			</composite-element>
 		</map>
 		
@@ -27,7 +29,6 @@
 				<property name="day" type="integer" />
 				<property name="begin" type="integer" />
 				<property name="end" type="integer" />
-				<property name="semester" type="integer" />
 			</composite-element>
 		</map>
 	</class>

@@ -1,6 +1,7 @@
 package bean;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -22,16 +23,14 @@ public class Student
 	String status;
 	Date graduationDate;
 	Map<Course, Student_Course> courses = new HashMap<>();
-	Financial financial;
 	Password password;
 
 	public static void main(String[] args)
 	{
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
-		// init(session);
-		// initialCourseOffering(session);
-
+		init(session);
+		initialCourseOffering(session);
 
 		tx.commit();
 		HibernateUtil.closeSessionFactory();
@@ -39,91 +38,86 @@ public class Student
 
 	private static void initialCourseOffering(Session session)
 	{
-		Course course = (Course) session.get(Course.class, 1L);
-		Professor_Course pCourse = new Professor_Course();
-		pCourse.setSemester(1);
-		Professor professor = (Professor) session.get(Professor.class, 1465480175927L);
-		Map<Course, Professor_Course> teach = new HashMap<>();
-		teach.put(course, pCourse);
-		professor.setTeach(teach);
-
-		course = (Course) session.get(Course.class, 2L);
-		pCourse = new Professor_Course();
-		pCourse.setSemester(2);
-		professor = (Professor) session.get(Professor.class, 1465480182594L);
-		teach = new HashMap<>();
-		teach.put(course, pCourse);
-		professor.setTeach(teach);
-
-		course = (Course) session.get(Course.class, 3L);
-		pCourse = new Professor_Course();
-		pCourse.setSemester(3);
-		professor = (Professor) session.get(Professor.class, 1465480188224L);
-		teach = new HashMap<>();
-		teach.put(course, pCourse);
-		professor.setTeach(teach);
+		Registrar registrar = new Registrar();
+		registrar.setId(233);
+		Password password = new Password();
+		password.setPassword("233");
+		password.setAuthority(2);
+		registrar.setName("registrar");
+		registrar.setPassword(password);
+		session.save(password);
+		session.save(registrar);
 	}
 
 	private static void init(Session session)
 	{
-		// Student student = new Student();
-		// Calendar calendar = Calendar.getInstance();
-		// calendar.set(1990, 1, 2);
-		// student.setBirth(calendar.getTime());
-		// student.setName("zyz");
-		// student.setSsN("123123123");
-		// calendar.set(2010, 1, 2);
-		// student.setGraduationDate(calendar.getTime());
-		// student.setStatus("无");
-		// session.save(student);
-		//
-		// student = new Student();
-		// student.setName("zdf");
-		// student.setSsN("123123123");
-		// student.setStatus("无");
-		// session.save(student);
-		//
-		// student = new Student();
-		// student.setName("asd");
-		// student.setSsN("123123123");
-		// student.setStatus("无");
-		// session.save(student);
-		//
-		// student = new Student();
-		// student.setName("qwe");
-		// student.setSsN("123123123");
-		// student.setStatus("无");
-		// session.save(student);
-		//
-		// student = new Student();
-		// student.setName("阿斯蒂芬");
-		// student.setSsN("123123123");
-		// student.setStatus("无");
-		// session.save(student);
-		//
 		Course course = new Course();
-		course.setName("chinese");
+		course.setName("data structrue");
+		course.setSemester(1);
 		session.save(course);
 
 		course = new Course();
-		course.setName("physics");
+		course.setName("advanced mathematics");
+		course.setSemester(1);
 		session.save(course);
 
 		course = new Course();
-		course.setName("math");
+		course.setName("linear algebra");
+		course.setSemester(1);
 		session.save(course);
 
 		course = new Course();
-		course.setName("english");
+		course.setName("database principle");
+		course.setSemester(2);
 		session.save(course);
+
+		course = new Course();
+		course.setName("database principle");
+		course.setSemester(2);
+		session.save(course);
+
+		course = new Course();
+		course.setName("Network");
+		course.setSemester(2);
+		session.save(course);
+
+		course = new Course();
+		course.setName("operating system");
+		course.setSemester(2);
+		session.save(course);
+
+		course = new Course();
+		course.setName("software engineering");
+		course.setSemester(2);
+		session.save(course);
+
+		Student student = addStudent("YiZheng Zhang", 123, "123", session);
 		
-		/*
-		 * Student student1 = (Student) session.get(Student.class,
-		 * 1465462464050L); for (long i = 1; i < 5; i++) { Student_Course
-		 * student_Course = new Student_Course(); student_Course.setGrade("A+");
-		 * Course course1 = (Course) session.get(Course.class, i);
-		 * student1.getCourses().put(course1, student_Course); }
-		 */
+		Professor professor = Professor.addProfessor(456, "God Zhang", "456", session);
+		Professor_Course.addCourseOffering(1, professor, session);
+
+		for (long i = 1; i < 9; i++)
+		{
+			Student_Course student_Course = new Student_Course();
+			student_Course.setGrade("A+");
+			student_Course.setPid(professor.getId());
+			Course course1 = (Course) session.get(Course.class, i);
+			student.getCourses().put(course1, student_Course);
+		}
+
+		student = new Student();
+		student.setName("ZhengYi Zhang");
+		student.setSsN("321967411354");
+		student.setStatus("无");
+		session.save(student);
+
+		for (long i = 1; i < 9; i++)
+		{
+			Student_Course student_Course = new Student_Course();
+			student_Course.setGrade("A+");
+			Course course1 = (Course) session.get(Course.class, i);
+			student.getCourses().put(course1, student_Course);
+		}
 	}
 
 	public Student()
@@ -138,16 +132,6 @@ public class Student
 	public Password getPassword()
 	{
 		return password;
-	}
-
-	public void setFinancial(Financial financial)
-	{
-		this.financial = financial;
-	}
-
-	public Financial getFinancial()
-	{
-		return financial;
 	}
 
 	public void setCourses(Map<Course, Student_Course> courses)
@@ -258,5 +242,33 @@ public class Student
 			list.add(toJStudent(student));
 		}
 		return list;
+	}
+
+	public static Student addStudent(String name, long id, String password, Session session)
+	{
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(1995, 1, 2);
+		Date birth = calendar.getTime();
+		calendar.set(2017, 7, 1);
+		Date graduation = calendar.getTime();
+		return addStudent(name, id, password, "54v6a546d8", birth, graduation, session);
+	}
+
+	public static Student addStudent(String name, long id, String password, String SSN, Date birth, Date graduation,
+			Session session)
+	{
+		Student student = new Student();
+		student.setBirth(birth);
+		student.setId(id);
+		Password psw = new Password();
+		psw.setPassword(password);
+		psw.setAuthority(1);
+		student.setPassword(psw);
+		student.setName(name);
+		student.setSsN(SSN);
+		student.setGraduationDate(graduation);
+		student.setStatus("无");
+		session.save(student);
+		return student;
 	}
 }

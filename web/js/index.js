@@ -28,10 +28,7 @@ $(function(){
         teacher.show();
     }else if(identity=='registrar'){
         registrar.show();
-    }else{
-        student.show();
-        inform.show();
-        if(endRegistrar=='over'){
+         if(endRegistrar=='over'){
         	iAddCourse.hide();
         	iDeleteCourse.hide();
         	openClose.val('Open Registrar');
@@ -42,6 +39,13 @@ $(function(){
         	openClose.removeClass('btn-success');
         	openClose.addClass('btn-info');
         }
+    }else{
+        student.show();
+        inform.show();
+         if(endRegistrar=='over'){
+        	iAddCourse.hide();
+        	iDeleteCourse.hide();
+        	}
     }
 
     /** show name*/
@@ -65,6 +69,9 @@ $(function(){
         localStorage.removeItem('id');
         localStorage.removeItem('name');
         localStorage.removeItem('identity');
+        localStorage.removeItem('endRegistrar');
+        localStorage.removeItem('endTime');
+        localStorage.removeItem('semester');
         location.replace('/');
     });
     no.click(function(){

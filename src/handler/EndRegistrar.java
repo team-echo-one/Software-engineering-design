@@ -61,6 +61,12 @@ public class EndRegistrar extends ServerResponse
 		}
 		try
 		{
+			if(Var.isForceShutDown)
+			{
+				Var.isForceShutDown = false;
+				session.close();
+				return true;
+			}
 			String hql = "from Course";
 			Query query = session.createQuery(hql);
 			for (Object o : query.list())

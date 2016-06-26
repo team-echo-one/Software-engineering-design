@@ -304,22 +304,44 @@ angular.module('software', [])
     .controller('endRegistrar',function($scope,$http,$id,$message){
         $scope.submit=function ($event) {
             var target=$($event.target);
-            target.attr('disabled','true');
             var data={
                 id:$scope.id,
                 password:$scope.password
             };
+            if(!data.id||!data.password){
+            	return;
+            }
+            var id=$('div#endRegistrar input:nth-child(1)');
+            var password=$('div#endRegistrar input:nth-child(2)');
+           
             $http.post('/endRegistrar',JSON.stringify(data))
                 .success(function(result){
-                target.removeAttr('disabled');
                     if(result['info']=='success'){
+                     id.val('');
+            		password.val('');
+                    var endRegistrar=localStorage.getItem('endRegistrar');
+                    if(endRegistrar=='over'){
+                    	localStorage.removeItem('endRegistrar');
+                    	localStorage.setItem('endRegistrar','ok');
+                    	target.removeClass('btn-info');
+                    	target.addClass('btn-success');
+                    	target.val('Close Registrar');
+                    }else{
+                       localStorage.removeItem('endRegistrar');
+                    	localStorage.setItem('endRegistrar','over');
+                    	target.removeClass('btn-success');
+                    	target.addClass('btn-info');
+                    	target.val('Open Registrar');
+                    }
                         $message.show('end registrar success!');
+                        
                     }else{
                         $message.show('end registrar failed!');
                     }
                 })
                 .error(function(){
-                    target.removeAttr('disabled');
+                   id.val('');
+            		password.val('');
                     $message.show('network error!');
                 })
         }

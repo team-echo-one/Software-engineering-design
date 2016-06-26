@@ -14,6 +14,7 @@ public class LoginSuccess
 	public LoginSuccess(String name, int authortiy)
 	{
 		info = "success";
+		endRegistrar = "ok";
 		this.name = name;
 		if (authortiy == 0)
 			this.identity = "teacher";

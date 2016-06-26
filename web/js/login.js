@@ -37,7 +37,7 @@ $(function(){
                    localStorage.setItem('name',result['name']);
                    localStorage.setItem('semester',result['semester']);
                    localStorage.setItem('endTime',result['endTime']);
-                   localStorage.setItem('endRegistrar',result['endRegistrar'])
+                   localStorage.setItem('endRegistrar',result['endRegistrar']);
                    location.replace('./index.html');
                }else{
                    if(result['error']=='username not exist'){

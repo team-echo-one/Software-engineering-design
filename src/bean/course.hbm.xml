@@ -6,7 +6,7 @@
 <hibernate-mapping package="bean">
 	<class name="Course" table="COURSE">
 		<id name="id" column="course_id">
-			<generator class="native" />
+			<generator class="increment"></generator>
 		</id>
 		<property name="name" type="string" />
 		<property name="semester" type="integer" />
@@ -15,8 +15,8 @@
 			<key column="course_id" not-null="true" />
 			<map-key-many-to-many column="student_id" class="Student" />
 			<composite-element class="Student_Course">
-				<property name="grade" column="grade" />
-				<property name="pid" type="long" />
+				<property name="grade" column="grade" type="string"/>
+				<property name="pid" column="professor_id" type="long" />
 			</composite-element>
 		</map>
 		

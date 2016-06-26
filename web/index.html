@@ -35,8 +35,9 @@
 <!--title-->
 <div class="title">Course Selection System
     <div class="welcome">
+    <div></div>
         <a href="#">log out</a>
-        <div></div>
+        
     </div>
 </div>
 
@@ -87,7 +88,6 @@
     <br>
     <select class="choice1" ng-change="selectProfessor(professorId)" ng-model="professorId"
             ng-options="professor.id as professor.name for professor in professors">
-        <option value=''>--choose--</option>
     </select>
     <input type="button" class="btn btn-info input1" ng-click="getProfessors()" value="Get Professors">
     <br><br><br>
@@ -204,9 +204,9 @@
     <br>
     <h2>End Registrar</h2>
     <form>
-        <input type="text" ng-model="id" required>
-        <input type="password" ng-model="password" required>
-        <input  ng-click="submit($event)" type="submit" class="btn btn-success" value="End Registrar">
+        <input type="text" ng-model="id" required placeholder="id">
+        <input type="password" ng-model="password" required placeholder="password">
+        <input  ng-click="submit($event)" type="submit" class="btn"  id="openClose">
     </form>
 </div>
 <!--viewReport-->
@@ -242,7 +242,7 @@
     <br>
     <input type="button" class="btn btn-info input1" value="View Schedule" ng-click="viewSchedule()">
     <div class="allCourse">
-    <div><div>Id</div><div>course</div><div>day</div><div>begin</div><div>end</div><div>capacity</div></div>
+    <div><div>Id</div><div>course</div><div>day</div><div>begin</div><div>end</div><div>capacity</div><div>teacher</div></div>
         <div ng-repeat="course in allCourse">
             <div>{{course.id}}</div>
             <div>{{course.name}}</div>
@@ -250,7 +250,8 @@
             <div>{{course.begin}}</div>
             <div>{{course.end}}</div>
             <div>{{course.capacity}}</div>
-            <input type="button" ng-click="addCourse(course.id,$event)" value="add">
+            <div>{{course.teacher}}</div>
+            <input type="button" ng-click="addCourse(course,$event)" value="add">
         </div>
     </div>
 
@@ -275,7 +276,7 @@
     <input type="button" class="btn btn-info input1" value="View Schedule" ng-click="viewSchedule()">
     <br><br><br>
     <div class="allCourse">
-    <div><div>Id</div><div>course</div><div>day</div><div>begin</div><div>end</div><div>capacity</div></div>
+    <div><div>Id</div><div>course</div><div>day</div><div>begin</div><div>end</div><div>capacity</div><div>teacher</div></div>
         <div ng-repeat="course in selectedCourse">
             <div>{{course.id}}</div>
             <div>{{course.name}}</div>
@@ -283,6 +284,7 @@
             <div>{{course.begin}}</div>
             <div>{{course.end}}</div>
             <div>{{course.capacity}}</div>
+            <div>{{course.teacher}}</div>
             <input type="button" value="delete" ng-click="deleteCourse(course.id,$event)">
         </div>
     </div>
@@ -299,10 +301,10 @@
         <div ng-repeat="course in allCourse" class="taughtCourse">
             <input type="text" ng-bind="course.id" ng-model="course.id" disabled>
             <input type="text" ng-bind="course.name" ng-model="course.name" disabled>
-            <input type="number" name="day" placeholder="day" required>
-            <input type="number" name="begin" placeholder="begin" required>
-            <input type="number" name="end" placeholder="end" required>
-            <input type="number" name="capacity" placeholder="capacity" required>
+            <input type="number" ng-model="course.day" placeholder="day" required>
+            <input type="number" ng-model="course.begin" placeholder="begin" required>
+            <input type="number" ng-model="course.end" placeholder="end" required>
+            <input type="number" ng-model="course.capacity" placeholder="capacity" required>
             <input type="button" class="btn-info" ng-click="addCourse(course,$event)" value="add">
         </div>
     </div>

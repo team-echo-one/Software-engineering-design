@@ -5,6 +5,9 @@ body{
     font-family:"Lucida Grande", Helvetica, Arial, sans-serif;
 
 }
+#student,#teacher,#registrar{
+	display:none;
+}
 a:link {
     text-decoration: none;
     color:white;
@@ -68,21 +71,32 @@ a:active {
     color: rgb(60,137,157);
 }
 .welcome{
-    float:right;
-    width:30%;
-    height:60px;
-    font-size:24px;
-    line-height: 60px;
-    background-color: black;
+     position: absolute;
+    top:10px;
+    right:100px;
+    width:380px;
+    height:50px;
+    font-size:20px;
+    line-height: 40px;
+    text-align: center;
     color: rgb(60,137,157);
 
 }
 div.welcome>div{
-    float:left;
+   position:absolute;
+   left:0;
+   top:0;
+   text-align:center;
+   width:300px;
+   height:100%;
 }
 div.welcome>a{
-    width:30%;
-    float:right;
+	text-align:center;
+   position:absolute;
+   left:300px;
+   top:0;
+   width:80px;
+   height:100%;
 }
 
 .containers{
@@ -208,7 +222,7 @@ tr.course>td{
      position:absolute ;
      left:200px;
      top:200px;
-     width:600px;
+     width:700px;
      height:180px;
      overflow: auto;
  }
@@ -268,13 +282,14 @@ tr.course>td{
 .inform{
     position: absolute;
     top:15px;
-    left:1150px;
+    right:50px;
+    display:none;
 }
 .time{
     position: absolute;
     top:10px;
-    left:700px;
-    width:200px;
+    left:400px;
+    width:500px;
     height:50px;
     font-size:20px;
     line-height: 40px;

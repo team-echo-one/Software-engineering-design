@@ -52,7 +52,12 @@ public class SubmitGrade extends ServerResponse
 			for(int i = 0; i<sg.getStudentIds().length; i++)
 			{
 				Student student = (Student) session.get(Student.class, sg.getStudentIds()[i]);
+				for(Course course2 : student.getCourses().keySet())
+				{
+					System.out.println(course2);
+				}
 				student.getCourses().get(course).setGrade(sg.getStudentGrades()[i]);
+				
 			}
 			tx.commit();
 		} catch (Exception e)

@@ -153,16 +153,18 @@ public class Professor
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(1995, 1, 2);
 		professor.setBirth(calendar.getTime());
-		professor.setId(456);
-		Password psw = new Password();
-		psw.setAuthority(0);
-		psw.setPassword(password);
+		professor.setId(id);
 		professor.setName(name);
 		professor.setSsN("89741354");
 		calendar.set(2010, 1, 2);
 		professor.setStatus("无");
 		professor.setFaculty("Computer Science");
-		session.save(password);
+		
+		Password psw = new Password();
+		psw.setId(id);
+		psw.setAuthority(0);
+		psw.setPassword(password);
+		professor.setPassword(psw);
 		session.save(professor);
 		return professor;
 	}

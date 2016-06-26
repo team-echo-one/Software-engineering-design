@@ -28,14 +28,16 @@ $(function(){
 		       login.attr('disabled','true');
 			   setTimeout(function(){
 				   login.val('login');
-				   login.attr('disabled','true');
+				   login.removeAttr('disabled');
 				   
-			   },3000);
+			   },1000);
                result=JSON.parse(result);
                if(result['info']=='success'){
                    localStorage.setItem('identity',result['identity']);
                    localStorage.setItem('name',result['name']);
                    localStorage.setItem('semester',result['semester']);
+                   localStorage.setItem('endTime',result['endTime']);
+                   localStorage.setItem('endRegistrar',result['endRegistrar'])
                    location.replace('./index.html');
                }else{
                    if(result['error']=='username not exist'){

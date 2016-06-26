@@ -21,7 +21,9 @@ import jbean.Login;
 import jbean.LoginDeny;
 import jbean.LoginSuccess;
 import bean.*;
+import utils.Configure;
 import utils.HibernateUtil;
+import utils.Var;
 
 public class LoginResponse extends ServerResponse
 {
@@ -77,8 +79,12 @@ public class LoginResponse extends ServerResponse
 						Registrar registrar = (Registrar)session.get(Registrar.class, pswd.getId());
 						name = registrar.getName();
 					}
-					result  = new LoginSuccess(name,pswd.getAuthority());
-					//pswd.setLastLogin(new Date());
+					LoginSuccess ls= new LoginSuccess(name, pswd.getAuthority());
+					ls.setSemester(Configure.getSemester());
+					ls.setEndTime(Configure.getShutDownDate().toString());
+					if(Var.isForceShutDown )
+						ls.setEndRegistrar("over");
+					result  = ls;
 				}else
 				{
 					result = LoginDeny.newNotMatchInstance();

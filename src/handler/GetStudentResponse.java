@@ -53,9 +53,7 @@ public class GetStudentResponse extends ServerResponse
 		Transaction tx = session.beginTransaction();
 		try
 		{
-			Course course = (Course) session.get(Course.class,2L);
-			
-			System.out.println(course);
+			Course course = (Course) session.get(Course.class,cs.getCourseId());
 
 			for (Map.Entry<Student, Student_Course> entry : course.getStudents().entrySet())
 			{

@@ -9,7 +9,7 @@
 			<generator class="increment"></generator>
 		</id>
 		<property name="title" type="string" />
-		<property name="content" type = "string"/>
+		<property name="content" length="6553600" type = "string"/>
 		<property name="releaseDate" type="timestamp"/>
 	</class>
 </hibernate-mapping>

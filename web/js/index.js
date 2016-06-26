@@ -11,33 +11,37 @@ $(function(){
 
     /**show time*/
     var time=$('.time');
-    setInterval(function(){
-        var date=new Date();
-        var day=date.toLocaleDateString();
-        var hour=parseInt(date.getHours())<10?0+''+date.getHours():date.getHours();
-        var minute=parseInt(date.getMinutes())<10?0+''+date.getMinutes():date.getMinutes();
-        var second=parseInt(date.getSeconds())<10?0+''+date.getSeconds():date.getSeconds();
-        time.text(day+' '+hour+':'+minute+':'+second);
-    },1000);
+    var endTime=localStorage.getItem('endTime');
+    endTime+=' Semester: '+localStorage.getItem('semester'); 
+    time.text(endTime);
 
     /**show function*/
     var teacher=$('#teacher');
     var student=$('#student');
     var registrar=$('#registrar');
-    var informContent=$('.informContent');
+    var inform=$('.inform');
+    var endRegistrar=localStorage.getItem('endRegistrar');
+    var iAddCourse=$('#iAddCourse');
+    var iDeleteCourse=$('#iDeleteCourse');
+    var openClose=$('#openClose');
     if(identity=='teacher'){
-        student.hide();
-        registrar.hide();
         teacher.show();
     }else if(identity=='registrar'){
-        teacher.hide();
-        student.hide();
         registrar.show();
     }else{
-        teacher.hide();
-        registrar.hide();
         student.show();
-        informContent;
+        inform.show();
+        if(endRegistrar=='over'){
+        	iAddCourse.hide();
+        	iDeleteCourse.hide();
+        	openClose.val('Open Registrar');
+        	openClose.removeClass('btn-info');
+        	openClose.addClass('btn-success');
+        }else{
+        	openClose.val('Close Registrar');
+        	openClose.removeClass('btn-success');
+        	openClose.addClass('btn-info');
+        }
     }
 
     /** show name*/

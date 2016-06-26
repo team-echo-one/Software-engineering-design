@@ -130,6 +130,9 @@ public class HttpServerInboundHandler extends SimpleChannelInboundHandler<FullHt
 				case "index.html":
 					WebHandler.sendHtml(request, "web/index.html", ctx);
 					break;
+				case "endRegistrar":
+					EndRegistrar.excute(request, ctx);
+					break;
 				default:
 					sendError(ctx, HttpResponseStatus.NOT_FOUND);
 					break;

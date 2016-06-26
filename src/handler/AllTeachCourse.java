@@ -43,8 +43,9 @@ public class AllTeachCourse extends ServerResponse
 			for (Object o : query.list())
 			{
 				Course course = (Course) o;
+				System.out.println(course);
 				JCourseOnlyName jCourse = new JCourseOnlyName();
-				if (course.getInfo() != null || !course.getInfo().isEmpty())
+				if ( !course.getInfo().isEmpty())
 				{
 					continue;
 				}

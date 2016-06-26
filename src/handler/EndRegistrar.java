@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 
 import bean.Course;
 import bean.Message;
+import bean.Password;
 import bean.Student;
 import bean.Student_Course;
 import io.netty.buffer.ByteBuf;
@@ -41,8 +42,10 @@ public class EndRegistrar extends ServerResponse
 		String s = buf.toString(Charset.forName("utf-8"));
 		Login data = gson.fromJson(s, Login.class);
 
+		
 		Result result = terminateAndCheck(data) ? Result.successInstance() : Result.failedInstance();
 		String content = gson.toJson(result);
+		printContent(content);
 		FullHttpResponse response = createResponse(content, request);
 		ctx.writeAndFlush(response);
 	}
@@ -52,6 +55,10 @@ public class EndRegistrar extends ServerResponse
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		ArrayList<Course> courses = new ArrayList<>();
+		if(!loginResult(login.getId(), login.getPassword(), session))
+		{
+			return false;
+		}
 		try
 		{
 			String hql = "from Course";
@@ -62,7 +69,7 @@ public class EndRegistrar extends ServerResponse
 				if (course.getStudents().size() <= 3)
 				{
 					courses.add(course);
-					for(Map.Entry<Student, Student_Course> entry : course.getStudents().entrySet())
+					for (Map.Entry<Student, Student_Course> entry : course.getStudents().entrySet())
 					{
 						entry.getKey().getCourses().remove(course);
 					}
@@ -90,5 +97,30 @@ public class EndRegistrar extends ServerResponse
 			return false;
 		}
 		return true;
+	}
+
+	private static boolean loginResult(long id, String password, Session session)
+	{
+		boolean result = false;
+		try
+		{
+			Password pswd = (Password) session.get(Password.class, id);
+			if (pswd == null)
+			{
+				result = false;
+			} else
+			{
+				if (password.equals(pswd.getPassword()))
+				{
+					int authority = pswd.getAuthority();
+					if (authority == 2)
+						result = true;
+				}
+			}
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

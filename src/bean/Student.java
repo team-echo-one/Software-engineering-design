@@ -30,23 +30,25 @@ public class Student
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		init(session);
-		initialCourseOffering(session);
+		initialRegistrar(session);
 
 		tx.commit();
 		HibernateUtil.closeSessionFactory();
 	}
 
-	private static void initialCourseOffering(Session session)
+	private static void initialRegistrar(Session session)
 	{
 		Registrar registrar = new Registrar();
 		registrar.setId(233);
+		registrar.setName("registrar");
+		
 		Password password = new Password();
+		password.setId(233);
 		password.setPassword("233");
 		password.setAuthority(2);
-		registrar.setName("registrar");
 		registrar.setPassword(password);
-		session.save(password);
 		session.save(registrar);
+		session.save(password);
 	}
 
 	private static void init(Session session)
@@ -91,33 +93,22 @@ public class Student
 		course.setSemester(2);
 		session.save(course);
 
-		Student student = addStudent("YiZheng Zhang", 123, "123", session);
+		Professor professor1 = Professor.addProfessor(456, "God Zhang", "456", session);
+		Professor_Course.addCourseOffering(1, professor1, session);
+
+		Professor professor2 = Professor.addProfessor(567, "Saint Zhang", "567", session);
+		Professor_Course.addCourseOffering(2, professor2, session);
+		Professor_Course.addCourseOffering(3, professor2, session);
 		
-		Professor professor = Professor.addProfessor(456, "God Zhang", "456", session);
-		Professor_Course.addCourseOffering(1, professor, session);
+		Student student = addStudent("YiZheng Zhang", 123, "123", session);
+		Student_Course.addCourse(student.id, professor1.getId(), 1, session);
+		Student_Course.addCourse(student.id, professor2.getId(), 2, session);
+		Student_Course.addCourse(student.id, professor2.getId(), 3, session);
 
-		for (long i = 1; i < 9; i++)
-		{
-			Student_Course student_Course = new Student_Course();
-			student_Course.setGrade("A+");
-			student_Course.setPid(professor.getId());
-			Course course1 = (Course) session.get(Course.class, i);
-			student.getCourses().put(course1, student_Course);
-		}
-
-		student = new Student();
-		student.setName("ZhengYi Zhang");
-		student.setSsN("321967411354");
-		student.setStatus("无");
+		student = addStudent("ZhengYi Zhang", 234, "234", session);
+		Student_Course.addCourse(student.id, professor1.getId(), 1, session);
+		Student_Course.addCourse(student.id, professor2.getId(), 2, session);
 		session.save(student);
-
-		for (long i = 1; i < 9; i++)
-		{
-			Student_Course student_Course = new Student_Course();
-			student_Course.setGrade("A+");
-			Course course1 = (Course) session.get(Course.class, i);
-			student.getCourses().put(course1, student_Course);
-		}
 	}
 
 	public Student()
@@ -261,6 +252,7 @@ public class Student
 		student.setBirth(birth);
 		student.setId(id);
 		Password psw = new Password();
+		psw.setId(id);
 		psw.setPassword(password);
 		psw.setAuthority(1);
 		student.setPassword(psw);

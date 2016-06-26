@@ -9,10 +9,21 @@ public class JCourse
 	int begin;
 	int end;
 	String teacher;
+	long professorId;
 
 	public void setBegin(int begin)
 	{
 		this.begin = begin;
+	}
+
+	public void setProfessorId(long professorId)
+	{
+		this.professorId = professorId;
+	}
+
+	public long getProfessorId()
+	{
+		return professorId;
 	}
 
 	public int getBegin()

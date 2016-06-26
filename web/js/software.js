@@ -73,9 +73,10 @@ angular.module('software', [])
         };
         $scope.studentId = 0;
         $scope.selectStudent = function (studentId) {
+       
             for (var i = 0; i < $scope.students.length; i++) {
                 var student = $scope.students[i];
-                if (student['id'] = studentId) {
+                if (student['id'] == studentId) {
                     $scope.name = student['name'];
                     $scope.birthday = student['birthday'];
                     $scope.SSN = student['SSN'];
@@ -129,7 +130,7 @@ angular.module('software', [])
         $scope.selectStudent = function (studentId) {
             for (var i = 0; i < $scope.students.length; i++) {
                 var student = $scope.students[i];
-                if (student['id'] = studentId) {
+                if (student['id'] ==studentId) {
                     $scope.name = student['name'];
                     $scope.birthday = student['birthday'];
                     $scope.SSN = student['SSN'];
@@ -205,12 +206,11 @@ angular.module('software', [])
                     $message.show('network error!');
                 });
         };
-        $scope.professorId = 0;
         $scope.selectProfessor = function (professorId) {
             for (var i = 0; i < $scope.professors.length; i++) {
                 var professor = $scope.professors[i];
-                if (professor['id'] = professorId) {
-                    $scope.name = professor['name'];
+                if (professor['id'] == professorId) {
+                	 $scope.name = professor['name'];
                     $scope.birthday = professor['birthday'];
                     $scope.SSN = professor['SSN'];
                     $scope.status = professor['status'];
@@ -264,7 +264,7 @@ angular.module('software', [])
         $scope.selectProfessor = function (professorId) {
             for (var i = 0; i < $scope.professors.length; i++) {
                 var professor = $scope.professors[i];
-                if (professor['id'] = professorId) {
+                if (professor['id'] == professorId) {
                     $scope.name = professor['name'];
                     $scope.birthday = professor['birthday'];
                     $scope.SSN = professor['SSN'];
@@ -311,10 +311,10 @@ angular.module('software', [])
             };
             $http.post('/endRegistrar',JSON.stringify(data))
                 .success(function(result){
+                target.removeAttr('disabled');
                     if(result['info']=='success'){
                         $message.show('end registrar success!');
                     }else{
-                        target.removeAttr('disabled');
                         $message.show('end registrar failed!');
                     }
                 })
@@ -364,14 +364,14 @@ angular.module('software', [])
         $scope.allCourse = [];
         $scope.selectedCourse = [];
         $scope.viewSchedule = function () {
-            $http.post('getCourses', JSON.stringify(data))
+            $http.post('/getCourses', JSON.stringify(data))
                 .success(function (result) {
                     $scope.selectedCourse = result;
                 })
                 .error(function () {
                     $message.show('network error!');
                 });
-            $http.get('allCourses')
+            $http.get('/allCourses')
                 .success(function (result) {
                     $scope.allCourse = result;
                 })
@@ -379,19 +379,19 @@ angular.module('software', [])
                     $message.show('network error!');
                 });
         };
-        $scope.addCourse = function (id, $event) {
+        $scope.addCourse = function (course, $event) {
             var choose = confirm('add this course?');
             if (choose) {
                 for (var i = 0; i < $scope.selectedCourse.length; i++) {
                     var course = $scope.selectedCourse[i];
-                    if (course['id'] == id) {
+                    if (course['id'] ==course.id) {
                         $message.show('you had selected this course!');
                         return;
                     }
                 }
                 var target = $($event.target);
 
-                $http.post('/addCourse', JSON.stringify({id: $id.id, courseId: id}))
+                $http.post('/addCourse', JSON.stringify({id: $id.id, courseId: course.id,professorId:course.professorId}))
                     .success(function (result) {
                         if (result['info'] == 'success') {
                             $message.show('add success!');
@@ -474,25 +474,47 @@ angular.module('software', [])
 
             var choice=confirm("you want to choose this course?");
             if(choice) {
-                for(var i=0;i<$scope.allCourse;i++){
-                    if(course.id==$scope.allCourse[i].id){}
+                for(var i=0;i<$scope.taughtCourse;i++){
+                    if(course.id==$scope.taughtCourse[i].id){}
                     $message.show('you have chose this course!');
                     return;
                 }
+                if($scope&&$scope.length>=1){
                 var days=[],begins=[],ends=[];
                 for( i=0;i<$scope.allCourse.length;i++){
-                    days.push($scope.allCourse[i].day);
-                    begins.push($scope.allCourse[i].begin);
-                    ends.push($scope.allCourse[i].end);
+                    days.push($scope.taughtCourse[i].day);
+                    begins.push($scope.taughtCourse[i].begin);
+                    ends.push($scope.taugthCourse[i].end);
                 }
                 for(i=0;i<days.length;i++){
                     if(course.day==days[i]){
-                        if((course.begin>begins[i]&&course.end<ends[i])||(course.end>begins[i]&&course.end<ends[i])){
+                        if((course.begin>=begins[i]&&course.end<=ends[i])||(course.end>=begins[i]&&course.end<=ends[i])){
                             $message.show("time conflict!");
                             return ;
                         }
                     }
                 }
+                }
+                var day=parseInt(course.day);
+                var begin=parseInt(course.begin);
+                var end=parseInt(course.end);
+                if(day!=1&&day!=2&&day!=3&&day!=4&&day!=5&&day!=6&&day!=7){
+                	$message.show('the day you choosed is wrong');
+                	return;
+                }
+                if(begin!=1&&begin!=2&&begin!=3&&begin!=4&&begin!=5&&begin!=6&&begin!=7&&begin!=8&&begin!=9&&begin!=10&&begin!=11){
+                	$message.show('the begin you choosed is wrong');
+                	return;
+                }
+                if(begin!=1&&begin!=2&&begin!=3&&begin!=4&&begin!=5&&begin!=6&&begin!=7&&begin!=8&&begin!=9&&begin!=10&&begin!=11){
+                	$messgae.show('the end you choosed is wrong');
+                	return;
+                }
+                if(begin>=end){
+                	$message.show('the end must larger than begin');
+                	return;
+                }
+                
                 var info={
                     professorId:$id.id,
                     courseId:course.id,
@@ -507,6 +529,7 @@ angular.module('software', [])
                             target.attr('disabled', 'true');
                             target.val('selected');
                             $message.show('add success!');
+                            console.log(JSON.stringify(info));
                         } else {
                             $message.show('add failed!');
                         }
@@ -561,7 +584,7 @@ angular.module('software', [])
             };
             $http.post('/submitGrade', JSON.stringify(data))
                 .success(function (data) {
-                    if (data['info' == 'success'])
+                    if (data['info']== 'success')
                         $message.show('submit success!');
                     else
                         $message.show('submit failed!');

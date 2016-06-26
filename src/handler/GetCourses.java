@@ -61,19 +61,25 @@ public class GetCourses extends ServerResponse
 			{
 				Course course = e.getKey();
 				jCourse = new JCourse();
-				/*Map.Entry<Professor, Professor_Course> entry = course.getInfoBySemester(Configure.getSemester());
-				if (entry == null)
+				if(course.getSemester()!=Configure.getSemester())
 				{
 					continue;
 				}
-				jCourse.setTeacher(entry.getKey().getName());
-				jCourse.setCapacity(entry.getValue().getCapacity());
-				jCourse.setBegin(entry.getValue().getBegin());
-				jCourse.setDay(entry.getValue().getDay());
-				jCourse.setEnd(entry.getValue().getEnd());
-				jCourse.setId(course.getId());
-				jCourse.setName(course.getName());
-				result.add(jCourse);*/
+				for(Map.Entry<Professor, Professor_Course> entry : course.getInfo().entrySet())
+				{
+					if(entry.getKey().getId()!=e.getValue().getPid())
+					{
+						continue;
+					}
+					jCourse.setTeacher(entry.getKey().getName());
+					jCourse.setCapacity(entry.getValue().getCapacity());
+					jCourse.setBegin(entry.getValue().getBegin());
+					jCourse.setDay(entry.getValue().getDay());
+					jCourse.setEnd(entry.getValue().getEnd());
+					jCourse.setId(course.getId());
+					jCourse.setName(course.getName());
+					result.add(jCourse);
+				}
 			}
 			tx.commit();
 		} catch (Exception e)
